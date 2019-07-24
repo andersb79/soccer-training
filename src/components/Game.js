@@ -14,6 +14,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import VideoControl from "./VideoControl";
+import { Video } from "cloudinary-react";
 
 const ITEM_HEIGHT = 48;
 const useStyles = makeStyles(theme => ({
@@ -160,7 +161,20 @@ export default function Game({ store }) {
             />
 
             <CardContent>
-              <VideoControl store={store} settings={level} />
+              {/* <VideoControl store={store} settings={level} /> */}
+              <Video
+                onClick={() => goFullScreen(level)}
+                id={level.id}
+                cloudName="deolievif"
+                publicId={level.publicId}
+                width="100%"
+                height="100%"
+                loop
+                muted
+                playsInline
+                preload="none"
+                poster={level.poster}
+              />
               <div className="card-content">
                 <Typography variant="body2" color="textSecondary" component="p">
                   {level.details}
