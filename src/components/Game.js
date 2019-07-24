@@ -161,8 +161,8 @@ export default function Game({ store }) {
             />
 
             <CardContent>
-              {/* <VideoControl store={store} settings={level} /> */}
-              <Video
+              <VideoControl store={store} settings={level} />
+              {/* <Video
                 onClick={() => goFullScreen(level)}
                 id={level.id}
                 cloudName="deolievif"
@@ -174,7 +174,7 @@ export default function Game({ store }) {
                 playsInline
                 preload="none"
                 poster={level.poster}
-              />
+              /> */}
               <div className="card-content">
                 <Typography variant="body2" color="textSecondary" component="p">
                   {level.details}
