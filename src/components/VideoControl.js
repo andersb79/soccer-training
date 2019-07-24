@@ -4,7 +4,7 @@ import { Video } from "cloudinary-react";
 
 function VideoControl({ store, settings }) {
   function goFullScreen(level) {
-    document.getElementById(level.id).requestFullscreen();
+    document.getElementById(level.id).webkitEnterFullscreen();
   }
 
   if (settings.hasSharedPath) {
