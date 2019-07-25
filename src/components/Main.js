@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
 
 function Main({ store, onLogout }) {
   const classes = useStyles();
-  const [tabIndex, setTabIndex] = useState(0);
+  const [tabIndex, setTabIndex] = useState(1);
 
   function handleChange(event, newValue) {
     setTabIndex(newValue);

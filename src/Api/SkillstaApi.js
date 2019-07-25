@@ -8,8 +8,8 @@ const config = {
 };
 
 export default {
-  generalRequest({ maxRecords, table, view }) {
-    const conf = config;
+  generalRequest({ maxRecords, table, view, filterByFromula }) {
+    const conf = Object.assign({}, config);
     if (maxRecords) {
       conf.maxRecords = maxRecords;
     }
@@ -20,17 +20,20 @@ export default {
       conf.table = table;
     }
 
-    return new Request(
-      `${config.url}/${conf.table}?maxRecords=${conf.maxRecords}&view=${
-        conf.view
-      }`,
-      {
-        method: "get",
-        headers: new Headers({
-          Authorization: `Bearer ${conf.apiKey}`
-        })
-      }
-    );
+    if (!filterByFromula) {
+      filterByFromula = "";
+    }
+
+    const url = `${config.url}/${conf.table}?maxRecords=${
+      conf.maxRecords
+    }&view=${conf.view}${filterByFromula}`;
+
+    return new Request(url, {
+      method: "get",
+      headers: new Headers({
+        Authorization: `Bearer ${conf.apiKey}`
+      })
+    });
   },
   async response(conf) {
     var resp = await fetch(this.generalRequest(conf)).catch(err => {
@@ -71,11 +74,22 @@ export default {
       alert(err);
     });
   },
-  async fetchLevels() {
-    return this.response({ table: "Levels" });
+  async fetchSeasons() {
+    return this.response({
+      table: "Seasons"
+    });
   },
-  async fetchItems() {
-    return this.response({ table: "Items" });
+  async fetchLevels(season = 0) {
+    return this.response({
+      table: "Levels",
+      filterByFromula: `&filterByFormula=season%3D${season}`
+    });
+  },
+  async fetchItems(season = 0) {
+    return this.response({
+      table: "Items",
+      filterByFromula: `&filterByFormula=season%3D${season}`
+    });
   },
   insertItem(item) {
     fetch(

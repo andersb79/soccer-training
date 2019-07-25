@@ -2,6 +2,7 @@ import { types, flow, applySnapshot } from "mobx-state-tree";
 import Level from "./Level";
 import Item from "./Item";
 import User from "./User";
+import Season from "./Season";
 
 const levelFilters = [
   { id: 0, text: "Alla utmaningar" },
@@ -15,9 +16,19 @@ const LevelStore = types
   .model("LevelStore", {
     levels: types.array(Level),
     items: types.array(Item),
-    users: types.array(User)
+    users: types.array(User),
+    seasons: types.array(Season)
   })
   .views(self => ({
+    get viewSeasonObject() {
+      return self.seasons.find(x => x.season === self.viewSeason);
+    },
+    get seasonsWithoutView() {
+      return self.seasons.filter(x => x.season !== self.viewSeason);
+    },
+    get currentSeasonObject() {
+      return self.seasons.find(x => x.season === self.currentSeason);
+    },
     get filteredItems() {
       return self.items.filter(
         x => x.isDone || x.userName === self.loggedIn.userName
@@ -35,18 +46,18 @@ const LevelStore = types
     },
     get filteredLevels() {
       if (self.levelFilter.id === 0) {
-        return self.levels.filter(x => x.season === self.currentSeason);
+        return self.levels.filter(x => x.season === self.viewSeason);
       }
 
       if (self.levelFilter.id === 1) {
         return self.levels.filter(
-          x => !x.isDone && x.season === self.currentSeason
+          x => !x.isDone && x.season === self.viewSeason
         );
       }
 
       if (self.levelFilter.id === 2) {
         return self.levels.filter(
-          x => x.isDone && x.season === self.currentSeason
+          x => x.isDone && x.season === self.viewSeason
         );
       }
 
@@ -65,9 +76,14 @@ const LevelStore = types
     api: null,
     appRunning: appRunning.MAIN,
     colorCount: 2,
-    currentSeason: 1
+    currentSeason: 0,
+    viewSeason: 0
   }))
   .actions(self => ({
+    async switchSeason(season) {
+      self.viewSeason = season.season;
+      await self.refresh();
+    },
     setColorCount(count) {
       self.colorCount = count;
     },
@@ -82,14 +98,23 @@ const LevelStore = types
     },
     async fetchAll() {
       var users = await self.api.getUsers();
-      var levels = await self.api.fetchLevels();
-      var items = await self.api.fetchItems();
+      var seasons = await self.api.fetchSeasons();
+      var levels = await self.api.fetchLevels(self.viewSeason);
+      var items = await self.api.fetchItems(self.viewSeason);
 
       const data = {
         users: [],
         items: [],
-        levels: []
+        levels: [],
+        seasons: []
       };
+
+      seasons.forEach(elm => {
+        elm.fields.id = elm.id;
+        elm.fields.startDate = new Date(elm.fields.startDate);
+        elm.fields.endDate = new Date(elm.fields.endDate);
+        data.seasons.push(elm.fields);
+      });
 
       levels.forEach(elm => {
         elm.fields.id = elm.id;
@@ -221,7 +246,8 @@ const LevelStore = types
           userName: self.loggedIn.userName,
           publicId: myObj.public_id,
           level: level.level,
-          status: "WAITINGFORAPPROVAL"
+          status: "WAITINGFORAPPROVAL",
+          season: self.currentSeason
         };
 
         self.api.insertItem(item);

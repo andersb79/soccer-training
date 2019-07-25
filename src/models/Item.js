@@ -16,7 +16,8 @@ const Item = types
     level: types.integer,
     status: types.string,
     sharedPath: types.maybeNull(types.string),
-    comment: types.maybeNull(types.string)
+    comment: types.maybeNull(types.string),
+    season: types.integer
   })
   .volatile(self => ({
     isVisible: false

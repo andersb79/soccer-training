@@ -24,7 +24,7 @@ function HighScore({ store }) {
     <>
       <div style={{ marginTop: "60px", textAlign: "center" }}>
         <Typography variant="h6" gutterBottom>
-          TOPPLISTA SÄSONG 1
+          TOPPLISTA {store.viewSeasonObject.friendlyName}
         </Typography>
 
         <Typography variant="overline" style={{ color: "gray" }} gutterBottom>

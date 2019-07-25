@@ -10,6 +10,7 @@ import PersonIcon from "@material-ui/icons/Person";
 import TabletIcon from "@material-ui/icons/Tablet";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 
 function Help({ store }) {
   function update() {
@@ -23,9 +24,35 @@ function Help({ store }) {
 
   return (
     <Paper className="help">
-      <Typography paragraph>Säsong 1:</Typography>
+      <Typography paragraph>
+        Här hittar du hjälp med hur appen fungerar.
+      </Typography>
+      <Typography paragraph>
+        Du kollar just nu på{" "}
+        <span style={{ color: "red" }}>
+          {store.viewSeasonObject.friendlyName}
+        </span>
+      </Typography>
+      <Typography paragraph>Visa annan säsong:</Typography>
 
-      <Typography paragraph>Varje säsong har 20 utmaningar.</Typography>
+      <ButtonGroup color="primary" aria-label="Outlined primary button group">
+        {store.seasonsWithoutView.map(season => (
+          <Button
+            key={season.season}
+            onClick={() => store.switchSeason(season)}
+          >
+            {season.friendlyName}
+          </Button>
+        ))}
+      </ButtonGroup>
+      <Typography paragraph />
+      <Typography paragraph>
+        Varje säsong har 20 utmaningar. Man väljer en utmaning som man sen
+        filmar i horisontellt läge med kameran. När man är nöjd så klickar man
+        på ladda upp på den utmaningen man gjort. Filmen hamnar då för
+        utvärdering, den är då bara synlig för dig. Om den blir godkänd så
+        kommer den synas för övriga deltagare.
+      </Typography>
 
       <Typography variant="h6" paragraph>
         <HomeIcon /> Hem

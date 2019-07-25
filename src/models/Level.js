@@ -43,6 +43,10 @@ const Level = types
     get categoryName() {
       return Categories[self.category];
     },
+    get isActiveSeason() {
+      const levelStore = getRoot(self);
+      return levelStore.currentSeason === self.season;
+    },
     get isDone() {
       const levelStore = getRoot(self);
       return levelStore.items.some(
