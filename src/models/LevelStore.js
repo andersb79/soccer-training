@@ -76,8 +76,8 @@ const LevelStore = types
     api: null,
     appRunning: appRunning.MAIN,
     colorCount: 2,
-    currentSeason: 0,
-    viewSeason: 0
+    currentSeason: 1,
+    viewSeason: 1
   }))
   .actions(self => ({
     async switchSeason(season) {

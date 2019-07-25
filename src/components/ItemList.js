@@ -60,18 +60,8 @@ function onChangeRefresh(store, isVisible) {
   }
 }
 
-function ItemList({ store }) {
+function ItemListItem({ store }) {
   const classes = useStyles();
-
-  useEffect(() => {
-    setTimeout(() => {
-      store.items
-        .filter(x => x.isVisible)
-        .map(items => {
-          onChange(items, true);
-        });
-    }, 1);
-  });
 
   function ItemStatusAction({ item }) {
     if (item.isDone) {
@@ -92,6 +82,77 @@ function ItemList({ store }) {
     return <AccountCircleIcon />;
   }
 
+  if (store.filteredItems.length === 0) {
+    return (
+      <div className="banner">
+        <div className="banner-text">
+          <span>Inga uppladdningar finns. </span>
+        </div>
+      </div>
+    );
+  }
+
+  return store.filteredItems.map((item, i) => (
+    <VisibilitySensor
+      key={item.publicId}
+      onChange={isVisible => onChange(item, isVisible)}
+    >
+      <Card key={item.publicId} className={classes.card}>
+        <CardHeader
+          avatar={
+            <Avatar aria-label="Recipe" className={classes.avatar}>
+              <Image
+                cloudName="deolievif"
+                publicId={item.user.profileImage}
+                width="100%"
+                height="100%"
+              />
+            </Avatar>
+          }
+          action={<ItemStatusAction item={item} />}
+          title={
+            <div onClick={() => store.selectProfile(item.user)}>
+              {item.user.name}
+            </div>
+          }
+          subheader={item.game.name}
+        />
+        <CardContent>
+          <VideoControl store={store} settings={item} />
+          {item.hasComment && (
+            <div className="comments">
+              <Typography
+                variant="overline"
+                style={{ color: "gray", fontSize: "10px" }}
+              >
+                Från tränaren:
+              </Typography>
+              <Typography variant="subtitle2">{item.comment}</Typography>
+            </div>
+          )}
+        </CardContent>
+
+        <CardActions>
+          <Typography variant="overline" style={{ color: "gray" }}>
+            {item.displayText}
+          </Typography>
+        </CardActions>
+      </Card>
+    </VisibilitySensor>
+  ));
+}
+
+function ItemList({ store }) {
+  useEffect(() => {
+    setTimeout(() => {
+      store.items
+        .filter(x => x.isVisible)
+        .map(items => {
+          onChange(items, true);
+        });
+    }, 1);
+  });
+
   return (
     <div className="item-container">
       <div className="item-list">
@@ -102,57 +163,7 @@ function ItemList({ store }) {
           <div className="refresh-div">dra för att ladda</div>
         </VisibilitySensor>
 
-        {!store.selectedProfile &&
-          store.filteredItems.map((item, i) => (
-            <VisibilitySensor
-              key={item.publicId}
-              onChange={isVisible => onChange(item, isVisible)}
-            >
-              <Card key={item.publicId} className={classes.card}>
-                <CardHeader
-                  avatar={
-                    <Avatar aria-label="Recipe" className={classes.avatar}>
-                      <Image
-                        cloudName="deolievif"
-                        publicId={item.user.profileImage}
-                        width="100%"
-                        height="100%"
-                      />
-                    </Avatar>
-                  }
-                  action={<ItemStatusAction item={item} />}
-                  title={
-                    <div onClick={() => store.selectProfile(item.user)}>
-                      {item.user.name}
-                    </div>
-                  }
-                  subheader={item.game.name}
-                />
-                <CardContent>
-                  <VideoControl store={store} settings={item} />
-                  {item.hasComment && (
-                    <div className="comments">
-                      <Typography
-                        variant="overline"
-                        style={{ color: "gray", fontSize: "10px" }}
-                      >
-                        Från tränaren:
-                      </Typography>
-                      <Typography variant="subtitle2">
-                        {item.comment}
-                      </Typography>
-                    </div>
-                  )}
-                </CardContent>
-
-                <CardActions>
-                  <Typography variant="overline" style={{ color: "gray" }}>
-                    {item.displayText}
-                  </Typography>
-                </CardActions>
-              </Card>
-            </VisibilitySensor>
-          ))}
+        {!store.selectedProfile && <ItemListItem store={store} />}
         {store.selectedProfile && <ProfileReadOnly store={store} />}
       </div>
     </div>
