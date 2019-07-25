@@ -20,6 +20,34 @@ const User = types
     get items() {
       return self.levelStore.items.filter(x => x.userName === self.userName);
     },
+    get badgeData() {
+      return self.levelStore.badges.filter(x => x.userName === self.userName);
+    },
+    get badges() {
+      const badges = [];
+
+      badges.push({
+        title: "Säsongspriser",
+        prices: [
+          { id: 0, title: "Första pris", color: "red", count: 2 },
+          { id: 1, title: "Klarat alla nivå Lätt", color: "green", count: 1 },
+          { id: 2, title: "Klarat alla nivå Medel", color: "orange", count: 2 },
+          { id: 3, title: "Klarat alla nivå Svår", color: "red", count: 2 }
+        ]
+      });
+
+      badges.push({
+        title: "Träningspriser",
+        prices: [
+          { id: 0, title: "Första pris säsong 1", color: "red" },
+          { id: 1, title: "Klarat alla nivå Lätt", color: "green" },
+          { id: 2, title: "Klarat alla nivå Medel", color: "orange" },
+          { id: 3, title: "Klarat alla nivå Svår", color: "red" }
+        ]
+      });
+
+      return badges;
+    },
     get videoList() {
       const userItems = self.items.filter(
         x => x.isDone && x.userName === self.userName

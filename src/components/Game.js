@@ -171,7 +171,7 @@ function Game({ store }) {
                 aria-haspopup="true"
                 onClick={handleChipClick}
               >
-                <MenuIcon />
+                <MenuIcon style={{ color: "#3f51b5" }} />
               </Button>
               <Menu
                 id="simple-menu"

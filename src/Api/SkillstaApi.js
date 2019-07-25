@@ -3,12 +3,12 @@ const config = {
   table: "Levels",
   view: "Grid%20view",
   apiKey: "keyHQ5GM7ktar7YtG",
-  maxRecords: 100,
+  maxRecords: 1000,
   url: "https://api.airtable.com/v0/appC7N77wl4iVEXGD"
 };
 
 export default {
-  generalRequest({ maxRecords, table, view, filterByFromula }) {
+  generalRequest({ maxRecords, table, view, filterByFromula, fields }) {
     const conf = Object.assign({}, config);
     if (maxRecords) {
       conf.maxRecords = maxRecords;
@@ -20,11 +20,16 @@ export default {
       conf.table = table;
     }
 
+    let includeFields = "";
+    if (fields) {
+      includeFields = `${fields}&`;
+    }
+
     if (!filterByFromula) {
       filterByFromula = "";
     }
 
-    const url = `${config.url}/${conf.table}?maxRecords=${
+    const url = `${config.url}/${conf.table}?${includeFields}maxRecords=${
       conf.maxRecords
     }&view=${conf.view}${filterByFromula}`;
 

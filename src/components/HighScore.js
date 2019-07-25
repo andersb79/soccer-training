@@ -9,6 +9,7 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Divider from "@material-ui/core/Divider";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
+import Badges from "./Badges";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,6 +32,9 @@ function HighScore({ store }) {
           max 200 poäng
         </Typography>
       </div>
+
+      {/* <Badges store={store} user={store.loggedIn} /> */}
+
       <div className="highscore">
         <List className={classes.root}>
           {store.highScoreList.map(user => (

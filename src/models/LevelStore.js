@@ -17,7 +17,8 @@ const LevelStore = types
     levels: types.array(Level),
     items: types.array(Item),
     users: types.array(User),
-    seasons: types.array(Season)
+    seasons: types.array(Season),
+    badges: types.array(Item)
   })
   .views(self => ({
     get viewSeasonObject() {
@@ -123,7 +124,8 @@ const LevelStore = types
         users: [],
         items: [],
         levels: [],
-        seasons: []
+        seasons: [],
+        badges: []
       };
 
       seasons.forEach(elm => {
@@ -143,13 +145,21 @@ const LevelStore = types
         data.users.push(elm.fields);
       });
 
-      items.reverse();
-
       items.forEach(elm => {
         elm.fields.id = elm.id;
         elm.fields.createdTime = new Date(elm.createdTime);
-        data.items.push(elm.fields);
+        data.badges.push(elm.fields);
       });
+
+      items.reverse();
+
+      items
+        .filter(x => x.fields.season === self.viewSeason)
+        .forEach(elm => {
+          elm.fields.id = elm.id;
+          elm.fields.createdTime = new Date(elm.createdTime);
+          data.items.push(elm.fields);
+        });
 
       return data;
     },
