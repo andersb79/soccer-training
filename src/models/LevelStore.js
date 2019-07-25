@@ -76,10 +76,14 @@ const LevelStore = types
     api: null,
     appRunning: appRunning.MAIN,
     colorCount: 2,
-    currentSeason: 0,
-    viewSeason: 0
+    currentSeason: null,
+    viewSeason: null
   }))
   .actions(self => ({
+    setStartSeason(season) {
+      self.viewSeason = season;
+      self.currentSeason = season;
+    },
     async switchSeason(season) {
       self.viewSeason = season.season;
       await self.refresh();
@@ -99,6 +103,19 @@ const LevelStore = types
     async fetchAll() {
       var users = await self.api.getUsers();
       var seasons = await self.api.fetchSeasons();
+
+      if (self.currentSeason === null) {
+        seasons.forEach(s => {
+          var startDate = new Date(s.fields.startDate);
+          var endDate = new Date(s.fields.endDate);
+          var check = new Date();
+
+          if (check > startDate && check < endDate) {
+            self.setStartSeason(s.fields.season);
+          }
+        });
+      }
+
       var levels = await self.api.fetchLevels(self.viewSeason);
       var items = await self.api.fetchItems(self.viewSeason);
 

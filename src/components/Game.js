@@ -88,7 +88,9 @@ function Game({ store }) {
   }
 
   function handleClose(option) {
-    store.setLevelFilter(option);
+    if (option.id || option.id === 0) {
+      store.setLevelFilter(option);
+    }
     setAnchorEl(null);
   }
 
@@ -97,7 +99,9 @@ function Game({ store }) {
   }
 
   function handleChipClose(option) {
-    store.switchSeason(option);
+    if (option.season || option.season === 0) {
+      store.switchSeason(option);
+    }
     setAnchorChipEl(null);
   }
 
