@@ -215,7 +215,9 @@ const LevelStore = types
         self.login2(id);
       }
 
-      self.updateUser(self.loggedIn);
+      if (self.loggedIn) {
+        self.updateUser(self.loggedIn);
+      }
 
       self.initzialize = true;
     }),

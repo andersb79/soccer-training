@@ -138,7 +138,7 @@ function Help({ store }) {
         <TabletIcon /> Verktyg
       </Typography>
 
-      <Button variant="outlined" onClick={() => store.setRunningApp("NUMBER")}>
+      {/* <Button variant="outlined" onClick={() => store.setRunningApp("NUMBER")}>
         Nummer
       </Button>
 
@@ -148,7 +148,7 @@ function Help({ store }) {
 
       <Button variant="outlined" onClick={() => startColor(4)}>
         Color 4 färger
-      </Button>
+      </Button> */}
 
       <Typography paragraph>
         Om det finns nya uppdateringar kan du uppdatera här.
