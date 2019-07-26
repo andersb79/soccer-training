@@ -67,7 +67,8 @@ export default {
             favoriteTeam: user.favoriteTeam,
             playerTeam: user.playerTeam,
             position: user.position,
-            shirtNumber: user.shirtNumber
+            shirtNumber: user.shirtNumber,
+            lastFetch: `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`
           }
         }),
         headers: new Headers({
