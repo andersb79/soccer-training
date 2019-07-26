@@ -3,8 +3,8 @@ import { observer } from "mobx-react";
 import { Video } from "cloudinary-react";
 
 function VideoControl({ store, settings }) {
-  function goFullScreen(level) {
-    document.getElementById(level.id).webkitEnterFullscreen();
+  function goFullScreen(settings) {
+    document.getElementById(settings.id).webkitEnterFullscreen();
   }
 
   if (settings.hasSharedPath) {
@@ -18,6 +18,7 @@ function VideoControl({ store, settings }) {
         muted
         width="100%"
         height="100%"
+        poster={settings.dropboxPoster}
       >
         <source src={settings.dropboxLink} type="video/mp4" />
       </video>

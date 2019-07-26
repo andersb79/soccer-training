@@ -15,7 +15,9 @@ const Level = types
     category: types.string,
     publicId: types.string,
     season: types.integer,
-    sharedPath: types.maybeNull(types.string)
+    sharedPath: types.maybeNull(types.string),
+    fileType: types.maybeNull(types.string),
+    posterPath: types.maybeNull(types.string)
   })
   .volatile(self => ({
     isVisible: false
@@ -36,9 +38,14 @@ const Level = types
       return self.sharedPath ? true : false;
     },
     get dropboxLink() {
-      return `https://www.dropbox.com/s/${self.sharedPath}/${
-        self.publicId
-      }.mov?raw=1`;
+      return `https://www.dropbox.com/s/${self.sharedPath}/${self.publicId}.${
+        self.fileType
+      }?raw=1`;
+    },
+    get dropboxPoster() {
+      return `https://www.dropbox.com/s/${
+        self.posterPath
+      }/ConeDrill1.jpg?raw=1`;
     },
     get categoryName() {
       return Categories[self.category];
