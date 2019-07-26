@@ -47,11 +47,21 @@ function Help({ store }) {
       </ButtonGroup>
       <Typography paragraph />
       <Typography paragraph>
-        Varje säsong har 20 utmaningar. Man väljer en utmaning som man sen
-        filmar i horisontellt läge med kameran. När man är nöjd så klickar man
-        på ladda upp på den utmaningen man gjort. Filmen hamnar då för
-        utvärdering, den är då bara synlig för dig. Om den blir godkänd så
-        kommer den synas för övriga deltagare.
+        Varje säsong har 20 utmaningar. Man väljer vilken utmaning som helst,
+        man behöver inte göra dem i ordning. Utmaning filmar man sen i
+        horisontellt läge med kameran. När man är nöjd så klickar man på ladda
+        upp på den utmaningen man gjort. Filmen hamnar då för utvärdering, den
+        är då bara synlig för dig. Om den blir godkänd så kommer den synas för
+        övriga deltagare.
+      </Typography>
+
+      <Typography paragraph>
+        Tänk på att ni kan filma er själva genom att sätta upp kameran
+        någonstanns , sen sätter ni igång med utmaningen. När ni är klara
+        stänger ni av videon och klipper början och slutet som ni inte vill ha
+        med. Det kan ni enkelt göra i bilderappen. Sen går ni in och laddar upp
+        den på rätt utmaning. På så sätt behöver ni inte hjälp med att någon
+        filmar er.
       </Typography>
 
       <Typography variant="h6" paragraph>
