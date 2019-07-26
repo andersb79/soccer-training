@@ -58,8 +58,8 @@ export default function Login({ store, onLogin }) {
 
   return (
     <div className="login">
-      {/* <img className="login-img" src="skillsta.jpg" alt="skillsta" /> */}
-      <video
+      <img className="login-img" src="skillsta.jpg" alt="skillsta" />
+      {/* <video
         id="intro"
         autoPlay
         loop
@@ -74,7 +74,7 @@ export default function Login({ store, onLogin }) {
           src="https://www.dropbox.com/s/j6ev3gevrqj78wx/intro.mp4?raw=1"
           type="video/mp4"
         />
-      </video>
+      </video> */}
       <div className="login-img-wrapper">
         <Typography paragraph variant="h3">
           skillsta
