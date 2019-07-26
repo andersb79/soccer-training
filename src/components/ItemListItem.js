@@ -79,7 +79,7 @@ function ItemListItem({ store }) {
     return (
       <div className="banner">
         <div className="banner-text">
-          <span>Inga uppladdningar finns. </span>
+          <span>Du kan fortfarande bli först. Välj en utmaning</span>
         </div>
       </div>
     );
