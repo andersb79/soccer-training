@@ -133,7 +133,11 @@ function ItemListItem({ store }) {
         </CardContent>
 
         <CardActions>
-          <Typography variant="overline" style={{ color: "gray" }}>
+          <Typography
+            onClick={() => store.refresh()}
+            variant="overline"
+            style={{ color: "gray" }}
+          >
             {item.displayText}
           </Typography>
         </CardActions>

@@ -165,7 +165,7 @@ const LevelStore = types
     },
     async refresh() {
       const data = await self.fetchAll();
-
+      alert("test");
       applySnapshot(self, data);
 
       return true;
