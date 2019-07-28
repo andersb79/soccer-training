@@ -8,7 +8,7 @@ function Card({ store, user }) {
 
   return (
     <div>
-      <div id="card" className="active" style={{clipPath:'url(#svgPath)'}}>
+      <div id="card" className="active">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 267.3 427.3">
           <clipPath id="svgPath">
             <path
