@@ -47,7 +47,7 @@ function Help({ store }) {
       </ButtonGroup>
       <Typography paragraph />
       <Typography paragraph>
-        Varje säsong har 20 utmaningar. Man väljer vilken utmaning som helst,
+        Varje säsong har 16 utmaningar. Man väljer vilken utmaning som helst,
         man behöver inte göra dem i ordning. Utmaning filmar man sen i
         horisontellt läge med kameran. När man är nöjd så klickar man på ladda
         upp på den utmaningen man gjort. Filmen hamnar då för utvärdering, den
@@ -62,6 +62,26 @@ function Help({ store }) {
         med. Det kan ni enkelt göra i bilderappen. Sen går ni in och laddar upp
         den på rätt utmaning. På så sätt behöver ni inte hjälp med att någon
         filmar er.
+      </Typography>
+
+      <Typography paragraph>
+        Utmaningarna är i fyra kategorier.
+      </Typography>
+
+      <Typography paragraph>
+        BAL = BALL MASTERY. Här gäller det att kunna klara av att hantera bollen på ett smidigt sätt.
+      </Typography>
+
+      <Typography paragraph>
+        THE - THECNICAL. Här är det mycket kickningar och trix.
+      </Typography>
+
+      <Typography paragraph>
+        DRI - DRIBBLE. Här gäller det att få till olika finter och driva bollen
+      </Typography>
+
+      <Typography paragraph>
+        PSY - PHYSICAL. Här handlar det om att bli starkare, men även en del skottövningar som kräver styrka och teknik.
       </Typography>
 
       <Typography variant="h6" paragraph>
@@ -103,9 +123,7 @@ function Help({ store }) {
           Här visas flödet med alla säsongens utmaningar. Det finns 3 olika
           nivåer. Lätt, medium, svår.
         </Typography>
-        <Typography paragraph>10 lätta övningar, 5 poäng var</Typography>
-        <Typography paragraph>5 medium övningar, 10 poäng var</Typography>
-        <Typography paragraph>5 svåra övningar, 20 poäng var</Typography>
+        
         <Typography paragraph>
           <VideoIcon />
           Klicka på denna för att ladda upp en film. Filma alltid i horisontellt
