@@ -4,7 +4,9 @@ import "../card.css";
 import { relative } from "path";
 
 function Card({ store, user }) {
-  
+  const imageStyle = {
+    // backgroundImage: `url(${user.cardImage})`
+  };
 
   return (
     <div className="cardWrapper">
@@ -30,7 +32,7 @@ function Card({ store, user }) {
               </div>
             </div>
 
-            <div className="image" />
+            <div className="image" style={imageStyle} />
             <div className="backfont">SKILLSTA</div>
           </div>
           <div id="card-bottom">

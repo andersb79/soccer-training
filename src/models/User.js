@@ -1,31 +1,36 @@
 import { types, getRoot } from "mobx-state-tree";
 
 const getCountByAttribute = (attribute, store, user) => {
-  const seasonCount = store.seasons.filter(x => x.season <= store.currentSeason).length;
-  const thes = store.itemsFromCurrentAndOldSeason.filter(x => x.game.attribute === attribute && x.isDone && x.userName === user.userName) ;  const easy = thes.filter(x => x.game.category === "EASY");
+  const seasonCount = store.seasons.filter(x => x.season <= store.currentSeason)
+    .length;
+  const thes = store.itemsFromCurrentAndOldSeason.filter(
+    x =>
+      x.game.attribute === attribute && x.isDone && x.userName === user.userName
+  );
+  const easy = thes.filter(x => x.game.category === "EASY");
   const medium = thes.filter(x => x.game.category === "MEDIUM");
   const hard = thes.filter(x => x.game.category === "HARD");
 
   let count = 50;
-  
-  if(easy.length) {
-    count = count + (easy.length * 10);
+
+  if (easy.length) {
+    count = count + easy.length * 10;
   }
 
-  if(medium.length) {
-    count = count + (medium.length * 10);
+  if (medium.length) {
+    count = count + medium.length * 10;
   }
 
-  if(hard.length) {
-    count = count + (hard.length * 10);
+  if (hard.length) {
+    count = count + hard.length * 10;
   }
 
-  if(!count) {
+  if (!count) {
     debugger;
   }
 
-  return Math.round(count/seasonCount);
-}
+  return Math.round(count / seasonCount);
+};
 
 const User = types
   .model("User", {
@@ -40,12 +45,20 @@ const User = types
     shirtNumber: types.optional(types.string, "")
   })
   .views(self => ({
-    get firstName() {
-      return self.name.split(' ')[0];
+    get cardImage() {
+      if (self.userName === "gk") {
+        return "gk.png";
+      }
+      return "https://i.stack.imgur.com/k2fOF.png";
     },
-    get totalRating(){
-      return Math.round((self.THERating + self.DRIRating + self.PHYRating + self.BALRating)/4);
-    },    
+    get firstName() {
+      return self.name.split(" ")[0];
+    },
+    get totalRating() {
+      return Math.round(
+        (self.THERating + self.DRIRating + self.PHYRating + self.BALRating) / 4
+      );
+    },
     get THERating() {
       return getCountByAttribute("THE", self.levelStore, self);
     },
@@ -67,7 +80,7 @@ const User = types
     },
     get badgeData() {
       return self.levelStore.badges.filter(x => x.userName === self.userName);
-    },    
+    },
     get videoList() {
       const userItems = self.items.filter(
         x => x.isDone && x.userName === self.userName
