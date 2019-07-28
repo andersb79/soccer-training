@@ -38,13 +38,13 @@
     opacity: 0;
   }
   #card {
-    position: relative;
-    color: #725b16;
-    width: 270px;
-    height: 430px;
+    position: relative; 
+    /* color: #725b16;
+    /* width: 270px; */
+    /* height: 430px;
     background: #ddd;
-    margin: auto;
-    clip-path: url(#svgPath);
+    margin: auto; */
+    /* clip-path: url("#svgPath"); */
     display: block;
     opacity: 0;
     transition: 0.3s all cubic-bezier(0.075, 0.82, 0.165, 1);
