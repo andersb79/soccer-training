@@ -9,7 +9,7 @@ function Card({ store, user }) {
     height: "430px",
     background: "#ddd",
     margin: "auto",
-    clipPath: "url('#svgPath')"
+    // clipPath: "url('#svgPath')"
   };
 
   return (
