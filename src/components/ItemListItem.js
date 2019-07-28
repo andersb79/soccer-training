@@ -108,7 +108,7 @@ function ItemListItem({ store }) {
               {item.user.name}
             </div>
           }
-          subheader={item.game.name}
+          subheader={`${item.game.attribute} - ${item.game.name}`}
         />
         <CardContent>
           <VideoControl store={store} settings={item} />
