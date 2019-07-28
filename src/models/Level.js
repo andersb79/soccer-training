@@ -17,7 +17,8 @@ const Level = types
     season: types.integer,
     sharedPath: types.maybeNull(types.string),
     fileType: types.maybeNull(types.string),
-    posterPath: types.maybeNull(types.string)
+    posterPath: types.maybeNull(types.string),
+    attribute: types.maybeNull(types.string)
   })
   .volatile(self => ({
     isVisible: false

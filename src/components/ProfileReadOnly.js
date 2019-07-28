@@ -5,6 +5,7 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import VideoList from "./VideoList";
+import Card from "./Card";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -48,6 +49,7 @@ function ProfileReadOnly({ store }) {
       </div>
 
       <form className={classes.container} noValidate autoComplete="off">
+      <Card user={store.selectedProfile} />
         <Image
           cloudName="deolievif"
           publicId={store.selectedProfile.profileImage}
@@ -94,7 +96,7 @@ function ProfileReadOnly({ store }) {
           disabled
           margin="normal"
         />
-        <VideoList store={store} user={store.selectedProfile} />
+        {/* <VideoList store={store} user={store.selectedProfile} /> */}
       </form>
     </div>
   );

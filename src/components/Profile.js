@@ -5,6 +5,7 @@ import { Image } from "cloudinary-react";
 import ImageIcon from "@material-ui/icons/Image";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import Card from "./Card";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -67,6 +68,8 @@ function Profile({ store, onLogout }) {
           </Button>
         </div>
       </div>
+      <br />
+      
       <form className={classes.container} noValidate autoComplete="off">
         <Image
           cloudName="deolievif"
@@ -74,6 +77,9 @@ function Profile({ store, onLogout }) {
           width="100%"
           height="100%"
         />
+        <div>
+        <Card user={store.loggedIn} />
+        </div>
         <TextField
           id="name"
           label="Namn"

@@ -13,6 +13,24 @@ const User = types
     shirtNumber: types.optional(types.string, "")
   })
   .views(self => ({
+    get firstName() {
+      return self.name.split(' ')[0];
+    },
+    get totalRating(){
+      return Math.round((self.THERating + self.DRIRating + self.PHYRating + self.BALRating)/4);
+    },
+    get THERating() {
+      return 50;
+    },
+    get DRIRating() {
+      return 60;
+    },
+    get PHYRating() {
+      return 50;
+    },
+    get BALRating() {
+      return 50;
+    },
     get levelStore() {
       const levelStore = getRoot(self);
       return levelStore;
