@@ -30,6 +30,9 @@ const LevelStore = types
     get currentSeasonObject() {
       return self.seasons.find(x => x.season === self.currentSeason);
     },
+    get itemsFromCurrentAndOldSeason() {
+      return self.badges.filter(x => x.season <= self.currentSeason);
+    },
     get filteredItems() {
       return self.items.filter(
         x => x.isDone || x.userName === self.loggedIn.userName

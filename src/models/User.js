@@ -1,5 +1,32 @@
 import { types, getRoot } from "mobx-state-tree";
 
+const getCountByAttribute = (attribute, store, user) => {
+  const seasonCount = store.seasons.filter(x => x.season <= store.currentSeason).length;
+  const thes = store.itemsFromCurrentAndOldSeason.filter(x => x.game.attribute === attribute && x.isDone && x.userName === user.userName) ;  const easy = thes.filter(x => x.game.category === "EASY");
+  const medium = thes.filter(x => x.game.category === "MEDIUM");
+  const hard = thes.filter(x => x.game.category === "HARD");
+
+  let count = 50;
+  
+  if(easy.length) {
+    count = count + (easy.length * 10);
+  }
+
+  if(medium.length) {
+    count = count + (medium.length * 10);
+  }
+
+  if(hard.length) {
+    count = count + (hard.length * 10);
+  }
+
+  if(!count) {
+    debugger;
+  }
+
+  return Math.round(count/seasonCount);
+}
+
 const User = types
   .model("User", {
     id: types.string,
@@ -18,94 +45,18 @@ const User = types
     },
     get totalRating(){
       return Math.round((self.THERating + self.DRIRating + self.PHYRating + self.BALRating)/4);
-    },
+    },    
     get THERating() {
-      const thes = self.items.filter(x => x.game.attribute === "THE" && x.isDone);
-      const easy = thes.filter(x => x.game.category === "EASY");
-      const medium = thes.filter(x => x.game.category === "MEDIUM");
-      const hard = thes.filter(x => x.game.category === "HARD");
-
-      let count = 50;
-      
-      if(easy.length) {
-        count = count + (easy.length * 10);
-      }
-
-      if(medium.length) {
-        count = count + (medium.length * 10);
-      }
-
-      if(hard.length) {
-        count = count + (hard.length * 10);
-      }
-
-      return count;
+      return getCountByAttribute("THE", self.levelStore, self);
     },
     get DRIRating() {
-      const thes = self.items.filter(x => x.game.attribute === "DRI" && x.isDone);
-      const easy = thes.filter(x => x.game.category === "EASY");
-      const medium = thes.filter(x => x.game.category === "MEDIUM");
-      const hard = thes.filter(x => x.game.category === "HARD");
-
-      let count = 50;
-      
-      if(easy.length) {
-        count = count + (easy.length * 10);
-      }
-
-      if(medium.length) {
-        count = count + (medium.length * 10);
-      }
-
-      if(hard.length) {
-        count = count + (hard.length * 10);
-      }
-
-      return count;
+      return getCountByAttribute("DRI", self.levelStore, self);
     },
     get PHYRating() {
-      const thes = self.items.filter(x => x.game.attribute === "PHY" && x.isDone);
-      const easy = thes.filter(x => x.game.category === "EASY");
-      const medium = thes.filter(x => x.game.category === "MEDIUM");
-      const hard = thes.filter(x => x.game.category === "HARD");
-
-      let count = 50;
-      
-      if(easy.length) {
-        count = count + (easy.length * 10);
-      }
-
-      if(medium.length) {
-        count = count + (medium.length * 10);
-      }
-
-      if(hard.length) {
-        count = count + (hard.length * 10);
-      }
-
-      return count;
+      return getCountByAttribute("PHY", self.levelStore, self);
     },
     get BALRating() {
-      const thes = self.items.filter(x => x.game.attribute === "BAL" && x.isDone);
-      const easy = thes.filter(x => x.game.category === "EASY");
-      const medium = thes.filter(x => x.game.category === "MEDIUM");
-      const hard = thes.filter(x => x.game.category === "HARD");
-
-      let count = 50;
-      
-      if(easy.length) {
-        count = count + (easy.length * 10);
-      }
-
-      if(medium.length) {
-        count = count + (medium.length * 10);
-      }
-
-      if(hard.length) {
-        count = count + (hard.length * 10);
-      }
-
-      return count;
+      return getCountByAttribute("BAL", self.levelStore, self);
     },
     get levelStore() {
       const levelStore = getRoot(self);
