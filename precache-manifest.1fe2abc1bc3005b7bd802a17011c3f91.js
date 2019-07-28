@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "7f834244c40da828cc76b30e134b37e4",
+    "revision": "b4c5225cf17b3d3ba3cb049ffdb68bed",
     "url": "/soccer-training/index.html"
   },
   {
-    "revision": "d63a53945a5dfca5b3d6",
+    "revision": "90757444c15cf41c804d",
     "url": "/soccer-training/static/css/main.8ee6fdaf.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/soccer-training/static/js/2.edfbbdb0.chunk.js"
   },
   {
-    "revision": "d63a53945a5dfca5b3d6",
-    "url": "/soccer-training/static/js/main.792682bc.chunk.js"
+    "revision": "90757444c15cf41c804d",
+    "url": "/soccer-training/static/js/main.cda356be.chunk.js"
   },
   {
     "revision": "8abad10538ce37de2f63",
