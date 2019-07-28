@@ -30,7 +30,7 @@ function HighScoreCards({ store }) {
         </Typography>
 
         <Typography variant="overline" style={{ color: "gray" }} gutterBottom>
-          max 200 poäng
+         
         </Typography>
       </div>
 
