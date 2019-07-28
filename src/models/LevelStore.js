@@ -39,11 +39,10 @@ const LevelStore = types
       );
     },
     get highScoreList() {
-      //   return self.users.sort(x => x.highscore);
       var byHighscore = self.users.slice(0);
       byHighscore.sort((a, b) => {
-        var x = a.highscore;
-        var y = b.highscore;
+        var x = a.totalRating;
+        var y = b.totalRating;
         return x < y ? -1 : x > y ? 1 : 0;
       });
       return byHighscore.reverse();

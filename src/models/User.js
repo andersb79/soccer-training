@@ -67,32 +67,7 @@ const User = types
     },
     get badgeData() {
       return self.levelStore.badges.filter(x => x.userName === self.userName);
-    },
-    get badges() {
-      const badges = [];
-
-      badges.push({
-        title: "Säsongspriser",
-        prices: [
-          { id: 0, title: "Första pris", color: "red", count: 2 },
-          { id: 1, title: "Klarat alla nivå Lätt", color: "green", count: 1 },
-          { id: 2, title: "Klarat alla nivå Medel", color: "orange", count: 2 },
-          { id: 3, title: "Klarat alla nivå Svår", color: "red", count: 2 }
-        ]
-      });
-
-      badges.push({
-        title: "Träningspriser",
-        prices: [
-          { id: 0, title: "Första pris säsong 1", color: "red" },
-          { id: 1, title: "Klarat alla nivå Lätt", color: "green" },
-          { id: 2, title: "Klarat alla nivå Medel", color: "orange" },
-          { id: 3, title: "Klarat alla nivå Svår", color: "red" }
-        ]
-      });
-
-      return badges;
-    },
+    },    
     get videoList() {
       const userItems = self.items.filter(
         x => x.isDone && x.userName === self.userName
@@ -106,23 +81,23 @@ const User = types
         challange: x.game.name
       }));
     },
-    get highscore() {
-      if (self.items.length === 0) {
-        return 0;
-      }
+    // get highscore() {
+    //   if (self.items.length === 0) {
+    //     return 0;
+    //   }
 
-      const easy =
-        self.items.filter(x => x.isDone && x.game.category === "EASY").length *
-        5;
-      const medium =
-        self.items.filter(x => x.isDone && x.game.category === "MEDIUM")
-          .length * 10;
-      const hard =
-        self.items.filter(x => x.isDone && x.game.category === "HARD").length *
-        20;
+    //   const easy =
+    //     self.items.filter(x => x.isDone && x.game.category === "EASY").length *
+    //     5;
+    //   const medium =
+    //     self.items.filter(x => x.isDone && x.game.category === "MEDIUM")
+    //       .length * 10;
+    //   const hard =
+    //     self.items.filter(x => x.isDone && x.game.category === "HARD").length *
+    //     20;
 
-      return easy + medium + hard;
-    },
+    //   return easy + medium + hard;
+    // },
     get nextChallange() {
       return self.levelStore.levels[self.items.length];
     }
