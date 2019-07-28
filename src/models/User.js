@@ -20,16 +20,92 @@ const User = types
       return Math.round((self.THERating + self.DRIRating + self.PHYRating + self.BALRating)/4);
     },
     get THERating() {
-      return 50;
+      const thes = self.items.filter(x => x.game.attribute === "THE" && x.isDone);
+      const easy = thes.filter(x => x.game.category === "EASY");
+      const medium = thes.filter(x => x.game.category === "MEDIUM");
+      const hard = thes.filter(x => x.game.category === "HARD");
+
+      let count = 50;
+      
+      if(easy.length) {
+        count = count + (easy.length * 10);
+      }
+
+      if(medium.length) {
+        count = count + (medium.length * 10);
+      }
+
+      if(hard.length) {
+        count = count + (hard.length * 10);
+      }
+
+      return count;
     },
     get DRIRating() {
-      return 60;
+      const thes = self.items.filter(x => x.game.attribute === "DRI" && x.isDone);
+      const easy = thes.filter(x => x.game.category === "EASY");
+      const medium = thes.filter(x => x.game.category === "MEDIUM");
+      const hard = thes.filter(x => x.game.category === "HARD");
+
+      let count = 50;
+      
+      if(easy.length) {
+        count = count + (easy.length * 10);
+      }
+
+      if(medium.length) {
+        count = count + (medium.length * 10);
+      }
+
+      if(hard.length) {
+        count = count + (hard.length * 10);
+      }
+
+      return count;
     },
     get PHYRating() {
-      return 50;
+      const thes = self.items.filter(x => x.game.attribute === "PHY" && x.isDone);
+      const easy = thes.filter(x => x.game.category === "EASY");
+      const medium = thes.filter(x => x.game.category === "MEDIUM");
+      const hard = thes.filter(x => x.game.category === "HARD");
+
+      let count = 50;
+      
+      if(easy.length) {
+        count = count + (easy.length * 10);
+      }
+
+      if(medium.length) {
+        count = count + (medium.length * 10);
+      }
+
+      if(hard.length) {
+        count = count + (hard.length * 10);
+      }
+
+      return count;
     },
     get BALRating() {
-      return 50;
+      const thes = self.items.filter(x => x.game.attribute === "BAL" && x.isDone);
+      const easy = thes.filter(x => x.game.category === "EASY");
+      const medium = thes.filter(x => x.game.category === "MEDIUM");
+      const hard = thes.filter(x => x.game.category === "HARD");
+
+      let count = 50;
+      
+      if(easy.length) {
+        count = count + (easy.length * 10);
+      }
+
+      if(medium.length) {
+        count = count + (medium.length * 10);
+      }
+
+      if(hard.length) {
+        count = count + (hard.length * 10);
+      }
+
+      return count;
     },
     get levelStore() {
       const levelStore = getRoot(self);

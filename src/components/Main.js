@@ -15,6 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { observer } from "mobx-react-lite";
 import Profile from "./Profile";
 import HighScore from "./HighScore";
+import HighScoreCards from "./HighScoreCards";
 import Help from "./Help";
 import Number from "./Number";
 
@@ -84,7 +85,8 @@ function Main({ store, onLogout }) {
       )}
       {tabIndex === 2 && (
         <TabContainer>
-          <HighScore store={store} />
+          {/* <HighScore store={store} /> */}
+          <HighScoreCards store={store} />
         </TabContainer>
       )}
       {tabIndex === 3 && (
