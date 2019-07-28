@@ -1,3 +1,4 @@
+
 /* body {
     position: relative;
     min-height: 100vh;
@@ -9,6 +10,13 @@
     align-items: center;
     font-family: "Roboto Condensed", sans-serif;
   } */
+
+  .cardWrapper {
+    width: 100%;
+    margin-top:10px;
+    margin-bottom: 10px;
+  }
+
   a {
     position: absolute;
     transition: 0.5s all cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -89,7 +97,7 @@
     z-index: 2;
     height: 75%;
     width: 70%;
-    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/214624/Ronaldo.png');
+    background-image: url('https://i.stack.imgur.com/k2fOF.png');
     background-position: bottom center;
     background-repeat: no-repeat;
     background-size: contain;
