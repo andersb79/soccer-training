@@ -96,7 +96,7 @@ a.active {
   z-index: 2;
   height: 75%;
   width: 70%;
-  background-image: url("./gk.png");
+  /* background-image: url("./gk.png"); */
   background-position: bottom center;
   background-repeat: no-repeat;
   background-size: contain;

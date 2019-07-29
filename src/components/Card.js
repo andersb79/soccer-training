@@ -5,7 +5,7 @@ import { relative } from "path";
 
 function Card({ store, user }) {
   const imageStyle = {
-    // backgroundImage: `url(${user.cardImage})`
+    backgroundImage: `url(${user.cardImage})`
   };
 
   return (
