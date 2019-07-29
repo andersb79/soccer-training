@@ -1,16 +1,43 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { observer } from "mobx-react";
 import "../card.css";
-import { relative } from "path";
+
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // Remember the latest function.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
 
 function Card({ store, user }) {
+  const [isActive, setIsActive] = useState(store && store.hasAnimatedCards);
+
   const imageStyle = {
     backgroundImage: `url(${user.cardImage})`
   };
 
+  useInterval(() => {
+    // Your custom logic here
+    setIsActive(true);
+    store.setHasAnimatedCards(true);
+  }, 10);
+
   return (
     <div className="cardWrapper">
-      <div id="card" className="active">
+      <div id="card" className={isActive ? "active" : ""}>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 267.3 427.3">
           <clipPath id="svgPath">
             <path

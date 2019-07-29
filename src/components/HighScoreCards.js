@@ -29,9 +29,7 @@ function HighScoreCards({ store }) {
           TOPPLISTA {store.viewSeasonObject.friendlyName}
         </Typography>
 
-        <Typography variant="overline" style={{ color: "gray" }} gutterBottom>
-         
-        </Typography>
+        <Typography variant="overline" style={{ color: "gray" }} gutterBottom />
       </div>
 
       {/* <Badges store={store} user={store.loggedIn} /> */}
@@ -39,7 +37,7 @@ function HighScoreCards({ store }) {
       <div className="highscore">
         <List className={classes.root}>
           {store.highScoreList.map(user => (
-            <Card key={user.id} user={user} />
+            <Card key={user.id} store={store} user={user} />
           ))}
         </List>
       </div>

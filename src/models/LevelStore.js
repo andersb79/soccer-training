@@ -80,9 +80,13 @@ const LevelStore = types
     appRunning: appRunning.MAIN,
     colorCount: 2,
     currentSeason: null,
-    viewSeason: null
+    viewSeason: null,
+    hasAnimatedCards: false
   }))
   .actions(self => ({
+    setHasAnimatedCards(value) {
+      self.hasAnimatedCards = value;
+    },
     setStartSeason(season) {
       self.viewSeason = season;
       self.currentSeason = season;
