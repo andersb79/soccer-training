@@ -3,6 +3,7 @@ import { observer } from "mobx-react";
 import { Video } from "cloudinary-react";
 
 function VideoControl({ store, settings }) {
+  console.log(settings);
   function goFullScreen(settings) {
     document.getElementById(settings.id).webkitEnterFullscreen();
   }

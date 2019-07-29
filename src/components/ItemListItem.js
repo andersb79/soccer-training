@@ -111,7 +111,18 @@ function ItemListItem({ store }) {
           subheader={`${item.game.attribute} - ${item.game.name}`}
         />
         <CardContent>
-          <VideoControl store={store} settings={item} />
+          {item.fileType === "video" && (
+            <VideoControl store={store} settings={item} />
+          )}
+          {item.fileType === "image" && (
+            <Image
+              cloudName="deolievif"
+              publicId={item.publicId}
+              width="100%"
+              height="100%"
+            />
+          )}
+
           {item.hasComment && (
             <div className="comments">
               <Typography
