@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { observer } from "mobx-react";
 import "../card.css";
+import Typography from "@material-ui/core/Typography";
+import Chip from "@material-ui/core/Chip";
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -24,7 +26,12 @@ function useInterval(callback, delay) {
 
 function Card({ store, user }) {
   const [isActive, setIsActive] = useState(store && store.hasAnimatedCards);
+  const [showBack, setShowBack] = useState(false);
+  const isActiveClass = !showBack ? "active" : "active2";
+  const isActiveClassBack = showBack ? "active" : "";
 
+  const classes = `${isActiveClass}`;
+  const classesBack = `${isActiveClassBack}`;
   const imageStyle = {
     backgroundImage: `url(${user.cardImage})`
   };
@@ -35,9 +42,17 @@ function Card({ store, user }) {
     store.setHasAnimatedCards(true);
   }, 10);
 
+  function onCardClick() {
+    setShowBack(!showBack);
+  }
+
+  // if (showBack) {
+  //   return <CardBack store={store} user={user} onClick={onCardClick} />;
+  // }
+
   return (
     <div className="cardWrapper">
-      <div id="card" className={isActive ? "active" : ""}>
+      <div id="card" onClick={onCardClick} className={classes}>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 267.3 427.3">
           <clipPath id="svgPath">
             <path
@@ -61,6 +76,15 @@ function Card({ store, user }) {
 
             <div className="image" style={imageStyle} />
             <div className="backfont">SKILLSTA</div>
+            {showBack && (
+              <div className="price">
+                <Typography paragraph>Vinnare av</Typography>
+                <Chip label="Säsong 1" style={{ margin: "5px" }} />
+                <Chip label="Säsong 2" style={{ margin: "5px" }} />
+                <Chip label="Säsong 3" style={{ margin: "5px" }} />
+                <Chip label="Säsong 4" style={{ margin: "5px" }} />
+              </div>
+            )}
           </div>
           <div id="card-bottom">
             <div className="name">{user.firstName}</div>
@@ -69,7 +93,7 @@ function Card({ store, user }) {
                 <ul>
                   <li>
                     <span>{user.THERating}</span>
-                    <span>THE</span>
+                    <span>TEK</span>
                   </li>
                   <li>
                     <span>{user.DRIRating}</span>
@@ -80,12 +104,12 @@ function Card({ store, user }) {
               <div>
                 <ul>
                   <li>
-                    <span>{user.PHYRating}</span>
-                    <span>PHY</span>
+                    <span>{user.BALRating}</span>
+                    <span>KON</span>
                   </li>
                   <li>
-                    <span>{user.BALRating}</span>
-                    <span>BAL</span>
+                    <span>{user.PHYRating}</span>
+                    <span>FYS</span>
                   </li>
                 </ul>
               </div>

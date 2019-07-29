@@ -10,6 +10,10 @@
     font-family: "Roboto Condensed", sans-serif;
   } */
 
+.rotate {
+  background: red;
+}
+
 .cardWrapper {
   width: 100%;
   margin-top: 10px;
@@ -44,6 +48,54 @@ a.active {
   transform: rotateX(-180deg);
   opacity: 0;
 }
+
+a.active2 {
+  opacity: 0;
+}
+#card.active2 {
+  display: block;
+  cursor: pointer;
+  transform: rotate(0deg);
+  opacity: 1;
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  66% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  66% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+#card #card-inner #card-top .price {
+  position: absolute;
+  text-align: center;
+  top: 60px;
+  margin: 5px;
+  line-height: 1;
+  opacity: 0;
+  left: 0;
+  right: 0;
+  -webkit-animation: 5s ease 0s normal forwards 1 fadein;
+  animation: 5s ease 0s normal forwards 1 fadein;
+}
+
 #card {
   position: relative;
   color: #725b16;

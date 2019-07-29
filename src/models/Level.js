@@ -1,7 +1,7 @@
 import { types, getRoot } from "mobx-state-tree";
 
 const Categories = {
-  EASY: "Lätt",
+  EASY: "Grunder",
   MEDIUM: "Medium",
   HARD: "Svår"
 };
@@ -64,23 +64,9 @@ const Level = types
           x.level === self.level
       );
     },
-    get points() {
-      if (self.category === "EASY") {
-        return 5;
-      }
 
-      if (self.category === "MEDIUM") {
-        return 10;
-      }
-
-      if (self.category === "HARD") {
-        return 20;
-      }
-
-      return 0;
-    },
     get displayText() {
-      return `${self.categoryName} - ${self.points} POÄNG`;
+      return `${self.categoryName}`;
     },
     get poster() {
       return { publicId: self.publicId + ".jpg", resourceType: "video" };
