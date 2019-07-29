@@ -69,7 +69,7 @@ function Profile({ store, onLogout }) {
         </div>
       </div>
       <br />
-      
+
       <form className={classes.container} noValidate autoComplete="off">
         <Image
           cloudName="deolievif"
@@ -77,9 +77,6 @@ function Profile({ store, onLogout }) {
           width="100%"
           height="100%"
         />
-        <div>
-        <Card user={store.loggedIn} />
-        </div>
         <TextField
           id="name"
           label="Namn"

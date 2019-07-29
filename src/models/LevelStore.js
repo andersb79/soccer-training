@@ -253,7 +253,8 @@ const LevelStore = types
     processFile(file, level, onProcessed) {
       var formdata = new FormData();
       debugger;
-      const isImage = file.type === "image/jpeg" ? true : false;
+      const isImage =
+        file.type === "image/jpeg" || file.type === "image/png" ? true : false;
 
       formdata.append("file", file);
       formdata.append("cloud_name", "deolievif");
@@ -286,7 +287,8 @@ const LevelStore = types
           publicId: myObj.public_id,
           level: level.level,
           status: "WAITINGFORAPPROVAL",
-          season: self.currentSeason
+          season: self.currentSeason,
+          fileType: isImage ? "image" : "video"
         };
 
         self.api.insertItem(item);

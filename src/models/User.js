@@ -1,6 +1,9 @@
 import { types, getRoot } from "mobx-state-tree";
 
-const getCountByAttribute = (attribute, store, user) => {
+const getCountByAttribute = (attribute, user) => {
+  const store = user.levelStore;
+  if (!user.levelStore) {
+  }
   const seasonCount = store.seasons.filter(x => x.season <= store.currentSeason)
     .length;
   const thes = store.itemsFromCurrentAndOldSeason.filter(
@@ -59,21 +62,24 @@ const User = types
         (self.THERating + self.DRIRating + self.PHYRating + self.BALRating) / 4
       );
     },
-    get THERating() {
-      return getCountByAttribute("THE", self.levelStore, self);
-    },
-    get DRIRating() {
-      return getCountByAttribute("DRI", self.levelStore, self);
-    },
-    get PHYRating() {
-      return getCountByAttribute("PHY", self.levelStore, self);
-    },
-    get BALRating() {
-      return getCountByAttribute("BAL", self.levelStore, self);
-    },
     get levelStore() {
       const levelStore = getRoot(self);
+      if (!levelStore.seasons) {
+        debugger;
+      }
       return levelStore;
+    },
+    get THERating() {
+      return getCountByAttribute("THE", self);
+    },
+    get DRIRating() {
+      return getCountByAttribute("DRI", self);
+    },
+    get PHYRating() {
+      return getCountByAttribute("PHY", self);
+    },
+    get BALRating() {
+      return getCountByAttribute("BAL", self);
     },
     get items() {
       return self.levelStore.items.filter(x => x.userName === self.userName);
