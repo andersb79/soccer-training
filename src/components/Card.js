@@ -46,10 +46,6 @@ function Card({ store, user }) {
     setShowBack(!showBack);
   }
 
-  // if (showBack) {
-  //   return <CardBack store={store} user={user} onClick={onCardClick} />;
-  // }
-
   return (
     <div className="cardWrapper">
       <div id="card" onClick={onCardClick} className={classes}>
@@ -78,11 +74,12 @@ function Card({ store, user }) {
             <div className="backfont">SKILLSTA</div>
             {showBack && (
               <div className="price">
-                <Typography paragraph>Vinnare av</Typography>
+                <Typography paragraph>Utmärkelser</Typography>
+                {/* <Typography paragraph>Vinnare av</Typography>
                 <Chip label="Säsong 1" style={{ margin: "5px" }} />
                 <Chip label="Säsong 2" style={{ margin: "5px" }} />
                 <Chip label="Säsong 3" style={{ margin: "5px" }} />
-                <Chip label="Säsong 4" style={{ margin: "5px" }} />
+                <Chip label="Säsong 4" style={{ margin: "5px" }} /> */}
               </div>
             )}
           </div>

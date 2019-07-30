@@ -207,7 +207,7 @@ function Game({ store }) {
                   style={getAvatarColor(level)}
                   className={classes.avatar}
                 >
-                  <span style={{ fontSize: "16px" }}>{level.attribute}</span>
+                  <span style={{ fontSize: "16px" }}>{level.attributeText}</span>
                 </Avatar>
               }
               title={level.name}

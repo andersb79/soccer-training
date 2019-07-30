@@ -6,6 +6,13 @@ const Categories = {
   HARD: "Svår"
 };
 
+const Attribute = {
+  BAL: "KON",
+  THE: "TEK",
+  DRI: "DRI",
+  PHY: "FYS"
+};
+
 const Level = types
   .model("Level", {
     id: types.string,
@@ -35,6 +42,9 @@ const Level = types
     }
   }))
   .views(self => ({
+    get attributeText() {
+      return Attribute[self.attribute];
+    },
     get hasSharedPath() {
       return self.sharedPath ? true : false;
     },

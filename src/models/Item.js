@@ -87,9 +87,7 @@ const Item = types
     },
     get displayText() {
       if (self.isDone) {
-        return `${self.date} - ${self.game.categoryName} - ${
-          self.points
-        } POÄNG`;
+        return `${self.date} - ${self.game.categoryName}`;
       }
 
       return `${self.date}`;

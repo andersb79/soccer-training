@@ -108,7 +108,7 @@ function ItemListItem({ store }) {
               {item.user.name}
             </div>
           }
-          subheader={`${item.game.attribute} - ${item.game.name}`}
+          subheader={`${item.game.attributeText} - ${item.game.name}`}
         />
         <CardContent>
           {item.fileType === "video" && (
