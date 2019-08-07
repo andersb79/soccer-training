@@ -33,18 +33,7 @@ function Help({ store }) {
           {store.viewSeasonObject.friendlyName}
         </span>
       </Typography>
-      <Typography paragraph>Visa annan säsong:</Typography>
 
-      <ButtonGroup color="primary" aria-label="Outlined primary button group">
-        {store.seasonsWithoutView.map(season => (
-          <Button
-            key={season.season}
-            onClick={() => store.switchSeason(season)}
-          >
-            {season.friendlyName}
-          </Button>
-        ))}
-      </ButtonGroup>
       <Typography paragraph />
       <Typography paragraph>
         Varje säsong har 16 utmaningar. Man väljer vilken utmaning som helst,
@@ -64,24 +53,25 @@ function Help({ store }) {
         filmar er.
       </Typography>
 
+      <Typography paragraph>Utmaningarna är i fyra kategorier.</Typography>
+
       <Typography paragraph>
-        Utmaningarna är i fyra kategorier.
+        KON = BOLL KONTROLL. Här gäller det att kunna klara av att hantera
+        bollen på ett smidigt sätt.
       </Typography>
 
       <Typography paragraph>
-        BAL = BALL MASTERY. Här gäller det att kunna klara av att hantera bollen på ett smidigt sätt.
+        TEK - TEKNIK. Här är det mycket kickningar och trix.
       </Typography>
 
       <Typography paragraph>
-        THE - THECNICAL. Här är det mycket kickningar och trix.
+        DRI - DRIBBLINGAR. Här gäller det att få till olika finter och driva
+        bollen
       </Typography>
 
       <Typography paragraph>
-        DRI - DRIBBLE. Här gäller det att få till olika finter och driva bollen
-      </Typography>
-
-      <Typography paragraph>
-        PSY - PHYSICAL. Här handlar det om att bli starkare, men även en del skottövningar som kräver styrka och teknik.
+        FYS - FYSIK. Här handlar det om att bli starkare, men även en del
+        skottövningar som kräver styrka och teknik.
       </Typography>
 
       <Typography variant="h6" paragraph>
@@ -123,7 +113,7 @@ function Help({ store }) {
           Här visas flödet med alla säsongens utmaningar. Det finns 3 olika
           nivåer. Lätt, medium, svår.
         </Typography>
-        
+
         <Typography paragraph>
           <VideoIcon />
           Klicka på denna för att ladda upp en film. Filma alltid i horisontellt
