@@ -58,7 +58,7 @@ export default function Login({ store, onLogin }) {
 
   return (
     <div className="login">
-      <img className="login-img" src="skillsta.jpg" alt="skillsta" />
+      <img className="login-img" src="skillsta.jpg" alt="skillzta" />
       {/* <video
         id="intro"
         autoPlay
@@ -77,7 +77,7 @@ export default function Login({ store, onLogin }) {
       </video> */}
       <div className="login-img-wrapper">
         <Typography paragraph variant="h3">
-          skillsta
+          skillzta
         </Typography>
         <div className="login-user-name">
           <input

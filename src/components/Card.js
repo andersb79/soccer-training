@@ -71,7 +71,7 @@ function Card({ store, user }) {
             </div>
 
             <div className="image" style={imageStyle} />
-            <div className="backfont">SKILLSTA</div>
+            <div className="backfont">SKILLZTA</div>
             {showBack && (
               <div className="price">
                 <Typography paragraph>Utmärkelser</Typography>
