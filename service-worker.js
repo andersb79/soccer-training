@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/soccer-training/precache-manifest.6a1811ceeaaeae874d8d1bb565e46beb.js"
+  "/soccer-training/precache-manifest.9b02132b3b1be94d6065870e88a93f3d.js"
 );
 
 self.addEventListener('message', (event) => {
