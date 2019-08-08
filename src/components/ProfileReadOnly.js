@@ -49,7 +49,7 @@ function ProfileReadOnly({ store }) {
       </div>
 
       <form className={classes.container} noValidate autoComplete="off">
-      <Card user={store.selectedProfile} />
+        <Card store={store} user={store.selectedProfile} />
         <Image
           cloudName="deolievif"
           publicId={store.selectedProfile.profileImage}
