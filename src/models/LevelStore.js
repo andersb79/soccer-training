@@ -256,7 +256,7 @@ const LevelStore = types
     },
     processFile(file, level, onProcessed) {
       var formdata = new FormData();
-      debugger;
+
       const isImage =
         file.type === "image/jpeg" || file.type === "image/png" ? true : false;
 
