@@ -60,9 +60,7 @@ function Game({ store }) {
   function processFile(e, level) {
     var file = e.target.files[0];
 
-    store.processFile(file, level, text => {
-      alert("Uppladdning klar");
-    });
+    store.processFile(file, level, text => {});
   }
 
   function onChange(level, isVisible) {
@@ -207,7 +205,9 @@ function Game({ store }) {
                   style={getAvatarColor(level)}
                   className={classes.avatar}
                 >
-                  <span style={{ fontSize: "16px" }}>{level.attributeText}</span>
+                  <span style={{ fontSize: "16px" }}>
+                    {level.attributeText}
+                  </span>
                 </Avatar>
               }
               title={level.name}
