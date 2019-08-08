@@ -18,7 +18,8 @@ const Item = types
     sharedPath: types.maybeNull(types.string),
     comment: types.maybeNull(types.string),
     season: types.integer,
-    fileType: types.maybeNull(types.string)
+    fileType: types.maybeNull(types.string),
+    posterPath: types.maybeNull(types.string)
   })
   .volatile(self => ({
     isVisible: false
@@ -39,6 +40,11 @@ const Item = types
       return `https://www.dropbox.com/s/${self.sharedPath}/${
         self.publicId
       }.mov?raw=1`;
+    },
+    get dropboxPoster() {
+      return `https://www.dropbox.com/s/${
+        self.posterPath
+      }/ConeDrill1.jpg?raw=1`;
     },
     get isDone() {
       return self.status === "DONE";
