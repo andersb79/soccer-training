@@ -127,8 +127,7 @@ function Help({ store }) {
 
       <div style={{ margin: "10px" }}>
         <Typography paragraph>
-          Varje säsong består av maximalt 200 poäng. Här visas vem som fått
-          flest poäng.
+          Du kan just nu få 90 som mest i din totala raiting.
         </Typography>
       </div>
 
