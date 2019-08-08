@@ -49,7 +49,11 @@ const User = types
   })
   .views(self => ({
     get cardImage() {
-      if (self.userName === "gk" || self.userName === "os") {
+      if (
+        self.userName === "gk" ||
+        self.userName === "os" ||
+        self.userName === "va"
+      ) {
         return `./${self.userName}.png`;
       }
       return "https://i.stack.imgur.com/k2fOF.png";
