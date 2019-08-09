@@ -34,12 +34,16 @@ const LevelStore = types
       return self.badges.filter(x => x.season <= self.currentSeason);
     },
     get filteredItems() {
+      if (self.loggedIn.userName === "admin") {
+        return self.items;
+      }
+
       return self.items.filter(
         x => x.isDone || x.userName === self.loggedIn.userName
       );
     },
     get highScoreList() {
-      var byHighscore = self.users.slice(0);
+      var byHighscore = self.users.filter(x => x.userName !== "admin").slice(0);
       byHighscore.sort((a, b) => {
         var x = a.totalRating;
         var y = b.totalRating;

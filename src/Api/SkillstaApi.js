@@ -112,5 +112,33 @@ export default {
     ).catch(err => {
       console.log(err);
     });
+  },
+  updateItem(item) {
+    const url = `${config.url}/Items/${item.id}`;
+
+    fetch(
+      new Request(url, {
+        method: "put",
+        body: JSON.stringify({
+          fields: {
+            userName: item.userName,
+            publicId: item.publicId,
+            level: item.level,
+            status: item.status,
+            sharedPath: item.sharedPath,
+            comment: item.comment,
+            season: item.season,
+            fileType: item.fileType,
+            posterPath: item.posterPath
+          }
+        }),
+        headers: new Headers({
+          Authorization: `Bearer ${config.apiKey}`,
+          "Content-Type": "application/json"
+        })
+      })
+    ).catch(err => {
+      alert(err);
+    });
   }
 };

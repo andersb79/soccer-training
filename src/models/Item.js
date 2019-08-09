@@ -27,6 +27,12 @@ const Item = types
   .actions(self => ({
     setVisibility(isVisible) {
       self.isVisible = isVisible;
+    },
+    setStatus(newStatus, comment) {
+      self.status = newStatus;
+      self.comment = comment;
+      const levelStore = getRoot(self);
+      levelStore.api.updateItem(self);
     }
   }))
   .views(self => ({

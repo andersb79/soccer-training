@@ -14,6 +14,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import VideoControl from "./VideoControl";
 import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -56,7 +57,37 @@ function onChange(item, isVisible) {
 function ItemListItem({ store }) {
   const classes = useStyles();
 
-  function ItemStatusAction({ item }) {
+  function AdminItemStatusAction({ item, store }) {
+    const [newComment, setNewComment] = React.useState(
+      item.comment ? item.comment : ""
+    );
+    const updateComment = event => {
+      setNewComment(event.target.value);
+    };
+
+    if (store.loggedIn.userName === "admin" && item.isWaitingForApproval) {
+      return (
+        <div>
+          <TextField
+            id="name"
+            label="Namn"
+            className={classes.textField}
+            value={newComment}
+            onChange={updateComment}
+            margin="normal"
+          />
+          <StarIcon onClick={() => item.setStatus("DONE", newComment)} />
+          <ThumbDownIcon
+            onClick={() => item.setStatus("REJECTED", newComment)}
+          />
+        </div>
+      );
+    }
+
+    return null;
+  }
+
+  function ItemStatusAction({ item, store }) {
     if (item.isDone) {
       const style = { color: "green" };
       if (item.game.category === "MEDIUM") {
@@ -68,6 +99,7 @@ function ItemListItem({ store }) {
 
       return <StarIcon style={style} />;
     }
+
     if (item.isRejected) {
       return <ThumbDownIcon />;
     }
@@ -102,7 +134,7 @@ function ItemListItem({ store }) {
               />
             </Avatar>
           }
-          action={<ItemStatusAction item={item} />}
+          action={<ItemStatusAction item={item} store={store} />}
           title={
             <div onClick={() => store.selectProfile(item.user)}>
               {item.user.name}
@@ -137,13 +169,10 @@ function ItemListItem({ store }) {
         </CardContent>
 
         <CardActions>
-          <Typography
-            onClick={() => store.refresh()}
-            variant="overline"
-            style={{ color: "gray" }}
-          >
+          <Typography variant="overline" style={{ color: "gray" }}>
             {item.displayText}
           </Typography>
+          <AdminItemStatusAction item={item} store={store} />
         </CardActions>
       </Card>
     </VisibilitySensor>
