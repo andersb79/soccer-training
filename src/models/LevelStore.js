@@ -269,7 +269,7 @@ const LevelStore = types
       formdata.append("upload_preset", "kv0do7lj");
 
       if (!isImage) {
-        formdata.append("resource_type", "raw");
+        formdata.append("resource_type", "video");
       }
 
       formdata.append("title", self.loggedIn.userName);
