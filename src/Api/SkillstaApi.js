@@ -1,3 +1,9 @@
+import Airtable from "airtable";
+
+const base = new Airtable({ apiKey: "keyHQ5GM7ktar7YtG" }).base(
+  "appC7N77wl4iVEXGD"
+);
+
 const config = {
   base: "appC7N77wl4iVEXGD",
   table: "Levels",
@@ -29,9 +35,7 @@ export default {
       filterByFromula = "";
     }
 
-    const url = `${config.url}/${conf.table}?${includeFields}maxRecords=${
-      conf.maxRecords
-    }&view=${conf.view}${filterByFromula}`;
+    const url = `${config.url}/${conf.table}?${includeFields}maxRecords=${conf.maxRecords}&view=${conf.view}${filterByFromula}`;
 
     return new Request(url, {
       method: "get",
@@ -53,37 +57,30 @@ export default {
     return this.response({ table: "Users" });
   },
   updateUser(user) {
-    const url = `${config.url}/Users/${user.id}`;
+    console.log(user.JSON);
+    const u = {
+      id: user.id,
+      fields: {
+        name: user.name,
+        userName: user.userName,
+        password: user.password,
+        profileImage: user.profileImage,
+        favoriteTeam: user.favoriteTeam,
+        playerTeam: user.playerTeam,
+        position: user.position,
+        shirtNumber: user.shirtNumber,
+        lastFetch: `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`
+      }
+    };
 
-    fetch(
-      new Request(url, {
-        method: "put",
-        body: JSON.stringify({
-          fields: {
-            name: user.name,
-            userName: user.userName,
-            password: user.password,
-            profileImage: user.profileImage,
-            favoriteTeam: user.favoriteTeam,
-            playerTeam: user.playerTeam,
-            position: user.position,
-            shirtNumber: user.shirtNumber,
-            lastFetch: `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`
-          }
-        }),
-        headers: new Headers({
-          Authorization: `Bearer ${config.apiKey}`,
-          "Content-Type": "application/json"
-        })
-      })
-    ).catch(err => {
-      alert(err);
-    });
+    this.update("Users", u);
   },
   async fetchSeasons() {
-    return this.response({
-      table: "Seasons"
-    });
+    const data = await base("Seasons")
+      .select({ view: "Grid view" })
+      .all();
+
+    return data;
   },
   async fetchLevels(season = 0) {
     return this.response({
@@ -139,6 +136,35 @@ export default {
       })
     ).catch(err => {
       alert(err);
+    });
+  },
+  async fetchUsers() {
+    const data = await base("Users")
+      .select({ view: "Grid view" })
+      .all();
+
+    return data;
+  },
+  create(table, item) {
+    base(table).create([item], function(err, records) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      records.forEach(function(record) {
+        console.log(record.getId());
+      });
+    });
+  },
+  update(table, item) {
+    base(table).update([item], function(err, records) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      records.forEach(function(record) {
+        console.log(record.get("name"));
+      });
     });
   }
 };

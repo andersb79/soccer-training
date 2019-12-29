@@ -18,6 +18,7 @@ import HighScore from "./HighScore";
 import HighScoreCards from "./HighScoreCards";
 import Help from "./Help";
 import Number from "./Number";
+import Categories from "./Categories";
 
 function TabContainer(props) {
   return (
@@ -80,7 +81,8 @@ function Main({ store, onLogout }) {
       )}
       {tabIndex === 1 && (
         <TabContainer>
-          <Game store={store} />
+          {/* <Game store={store} /> */}
+          <Categories store={store} />
         </TabContainer>
       )}
       {tabIndex === 2 && (

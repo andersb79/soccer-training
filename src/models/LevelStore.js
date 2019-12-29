@@ -10,6 +10,13 @@ const levelFilters = [
   { id: 2, text: "Klarade utmaningar" }
 ];
 
+const Attributes = [
+  { id: "BAL", short: "KON", text: "KONTROLL", image: "BAL.jpg" },
+  { id: "THE", short: "TEK", text: "TEKNIK", image: "THE.jpg" },
+  { id: "DRI", short: "DRI", text: "DRIBBLING", image: "BAL.jpg" },
+  { id: "PHY", short: "FYS", text: "FYSIK", image: "BAL.jpg" }
+];
+
 const appRunning = { MAIN: "MAIN", NUMBER: "NUMBER", COLOR: "COLOR" };
 
 const LevelStore = types
@@ -21,6 +28,13 @@ const LevelStore = types
     badges: types.array(Item)
   })
   .views(self => ({
+    get filterLevelsByAttribute() {
+      const filteredLevels = self.levels.filter(
+        x => x.attribute == self.selectedAttribute.id
+      );
+
+      return filteredLevels;
+    },
     get viewSeasonObject() {
       return self.seasons.find(x => x.season === self.viewSeason);
     },
@@ -72,6 +86,9 @@ const LevelStore = types
     },
     get levelFilters() {
       return levelFilters;
+    },
+    get attributes() {
+      return Attributes;
     }
   }))
   .volatile(self => ({
@@ -85,7 +102,8 @@ const LevelStore = types
     colorCount: 2,
     currentSeason: null,
     viewSeason: null,
-    hasAnimatedCards: false
+    hasAnimatedCards: false,
+    selectedAttribute: null
   }))
   .actions(self => ({
     setHasAnimatedCards(value) {
@@ -110,6 +128,10 @@ const LevelStore = types
     },
     setLevelFilter(filter) {
       self.levelFilter = filter;
+    },
+    selectAttribute(attribute) {
+      console.log(attribute);
+      self.selectedAttribute = attribute;
     },
     async fetchAll() {
       var users = await self.api.getUsers();
