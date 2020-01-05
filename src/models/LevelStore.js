@@ -13,8 +13,8 @@ const levelFilters = [
 const Attributes = [
   { id: "BAL", short: "KON", text: "KONTROLL", image: "BAL.jpg" },
   { id: "THE", short: "TEK", text: "TEKNIK", image: "THE.jpg" },
-  { id: "DRI", short: "DRI", text: "DRIBBLING", image: "BAL.jpg" },
-  { id: "PHY", short: "FYS", text: "FYSIK", image: "BAL.jpg" }
+  { id: "DRI", short: "DRI", text: "DRIBBLING", image: "DRI.jpg" },
+  { id: "PHY", short: "FYS", text: "FYSIK", image: "PHY.jpg" }
 ];
 
 const appRunning = { MAIN: "MAIN", NUMBER: "NUMBER", COLOR: "COLOR" };
