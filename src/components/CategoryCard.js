@@ -8,29 +8,20 @@ import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import VideoIcon from "@material-ui/icons/VideoCall";
-import MenuIcon from "@material-ui/icons/Menu";
 import VisibilitySensor from "react-visibility-sensor";
-import IconButton from "@material-ui/core/IconButton";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import FilterListIcon from "@material-ui/icons/FilterList";
 import VideoControl from "./VideoControl";
-import Chip from "@material-ui/core/Chip";
 import { observer } from "mobx-react-lite";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-
 import CardMedia from "@material-ui/core/CardMedia";
 
 const ITEM_HEIGHT = 48;
 const useStyles = makeStyles(theme => ({
   card: {
-    //maxWidth: 345,
     marginTop: "10px"
   },
   media: {
     height: 0,
-    paddingTop: "56.25%" // 16:9
+    paddingTop: "56.25%"
   },
   expand: {
     transform: "rotate(0deg)",
@@ -42,9 +33,7 @@ const useStyles = makeStyles(theme => ({
   expandOpen: {
     transform: "rotate(180deg)"
   },
-  avatar: {
-    // backgroundColor: red[500]
-  }
+  avatar: {}
 }));
 
 function CategoryCard({ store }) {

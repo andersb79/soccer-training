@@ -2,11 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { observer } from "mobx-react";
 import "../card.css";
 import Typography from "@material-ui/core/Typography";
-import Chip from "@material-ui/core/Chip";
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();
-
   // Remember the latest function.
   useEffect(() => {
     savedCallback.current = callback;
@@ -75,11 +73,6 @@ function Card({ store, user }) {
             {showBack && (
               <div className="price">
                 <Typography paragraph>Utmärkelser</Typography>
-                {/* <Typography paragraph>Vinnare av</Typography>
-                <Chip label="Säsong 1" style={{ margin: "5px" }} />
-                <Chip label="Säsong 2" style={{ margin: "5px" }} />
-                <Chip label="Säsong 3" style={{ margin: "5px" }} />
-                <Chip label="Säsong 4" style={{ margin: "5px" }} /> */}
               </div>
             )}
           </div>

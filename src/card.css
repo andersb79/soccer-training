@@ -36,10 +36,10 @@ a {
   z-index: 2;
   border: 2px solid #e1c072;
   background: transparent;
+  background: radial-gradient(ellipse at center, #d8ad48 0%, #c3962a);
   color: #45350f;
   font-weight: 700;
   transform: scale(1);
-  background: radial-gradient(ellipse at center, #d8ad48 0%, #c3962a);
 }
 a:hover {
   margin-top: -5px;

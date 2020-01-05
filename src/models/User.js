@@ -1,38 +1,55 @@
 import { types, getRoot } from "mobx-state-tree";
 
+// const getCountByAttribute = (attribute, user) => {
+//   const store = user.levelStore;
+//   if (!user.levelStore) {
+//   }
+//   const seasonCount = store.seasons.filter(x => x.season <= store.currentSeason)
+//     .length;
+//   const thes = store.itemsFromCurrentAndOldSeason.filter(
+//     x =>
+//       x.game.attribute === attribute && x.isDone && x.userName === user.userName
+//   );
+//   const easy = thes.filter(x => x.game.category === "EASY");
+//   const medium = thes.filter(x => x.game.category === "MEDIUM");
+//   const hard = thes.filter(x => x.game.category === "HARD");
+
+//   let count = 50;
+
+//   if (easy.length) {
+//     count = count + easy.length * 10;
+//   }
+
+//   if (medium.length) {
+//     count = count + medium.length * 10;
+//   }
+
+//   if (hard.length) {
+//     count = count + hard.length * 10;
+//   }
+
+//   if (!count) {
+//     debugger;
+//   }
+
+//   return Math.round(count / seasonCount);
+// };
+
+const getPointsByAttribute = (attribute, user) => {
+  return getCountByAttribute(attribute, user) * 10;
+};
+
 const getCountByAttribute = (attribute, user) => {
   const store = user.levelStore;
   if (!user.levelStore) {
   }
-  const seasonCount = store.seasons.filter(x => x.season <= store.currentSeason)
-    .length;
+
   const thes = store.itemsFromCurrentAndOldSeason.filter(
     x =>
       x.game.attribute === attribute && x.isDone && x.userName === user.userName
   );
-  const easy = thes.filter(x => x.game.category === "EASY");
-  const medium = thes.filter(x => x.game.category === "MEDIUM");
-  const hard = thes.filter(x => x.game.category === "HARD");
 
-  let count = 50;
-
-  if (easy.length) {
-    count = count + easy.length * 10;
-  }
-
-  if (medium.length) {
-    count = count + medium.length * 10;
-  }
-
-  if (hard.length) {
-    count = count + hard.length * 10;
-  }
-
-  if (!count) {
-    debugger;
-  }
-
-  return Math.round(count / seasonCount);
+  return thes.length;
 };
 
 const User = types
@@ -74,16 +91,16 @@ const User = types
       return levelStore;
     },
     get THERating() {
-      return getCountByAttribute("THE", self);
+      return getPointsByAttribute("THE", self);
     },
     get DRIRating() {
-      return getCountByAttribute("DRI", self);
+      return getPointsByAttribute("DRI", self);
     },
     get PHYRating() {
-      return getCountByAttribute("PHY", self);
+      return getPointsByAttribute("PHY", self);
     },
     get BALRating() {
-      return getCountByAttribute("BAL", self);
+      return getPointsByAttribute("BAL", self);
     },
     get items() {
       return self.levelStore.items.filter(x => x.userName === self.userName);
@@ -97,30 +114,11 @@ const User = types
       );
       return userItems.map(x => ({
         id: x.id,
-        img: `http://res.cloudinary.com/deolievif/video/upload/${
-          x.publicId
-        }.jpg`,
+        img: `http://res.cloudinary.com/deolievif/video/upload/${x.publicId}.jpg`,
         title: x.name,
         challange: x.game.name
       }));
     },
-    // get highscore() {
-    //   if (self.items.length === 0) {
-    //     return 0;
-    //   }
-
-    //   const easy =
-    //     self.items.filter(x => x.isDone && x.game.category === "EASY").length *
-    //     5;
-    //   const medium =
-    //     self.items.filter(x => x.isDone && x.game.category === "MEDIUM")
-    //       .length * 10;
-    //   const hard =
-    //     self.items.filter(x => x.isDone && x.game.category === "HARD").length *
-    //     20;
-
-    //   return easy + medium + hard;
-    // },
     get nextChallange() {
       return self.levelStore.levels[self.items.length];
     }
@@ -128,6 +126,9 @@ const User = types
   .actions(self => ({
     setProfileImage(newPublicId) {
       self.profileImage = newPublicId;
+    },
+    Count(attribute) {
+      return getCountByAttribute(attribute.id, self);
     },
     updateUser({
       name,
