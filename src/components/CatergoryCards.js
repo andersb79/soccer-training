@@ -36,6 +36,7 @@ function CatergoryCards({ store }) {
     <div className="game">
       {store.attributes.map((attribute, i) => (
         <Card
+          key={i}
           className={classes.card}
           onClick={() => store.selectAttribute(attribute)}
         >
