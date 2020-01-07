@@ -33,6 +33,21 @@ const Item = types
       self.comment = comment;
       const levelStore = getRoot(self);
       levelStore.api.updateItem(self);
+    },
+    like() {
+      const levelStore = getRoot(self);
+
+      const like = levelStore.likes.find(
+        x => x.itemId === self.id && x.userName === levelStore.loggedIn.userName
+      );
+
+      if (like) {
+        levelStore.api.unLike(like.id);
+      } else {
+        levelStore.api.like(self.id, levelStore.loggedIn.userName);
+      }
+
+      levelStore.refresh();
     }
   }))
   .views(self => ({
@@ -43,14 +58,10 @@ const Item = types
       return self.sharedPath ? true : false;
     },
     get dropboxLink() {
-      return `https://www.dropbox.com/s/${self.sharedPath}/${
-        self.publicId
-      }.mov?raw=1`;
+      return `https://www.dropbox.com/s/${self.sharedPath}/${self.publicId}.mov?raw=1`;
     },
     get dropboxPoster() {
-      return `https://www.dropbox.com/s/${
-        self.posterPath
-      }/ConeDrill1.jpg?raw=1`;
+      return `https://www.dropbox.com/s/${self.posterPath}/ConeDrill1.jpg?raw=1`;
     },
     get isDone() {
       return self.status === "DONE";
@@ -69,6 +80,10 @@ const Item = types
         "-" +
         appendLeadingZeroes(self.createdTime.getDate())
       );
+    },
+    get likes() {
+      const levelStore = getRoot(self);
+      return levelStore.likes.filter(x => x.itemId == self.id).length;
     },
     get user() {
       const levelStore = getRoot(self);

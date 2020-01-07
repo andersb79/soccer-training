@@ -94,6 +94,13 @@ export default {
       filterByFromula: `&filterByFormula=season%3D${season}`
     });
   },
+  async fetchLikes() {
+    const data = await base("Likes")
+      .select({ view: "Grid view" })
+      .all();
+
+    return data;
+  },
   insertItem(item) {
     fetch(
       new Request(`${config.url}/Items`, {
@@ -144,6 +151,28 @@ export default {
       .all();
 
     return data;
+  },
+  like(itemId, userName) {
+    const u = {
+      fields: {
+        userName,
+        itemId
+      }
+    };
+
+    this.create("Likes", u);
+  },
+  unLike(id) {
+    this.delete("Likes", id);
+  },
+  delete(table, id) {
+    base(table).destroy([id], function(err, deletedRecords) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      console.log("Deleted", deletedRecords.length, "records");
+    });
   },
   create(table, item) {
     base(table).create([item], function(err, records) {

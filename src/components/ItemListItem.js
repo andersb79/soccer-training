@@ -10,6 +10,7 @@ import { Image } from "cloudinary-react";
 import VisibilitySensor from "react-visibility-sensor";
 import StarIcon from "@material-ui/icons/Star";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
+import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import VideoControl from "./VideoControl";
 import CardActions from "@material-ui/core/CardActions";
@@ -170,7 +171,8 @@ function ItemListItem({ store }) {
 
         <CardActions>
           <Typography variant="overline" style={{ color: "gray" }}>
-            {item.displayText}
+            {item.displayText} - <ThumbUpIcon onClick={item.like} />{" "}
+            {item.likes} Likes{" "}
           </Typography>
           <AdminItemStatusAction item={item} store={store} />
         </CardActions>

@@ -58,6 +58,19 @@ export default {
 
     this.create("Stat", u);
   },
+  unLike(id) {
+    this.delete(id);
+  },
+  delete(id) {
+    base(table).destroy([id], function(err, deletedRecords) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      console.log("Deleted", deletedRecords.length, "records");
+    });
+  },
+
   create(table, item) {
     base(table).create([item], function(err, records) {
       if (err) {

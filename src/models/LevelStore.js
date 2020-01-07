@@ -1,6 +1,7 @@
 import { types, flow, applySnapshot } from "mobx-state-tree";
 import Level from "./Level";
 import Item from "./Item";
+import Likes from "./Likes";
 import User from "./User";
 import Season from "./Season";
 
@@ -25,7 +26,8 @@ const LevelStore = types
     items: types.array(Item),
     users: types.array(User),
     seasons: types.array(Season),
-    badges: types.array(Item)
+    badges: types.array(Item),
+    likes: types.array(Likes)
   })
   .views(self => ({
     get filterLevelsByAttribute() {
@@ -151,13 +153,15 @@ const LevelStore = types
 
       var levels = await self.api.fetchLevels(self.viewSeason);
       var items = await self.api.fetchItems(self.viewSeason);
+      var likes = await self.api.fetchLikes();
 
       const data = {
         users: [],
         items: [],
         levels: [],
         seasons: [],
-        badges: []
+        badges: [],
+        likes: []
       };
 
       seasons.forEach(elm => {
@@ -170,6 +174,11 @@ const LevelStore = types
       levels.forEach(elm => {
         elm.fields.id = elm.id;
         data.levels.push(elm.fields);
+      });
+
+      likes.forEach(elm => {
+        elm.fields.id = elm.id;
+        data.likes.push(elm.fields);
       });
 
       users.forEach(elm => {
