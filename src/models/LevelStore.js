@@ -15,7 +15,8 @@ const Attributes = [
   { id: "BAL", short: "KON", text: "KONTROLL", image: "BAL.jpg" },
   { id: "THE", short: "TEK", text: "TEKNIK", image: "THE.jpg" },
   { id: "DRI", short: "DRI", text: "DRIBBLING", image: "DRI.jpg" },
-  { id: "PHY", short: "FYS", text: "FYSIK", image: "PHY.jpg" }
+  { id: "PHY", short: "FYS", text: "FYSIK", image: "PHY.jpg" },
+  { id: "OWN", short: "OWN", text: "EGENA SKILLS", image: "OWN.jpg" }
 ];
 
 const appRunning = { MAIN: "MAIN", NUMBER: "NUMBER", COLOR: "COLOR" };
