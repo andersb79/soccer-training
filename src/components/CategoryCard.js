@@ -172,7 +172,11 @@ function CategoryCard({ store }) {
           </Card>
         </VisibilitySensor>
       ))}
-      <Card key="locked" className={classes.card}>
+      <Card
+        key="locked"
+        style={{ marginBottom: "20px" }}
+        className={classes.card}
+      >
         <CardHeader
           avatar={
             <Avatar aria-label="Recipe" className={classes.avatar}>
@@ -182,12 +186,22 @@ function CategoryCard({ store }) {
             </Avatar>
           }
           title="Låst"
-          subheader="Låst"
+          subheader=""
         />
 
         <CardActionArea>
-          <CardMedia className={classes.media} image="locked.png" />
-          <CardContent></CardContent>
+          <CardMedia
+            style={{ opacity: 0.5 }}
+            className={classes.media}
+            image="locked.jpg"
+          />
+          <CardContent>
+            <div className="card-content">
+              <Typography variant="body2" color="textSecondary" component="p">
+                Klara av mer övningar för att låsa upp fler.
+              </Typography>
+            </div>
+          </CardContent>
         </CardActionArea>
       </Card>
     </div>
