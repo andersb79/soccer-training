@@ -13,6 +13,7 @@ import VideoControl from "./VideoControl";
 import { observer } from "mobx-react-lite";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
+import ArrowLeftIcon from "@material-ui/icons/ChevronLeft";
 
 const ITEM_HEIGHT = 48;
 const useStyles = makeStyles(theme => ({
@@ -109,14 +110,15 @@ function CategoryCard({ store }) {
       return { backgroundColor: "red" };
     }
 
-    return { backgroundColor: "green" };
+    return { backgroundColor: "black" };
   }
 
   return (
     <div className="game">
-      <button onClick={() => store.selectAttribute()}>Go back</button>
-      {store.selectedAttribute.text}
-
+      <div onClick={() => store.selectAttribute()}>
+        <ArrowLeftIcon />
+        {store.selectedAttribute.text}
+      </div>
       {store.filterLevelsByAttribute.map((level, i) => (
         <VisibilitySensor
           key={level.id}

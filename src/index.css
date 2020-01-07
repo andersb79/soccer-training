@@ -41,7 +41,7 @@ code {
 .center {
   margin: auto;
   width: 50%;
-  border: 3px solid green;
+  border: 3px solid black;
   padding: 10px;
 }
 
@@ -98,7 +98,7 @@ code {
 }
 
 .MuiTabs-root {
-  background-color: green;
+  background-color: black;
 }
 
 .Mui-selected.MuiTabs-indicator {

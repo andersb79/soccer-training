@@ -116,7 +116,7 @@ function Game({ store }) {
       return { backgroundColor: "red" };
     }
 
-    return { backgroundColor: "green" };
+    return { backgroundColor: "black" };
   }
 
   return (
