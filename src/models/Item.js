@@ -12,7 +12,7 @@ const Item = types
     id: types.string,
     createdTime: types.Date,
     userName: types.string,
-    publicId: types.string,
+    publicId: types.maybeNull(types.string),
     level: types.integer,
     status: types.string,
     sharedPath: types.maybeNull(types.string),
