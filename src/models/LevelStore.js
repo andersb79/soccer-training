@@ -45,9 +45,35 @@ const LevelStore = types
     get americanoPlayers() {
       return americanoPlayerList;
     },
+    get americanoStat() {
+      const stat = [];
+      self.americanoPlayers.forEach(p => {
+        const item = { player: p };
+
+        item.goals = 0;
+
+        self.americano.forEach(g => {
+          if (g.team1.players.find(pp => pp.id === p.id)) {
+            item.goals += g.team1.goals;
+          } else {
+            item.goals += g.team2.goals;
+          }
+        });
+
+        stat.push(item);
+      });
+
+      return stat
+        .sort((a, b) => {
+          var x = a.goals;
+          var y = b.goals;
+          return x < y ? -1 : x > y ? 1 : 0;
+        })
+        .reverse();
+    },
     get filterLevelsByAttribute() {
       const filteredLevels = self.levels.filter(
-        x => x.attribute == self.selectedAttribute.id
+        x => x.attribute === self.selectedAttribute.id
       );
 
       return filteredLevels;
@@ -129,7 +155,7 @@ const LevelStore = types
     removeUser() {
       self.users.remove(self.users[0]);
     },
-    americanoRandom() {
+    getNewGame() {
       var shuffled = self.americanoPlayers.sort(function() {
         return 0.5 - Math.random();
       });
@@ -147,12 +173,28 @@ const LevelStore = types
         return textA < textB ? -1 : textA > textB ? 1 : 0;
       });
 
-      const game = {
+      let game = {
         gameName: `Game ${self.americano.length + 1}`,
         team1: { players: players1 },
         team2: { players: players2 }
       };
 
+      //kolla om det redan finns
+      //hämta då ny
+      const uniqueId = players1.reduce((a, b) => a + (b["id"] || ""), "");
+      console.log(uniqueId);
+
+      self.americano.forEach(g => {
+        if (g.team1.uniqueId === uniqueId || g.team2.uniqueId === uniqueId) {
+          console.log("dublett", uniqueId);
+          game = self.getNewGame();
+        }
+      });
+
+      return game;
+    },
+    americanoRandom() {
+      const game = self.getNewGame();
       const mobxGame = Game.create(game);
 
       self.americano.push(mobxGame);

@@ -1,12 +1,11 @@
 import React from "react";
 import { observer } from "mobx-react";
 import Paper from "@material-ui/core/Paper";
-import CardMedia from "@material-ui/core/CardMedia";
 
 function Americano({ store }) {
   return (
     <>
-      <Paper className="help">
+      {/* <Paper className="help">
         {store.americano.map(g => (
           <>
             <span>{g.gameName}</span>
@@ -15,12 +14,24 @@ function Americano({ store }) {
             </div>
           </>
         ))}
+      </Paper> */}
+      <div className="help">Antal matcher {store.americano.length}</div>
+      <Paper>
+        {store.americanoStat.map(p => (
+          <>
+            <div>
+              {p.player.name} - {p.goals}
+            </div>
+          </>
+        ))}
       </Paper>
 
-      <button onClick={store.americanoRandom}>Ny match</button>
-      <span>{store.americano.length}</span>
-      {store.americano.map(g => (
-        <Paper className="help">
+      {store.americano.length < 10 && (
+        <button onClick={store.americanoRandom}>Ny match</button>
+      )}
+
+      {store.americano.reverse().map(g => (
+        <Paper className="americanoGame">
           <span>{g.gameName}</span>
           <input
             style={{ width: "50px" }}

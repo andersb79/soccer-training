@@ -50,6 +50,11 @@ code {
   padding: 10px;
 }
 
+.americanoGame {
+  margin: 20px 10px 10px 10px;
+  padding: 10px;
+}
+
 .login-img {
   opacity: 1;
   width: 100%;
