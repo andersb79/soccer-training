@@ -16,7 +16,7 @@ function Americano({ store }) {
         ))}
       </Paper> */}
       <div className="help">Antal matcher {store.americano.length}</div>
-      <Paper>
+      <Paper className="americanoGame">
         {store.americanoStat.map(p => (
           <>
             <div>
