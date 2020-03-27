@@ -66,7 +66,7 @@ function Americano({ store }) {
             </div>
           </div>
           <div style={{ textAlign: "center" }}>
-            <img src="vsloggo.jpg" style={{ width: "100px" }} />
+            <img src="vsloggo2.jpg" style={{ width: "100px" }} />
           </div>
           <div style={{ backgroundColor: "", padding: "10px" }}>
             <div>
