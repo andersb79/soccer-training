@@ -66,6 +66,9 @@ function Profile({ store, onLogout }) {
             <ImageIcon />
           </Button>
         </div>
+        <Button variant="outlined" onClick={() => document.location.reload()}>
+          Uppdatera appen
+        </Button>
       </div>
       <br />
 
