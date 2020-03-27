@@ -7,6 +7,7 @@ const Game = types
     team1: types.maybeNull(Team),
     team2: types.maybeNull(Team)
   })
+  .volatile(self => ({}))
   .actions(self => ({}));
 
 export default Game;

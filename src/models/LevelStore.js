@@ -7,12 +7,12 @@ import Season from "./Season";
 import Game from "./Game";
 
 const americanoPlayerList = [
-  { id: 1, name: "Gustav" },
-  { id: 2, name: "Love" },
-  { id: 3, name: "Oskar" },
-  { id: 4, name: "Alfred" },
-  { id: 5, name: "Arvid" },
-  { id: 6, name: "Douglas" }
+  { id: 1, name: "Gustav", image: "gklag.png" },
+  { id: 2, name: "Love", image: "lolag.png" },
+  { id: 3, name: "Oskar", image: "oslag.png" },
+  { id: 4, name: "Alfred", image: "aslag.png" },
+  { id: 5, name: "Arvid", image: "allag.png" },
+  { id: 6, name: "Douglas", image: "dblag.png" }
 ];
 
 const levelFilters = [
