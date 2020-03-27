@@ -19,6 +19,7 @@ import HighScoreCards from "./HighScoreCards";
 import Help from "./Help";
 import Number from "./Number";
 import Categories from "./Categories";
+import Americano from "./Americano";
 
 function TabContainer(props) {
   return (
@@ -42,7 +43,7 @@ const useStyles = makeStyles(theme => ({
 
 function Main({ store, onLogout }) {
   const classes = useStyles();
-  const [tabIndex, setTabIndex] = useState(store.items.length === 0 ? 1 : 0);
+  const [tabIndex, setTabIndex] = useState(store.items.length === 0 ? 4 : 0);
 
   function handleChange(event, newValue) {
     setTabIndex(newValue);
@@ -98,7 +99,7 @@ function Main({ store, onLogout }) {
       )}
       {tabIndex === 4 && (
         <TabContainer>
-          <Help store={store} />
+          <Americano store={store} />
         </TabContainer>
       )}
     </div>

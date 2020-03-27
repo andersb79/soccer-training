@@ -4,6 +4,16 @@ import Item from "./Item";
 import Likes from "./Likes";
 import User from "./User";
 import Season from "./Season";
+import Game from "./Game";
+
+const americanoPlayerList = [
+  { id: 1, name: "Gustav" },
+  { id: 2, name: "Love" },
+  { id: 3, name: "Oskar" },
+  { id: 4, name: "Alfred" },
+  { id: 5, name: "Arvid" },
+  { id: 6, name: "Douglas" }
+];
 
 const levelFilters = [
   { id: 0, text: "Alla utmaningar" },
@@ -28,9 +38,13 @@ const LevelStore = types
     users: types.array(User),
     seasons: types.array(Season),
     badges: types.array(Item),
-    likes: types.array(Likes)
+    likes: types.array(Likes),
+    americano: types.maybeNull(types.array(Game))
   })
   .views(self => ({
+    get americanoPlayers() {
+      return americanoPlayerList;
+    },
     get filterLevelsByAttribute() {
       const filteredLevels = self.levels.filter(
         x => x.attribute == self.selectedAttribute.id
@@ -92,6 +106,9 @@ const LevelStore = types
     },
     get attributes() {
       return Attributes;
+    },
+    get americanoGameCount() {
+      return self.americanoGames.length;
     }
   }))
   .volatile(self => ({
@@ -109,6 +126,39 @@ const LevelStore = types
     selectedAttribute: null
   }))
   .actions(self => ({
+    removeUser() {
+      self.users.remove(self.users[0]);
+    },
+    americanoRandom() {
+      var shuffled = self.americanoPlayers.sort(function() {
+        return 0.5 - Math.random();
+      });
+
+      let players1 = shuffled.slice(0, 3);
+      players1 = players1.sort(function(a, b) {
+        var textA = a.name.toUpperCase();
+        var textB = b.name.toUpperCase();
+        return textA < textB ? -1 : textA > textB ? 1 : 0;
+      });
+      let players2 = shuffled.slice(3, 6);
+      players2 = players2.sort(function(a, b) {
+        var textA = a.name.toUpperCase();
+        var textB = b.name.toUpperCase();
+        return textA < textB ? -1 : textA > textB ? 1 : 0;
+      });
+
+      const game = {
+        gameName: `Game ${self.americano.length + 1}`,
+        team1: { players: players1 },
+        team2: { players: players2 }
+      };
+
+      const mobxGame = Game.create(game);
+
+      self.americano.push(mobxGame);
+
+      //applySnapshot(self.americano, game);
+    },
     setHasAnimatedCards(value) {
       self.hasAnimatedCards = value;
     },
@@ -202,6 +252,8 @@ const LevelStore = types
           elm.fields.createdTime = new Date(elm.createdTime);
           data.items.push(elm.fields);
         });
+
+      data.americano = [];
 
       return data;
     },
