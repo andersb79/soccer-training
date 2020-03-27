@@ -17,9 +17,7 @@ function Americano({ store }) {
         ))}
       </Paper>
 
-      <button style={{ marginTop: "100px" }} onClick={store.americanoRandom}>
-        Ny match
-      </button>
+      <button onClick={store.americanoRandom}>Ny match</button>
       <span>{store.americano.length}</span>
       {store.americano.map(g => (
         <Paper className="help">
