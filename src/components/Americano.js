@@ -39,7 +39,6 @@ function Americano({ store }) {
           </Button>
         </div>
       )}
-
       {store.americanoReverse.map(g => (
         <Paper key={g.gameName} className="americanoGame">
           <div>{g.gameName}</div>
