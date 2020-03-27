@@ -1,6 +1,8 @@
 import React from "react";
 import { observer } from "mobx-react";
 import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 
 function Americano({ store }) {
   return (
@@ -27,33 +29,47 @@ function Americano({ store }) {
       </Paper>
 
       {store.americano.length < 10 && (
-        <button onClick={store.americanoRandom}>Ny match</button>
+        <div style={{ textAlign: "center" }}>
+          <Button
+            onClick={store.americanoRandom}
+            variant="contained"
+            color="primary"
+          >
+            Ny match
+          </Button>
+        </div>
       )}
 
-      {store.americano.reverse().map(g => (
-        <Paper className="americanoGame">
-          <span>{g.gameName}</span>
-          <input
-            style={{ width: "50px" }}
-            defaultValue={g.team1.goals}
-            onChange={e => g.team1.setGoals(e.target.value)}
-          />{" "}
-          -
-          <input
-            style={{ width: "50px" }}
-            defaultValue={g.team2.goals}
-            onChange={e => g.team2.setGoals(e.target.value)}
-          />
+      {store.americanoReverse.map(g => (
+        <Paper key={g.gameName} className="americanoGame">
+          <div>{g.gameName}</div>
+          <div>
+            Resultat:
+            <TextField
+              type="number"
+              style={{ width: "50px" }}
+              defaultValue={g.team1.goals}
+              onChange={e => g.team1.setGoals(e.target.value)}
+            />
+            -
+            <TextField
+              type="number"
+              style={{ width: "50px" }}
+              defaultValue={g.team2.goals}
+              onChange={e => g.team2.setGoals(e.target.value)}
+            />
+          </div>
           <div style={{ backgroundColor: "", padding: "10px" }}>
-            Team 1
             <div>
               {g.team1.players.map(x => (
                 <img src={x.image} style={{ width: "100px" }} />
               ))}
             </div>
           </div>
+          <div style={{ textAlign: "center" }}>
+            <img src="vsloggo.jpg" style={{ width: "100px" }} />
+          </div>
           <div style={{ backgroundColor: "", padding: "10px" }}>
-            Team 2
             <div>
               {g.team2.players.map(x => (
                 <img src={x.image} style={{ width: "100px" }} />

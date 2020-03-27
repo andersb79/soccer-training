@@ -71,6 +71,9 @@ const LevelStore = types
         })
         .reverse();
     },
+    get americanoReverse() {
+      return self.americano.reverse();
+    },
     get filterLevelsByAttribute() {
       const filteredLevels = self.levels.filter(
         x => x.attribute === self.selectedAttribute.id
