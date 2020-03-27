@@ -31,6 +31,13 @@ code {
   color: gray;
 }
 
+.playerCard {
+  width: 100px;
+  border: 1px solid #bdbbbb;
+  margin: 2px;
+  border-radius: 18px;
+}
+
 .banner {
   height: 300px;
   display: flex;

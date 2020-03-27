@@ -177,7 +177,7 @@ const LevelStore = types
       });
 
       let game = {
-        gameName: `Game ${self.americano.length + 1}`,
+        gameName: `Match ${self.americano.length + 1}`,
         team1: { players: players1 },
         team2: { players: players2 }
       };
