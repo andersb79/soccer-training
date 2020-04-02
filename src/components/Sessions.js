@@ -8,6 +8,7 @@ import TextField from "@material-ui/core/TextField";
 import Box from "@material-ui/core/Box";
 import VideoControl from "./VideoControl";
 import styles from "react-responsive-carousel/lib/styles/carousel.min.css";
+import Paper from "@material-ui/core/Paper";
 
 var Carousel = require("react-responsive-carousel").Carousel;
 
@@ -33,7 +34,7 @@ function Sessions({ store }) {
 
       console.log("play");
       videoElm.play();
-    }, 3000);
+    }, 1000);
   });
 
   useEffect(() => {
@@ -61,6 +62,10 @@ function Sessions({ store }) {
     // component re-renders
     const intervalId = setInterval(() => {
       if (!paused) {
+        // if (rest && timeLeft === workTime - 2) {
+        //   var audio = new Audio("notify.wav");
+        //   audio.play();
+        // }
         setTimeLeft(timeLeft - 1);
       }
     }, 1000);
@@ -123,26 +128,29 @@ function Sessions({ store }) {
           </div>
         ))}
       </Carousel>
+
       <Box padding={2}>
-        <Box textAlign="center" id="legend">
-          {store.filterLevelsForSession[selectedItem].details}
-        </Box>
+        <Paper className="sessionOverview">
+          <Box textAlign="center" id="legend">
+            {store.filterLevelsForSession[selectedItem].details}
+          </Box>
 
-        {finished && <Box textAlign="center">KLART</Box>}
+          <Box textAlign="center" fontWeight="fontWeightBold">
+            Övning {selectedItem + 1} av {store.filterLevelsForSession.length}
+          </Box>
 
-        {rest && <Box textAlign="center">Förbered dig</Box>}
-        {!rest && <Box textAlign="center">Kör</Box>}
-        <Box textAlign="center" fontWeight="fontWeightBold">
-          Övning {selectedItem + 1} av {store.filterLevelsForSession.length}
-        </Box>
+          <Box
+            style={{ fontSize: "74px", textAlign: "center" }}
+            fontWeight="fontWeightBold"
+          >
+            {timeLeft}
+          </Box>
 
-        <Box
-          style={{ fontSize: "74px", textAlign: "center" }}
-          fontWeight="fontWeightBold"
-        >
-          {timeLeft}
-        </Box>
+          {finished && <Box textAlign="center">KLART</Box>}
 
+          {rest && <Box textAlign="center">Förbered dig</Box>}
+          {!rest && <Box textAlign="center">Kör</Box>}
+        </Paper>
         <div style={{ textAlign: "center" }}>
           <Button variant="contained" color="primary" onClick={start}>
             {paused ? "Starta" : "Pausa"}
@@ -156,13 +164,13 @@ function Sessions({ store }) {
             Börja om
           </Button>
         </div>
-        <div style={{ marginTop: "20px" }}>
+        <Paper className="sessionOverview">
           {store.filterLevelsForSession.map((level, index) => (
-            <div style={{ color: index === selectedItem ? "red" : "blue" }}>
-              {level.details}
+            <div style={{ color: index === selectedItem ? "blue" : "black" }}>
+              {index + 1}. {level.details}
             </div>
           ))}
-        </div>
+        </Paper>
       </Box>
     </div>
   );
