@@ -74,6 +74,13 @@ const LevelStore = types
     get americanoReverse() {
       return self.americano.reverse();
     },
+    get filterLevelsForSession() {
+      const filteredLevels = self.levels.filter(
+        x => x.attribute === self.attributes[0].id
+      );
+
+      return filteredLevels;
+    },
     get filterLevelsByAttribute() {
       const filteredLevels = self.levels.filter(
         x => x.attribute === self.selectedAttribute.id
@@ -300,8 +307,6 @@ const LevelStore = types
 
       data.americano = [];
 
-      self.selectAttribute(Attributes[0]);
-
       return data;
     },
     async refresh() {
@@ -388,6 +393,18 @@ const LevelStore = types
         onProcessed(this.responseText);
       };
       xhr.send(formdata);
+    },
+    finishedSession() {
+      const item = {
+        userName: self.loggedIn.userName,
+        sharedPath: "kdlql6q3s3tuoh0",
+        level: 1,
+        status: "WAITINGFORAPPROVAL",
+        season: self.currentSeason,
+        fileType: "image"
+      };
+
+      self.api.insertItem(item);
     },
     processFile(file, level, onProcessed) {
       var formdata = new FormData();

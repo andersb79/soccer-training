@@ -12,15 +12,16 @@ import styles from "react-responsive-carousel/lib/styles/carousel.min.css";
 var Carousel = require("react-responsive-carousel").Carousel;
 
 function Sessions({ store }) {
-  const level = store.filterLevelsByAttribute[0];
+  const drillCount = store.filterLevelsForSession.length;
 
-  const restTime = 5;
-  const workTime = 3;
+  const restTime = 15;
+  const workTime = 15;
 
   const [selectedItem, setSelectedItem] = useState(0);
   const [paused, setPaused] = React.useState(true);
   const [timeLeft, setTimeLeft] = useState(workTime);
-  const [rest, setRest] = useState(false);
+  const [rest, setRest] = useState(true);
+  const [finished, setFinished] = React.useState(false);
 
   useEffect(() => {
     onChange(0);
@@ -33,7 +34,15 @@ function Sessions({ store }) {
 
       if (!rest) {
         setTimeLeft(restTime);
-        setSelectedItem(selectedItem + 1);
+        const newSelectedItem = selectedItem + 1;
+
+        if (newSelectedItem === drillCount) {
+          setPaused(true);
+          setFinished(true);
+          //store.finishedSession();
+        } else {
+          setSelectedItem(newSelectedItem);
+        }
       } else {
         setTimeLeft(workTime);
       }
@@ -51,13 +60,18 @@ function Sessions({ store }) {
     return () => clearInterval(intervalId);
     // add timeLeft as a dependency to re-rerun the effect
     // when we update it
-  }, [timeLeft, selectedItem, paused, rest]);
+  }, [timeLeft, selectedItem, paused, rest, finished, drillCount, store]);
+
+  function start() {
+    setPaused(!paused);
+  }
 
   function restart() {
     setPaused(true);
     setRest(false);
     setTimeLeft(workTime);
     setSelectedItem(0);
+    setFinished(false);
   }
 
   function onChange(index) {
@@ -65,13 +79,13 @@ function Sessions({ store }) {
       return;
     }
 
-    var media = store.filterLevelsByAttribute[index];
+    var media = store.filterLevelsForSession[index];
 
     const videoElm = document.getElementById(media.id);
 
-    const placeHolder = document.getElementById("legend");
-    console.log(media.details);
-    placeHolder.innerHTML = media.details;
+    // const placeHolder = document.getElementById("legend");
+    // console.log(media.details);
+    // placeHolder.innerHTML = media.details;
 
     if (videoElm) {
       console.log("play");
@@ -89,7 +103,7 @@ function Sessions({ store }) {
         showIndicators={false}
         showStatus={false}
       >
-        {store.filterLevelsByAttribute.map(level => (
+        {store.filterLevelsForSession.map(level => (
           <div>
             {level.fileType === "mp4" && (
               <VideoControl store={store} settings={level} />
@@ -102,17 +116,17 @@ function Sessions({ store }) {
       </Carousel>
       <Box padding={2}>
         <Box textAlign="center" id="legend">
-          {level.details}
+          {store.filterLevelsForSession[selectedItem].details}
         </Box>
 
-        {rest && (
-          <Box textAlign="center" id="legend">
-            VILA
-          </Box>
-        )}
-        <Box fontWeight="fontWeightBold">
-          Antal övningar {store.filterLevelsByAttribute.length + 1}
+        {finished && <Box textAlign="center">KLART</Box>}
+
+        {rest && <Box textAlign="center">Förbered dig</Box>}
+        {!rest && <Box textAlign="center">Kör</Box>}
+        <Box textAlign="center" fontWeight="fontWeightBold">
+          Övning {selectedItem + 1} av {store.filterLevelsForSession.length}
         </Box>
+
         <Box
           style={{ fontSize: "74px", textAlign: "center" }}
           fontWeight="fontWeightBold"
@@ -120,16 +134,26 @@ function Sessions({ store }) {
           {timeLeft}
         </Box>
 
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => setPaused(!paused)}
-        >
-          {paused ? "Starta" : "Pausa"}
-        </Button>
-        <Button variant="contained" color="primary" onClick={restart}>
-          Börja om
-        </Button>
+        <div style={{ textAlign: "center" }}>
+          <Button variant="contained" color="primary" onClick={start}>
+            {paused ? "Starta" : "Pausa"}
+          </Button>
+          <Button
+            style={{ marginLeft: "15px" }}
+            variant="contained"
+            color="secondary"
+            onClick={restart}
+          >
+            Börja om
+          </Button>
+        </div>
+        <div style={{ marginTop: "20px" }}>
+          {store.filterLevelsForSession.map((level, index) => (
+            <div style={{ color: index === selectedItem ? "red" : "blue" }}>
+              {level.details}
+            </div>
+          ))}
+        </div>
       </Box>
     </div>
   );
