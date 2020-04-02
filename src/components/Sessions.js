@@ -24,7 +24,14 @@ function Sessions({ store }) {
   const [finished, setFinished] = React.useState(false);
 
   useEffect(() => {
-    onChange(0);
+    //onChange(0);
+
+    var media = store.filterLevelsForSession[0];
+
+    const videoElm = document.getElementById(media.id);
+
+    console.log("play");
+    videoElm.play();
   });
 
   useEffect(() => {
