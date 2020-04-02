@@ -5,6 +5,8 @@ import Likes from "./Likes";
 import User from "./User";
 import Season from "./Season";
 import Game from "./Game";
+import Session from "./Session";
+import SessionItem from "./SessionItem";
 
 const americanoPlayerList = [
   { id: 1, name: "Gustav", image: "gklag.png" },
@@ -39,7 +41,9 @@ const LevelStore = types
     seasons: types.array(Season),
     badges: types.array(Item),
     likes: types.array(Likes),
-    americano: types.maybeNull(types.array(Game))
+    americano: types.maybeNull(types.array(Game)),
+    sessions: types.maybeNull(types.array(Session)),
+    sessionItems: types.maybeNull(types.array(SessionItem))
   })
   .views(self => ({
     get americanoPlayers() {
@@ -159,7 +163,8 @@ const LevelStore = types
     currentSeason: null,
     viewSeason: null,
     hasAnimatedCards: false,
-    selectedAttribute: null
+    selectedAttribute: null,
+    selectedSession: null
   }))
   .actions(self => ({
     removeUser() {
@@ -234,9 +239,13 @@ const LevelStore = types
     setLevelFilter(filter) {
       self.levelFilter = filter;
     },
-    selectAttribute(attribute) {
+    selectAttselectAttribute(attribute) {
       console.log(attribute);
       self.selectedAttribute = attribute;
+    },
+    selectSession(session) {
+      console.log(session);
+      self.selectedSession = session;
     },
     async fetchAll() {
       var users = await self.api.getUsers();
@@ -257,6 +266,8 @@ const LevelStore = types
       var levels = await self.api.fetchLevels(self.viewSeason);
       var items = await self.api.fetchItems(self.viewSeason);
       var likes = await self.api.fetchLikes();
+      var sessions = await self.api.fetchSessions();
+      var sessionItems = await self.api.fetchSessionItems();
 
       const data = {
         users: [],
@@ -264,7 +275,9 @@ const LevelStore = types
         levels: [],
         seasons: [],
         badges: [],
-        likes: []
+        likes: [],
+        sessions: [],
+        sessionItems: []
       };
 
       seasons.forEach(elm => {
@@ -293,6 +306,18 @@ const LevelStore = types
         elm.fields.id = elm.id;
         elm.fields.createdTime = new Date(elm.createdTime);
         data.badges.push(elm.fields);
+      });
+
+      sessions.forEach(elm => {
+        elm.fields.id = elm.id;
+        elm.fields.createdTime = new Date(elm.createdTime);
+        data.sessions.push(elm.fields);
+      });
+
+      sessionItems.forEach(elm => {
+        elm.fields.id = elm.id;
+        elm.fields.createdTime = new Date(elm.createdTime);
+        data.sessionItems.push(elm.fields);
       });
 
       items.reverse();

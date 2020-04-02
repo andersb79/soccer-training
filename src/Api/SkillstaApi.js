@@ -101,6 +101,20 @@ export default {
 
     return data;
   },
+  async fetchSessions() {
+    const data = await base("Sessions")
+      .select({ view: "Grid view" })
+      .all();
+
+    return data;
+  },
+  async fetchSessionItems() {
+    const data = await base("SessionItems")
+      .select({ view: "Grid view" })
+      .all();
+
+    return data;
+  },
   insertItem(item) {
     fetch(
       new Request(`${config.url}/Items`, {
