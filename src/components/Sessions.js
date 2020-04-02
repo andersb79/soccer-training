@@ -68,7 +68,7 @@ function Sessions({ store }) {
 
   function restart() {
     setPaused(true);
-    setRest(false);
+    setRest(true);
     setTimeLeft(workTime);
     setSelectedItem(0);
     setFinished(false);
