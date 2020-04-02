@@ -147,7 +147,11 @@ function Session({ store }) {
           </Box>
 
           <Box
-            style={{ fontSize: "74px", textAlign: "center" }}
+            style={{
+              fontSize: "74px",
+              textAlign: "center",
+              color: rest ? "orange" : "blue"
+            }}
             fontWeight="fontWeightBold"
           >
             {timeLeft}
