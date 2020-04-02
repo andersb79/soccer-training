@@ -300,6 +300,8 @@ const LevelStore = types
 
       data.americano = [];
 
+      self.selectAttribute(Attributes[0]);
+
       return data;
     },
     async refresh() {

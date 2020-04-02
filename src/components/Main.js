@@ -14,6 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { observer } from "mobx-react-lite";
 import Profile from "./Profile";
+import Sessions from "./Sessions";
 import HighScore from "./HighScore";
 import HighScoreCards from "./HighScoreCards";
 import Help from "./Help";
@@ -94,7 +95,8 @@ function Main({ store, onLogout }) {
       )}
       {tabIndex === 3 && (
         <TabContainer>
-          <Profile store={store} onLogout={onLogout} />
+          <Sessions store={store} />
+          {/* <Profile store={store} onLogout={onLogout} /> */}
         </TabContainer>
       )}
       {tabIndex === 4 && (

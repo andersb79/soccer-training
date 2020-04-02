@@ -16,6 +16,7 @@
     "react": "^16.8.6",
     "react-burger-menu": "^2.6.10",
     "react-dom": "^16.8.6",
+    "react-responsive-carousel": "^3.1.51",
     "react-scripts": "3.0.1",
     "react-visibility-sensor": "^5.1.0",
     "whatwg-fetch": "^3.0.0"

@@ -8,6 +8,7 @@ function VideoControl({ store, settings }) {
   }
 
   if (settings.hasSharedPath) {
+    console.log("settings", settings);
     return (
       <video
         onClick={() => goFullScreen(settings)}
