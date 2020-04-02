@@ -26,12 +26,14 @@ function Sessions({ store }) {
   useEffect(() => {
     //onChange(0);
 
-    var media = store.filterLevelsForSession[0];
+    setTimeout(() => {
+      var media = store.filterLevelsForSession[0];
 
-    const videoElm = document.getElementById(media.id);
+      const videoElm = document.getElementById(media.id);
 
-    console.log("play");
-    videoElm.play();
+      console.log("play");
+      videoElm.play();
+    }, 3000);
   });
 
   useEffect(() => {
