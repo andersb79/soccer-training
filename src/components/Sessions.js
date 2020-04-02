@@ -9,6 +9,7 @@ import Box from "@material-ui/core/Box";
 import VideoControl from "./VideoControl";
 import styles from "react-responsive-carousel/lib/styles/carousel.min.css";
 import Paper from "@material-ui/core/Paper";
+import Chip from "@material-ui/core/Chip";
 
 var Carousel = require("react-responsive-carousel").Carousel;
 
@@ -148,8 +149,16 @@ function Sessions({ store }) {
 
           {finished && <Box textAlign="center">KLART</Box>}
 
-          {rest && <Box textAlign="center">Förbered dig</Box>}
-          {!rest && <Box textAlign="center">Kör</Box>}
+          {rest && (
+            <div style={{ textAlign: "center" }}>
+              <Chip size="small" label="Förbered dig" />
+            </div>
+          )}
+          {!rest && (
+            <div style={{ textAlign: "center" }}>
+              <Chip size="small" label="Kör" color="primary" />
+            </div>
+          )}
         </Paper>
         <div style={{ textAlign: "center" }}>
           <Button variant="contained" color="primary" onClick={start}>
