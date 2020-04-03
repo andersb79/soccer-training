@@ -17,8 +17,8 @@ var Carousel = require("react-responsive-carousel").Carousel;
 function Session({ store }) {
   const drillCount = store.selectedSession.sessionItems.length;
 
-  const restTime = 1;
-  const workTime = 1;
+  const restTime = 15;
+  const workTime = 15;
 
   const [selectedItem, setSelectedItem] = useState(0);
   const [paused, setPaused] = React.useState(true);
