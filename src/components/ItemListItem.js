@@ -124,6 +124,48 @@ function ItemListItem({ store }) {
       onChange={isVisible => onChange(item, isVisible)}
     >
       <Card key={item.publicId} className={classes.card}>
+        {item.level === 1 && SessionCard(item)}
+        {item.level !== 1 && SkillzCard(item)}
+      </Card>
+    </VisibilitySensor>
+  ));
+
+  function SessionCard(item) {
+    return (
+      <>
+        <CardHeader
+          avatar={
+            <Avatar aria-label="Recipe" className={classes.avatar}>
+              <Image
+                cloudName="deolievif"
+                publicId={item.user.profileImage}
+                width="100%"
+                height="100%"
+              />
+            </Avatar>
+          }
+          title={
+            <div onClick={() => store.selectProfile(item.user)}>
+              {item.user.name}
+            </div>
+          }
+          subheader={item.session.description}
+        />
+        <CardContent>
+          <Typography
+            variant="overline"
+            style={{ color: "gray", marginLeft: "10px" }}
+          >
+            {item.date}
+          </Typography>
+        </CardContent>
+      </>
+    );
+  }
+
+  function SkillzCard(item) {
+    return (
+      <>
         <CardHeader
           avatar={
             <Avatar aria-label="Recipe" className={classes.avatar}>
@@ -176,9 +218,9 @@ function ItemListItem({ store }) {
           </Typography>
           <AdminItemStatusAction item={item} store={store} />
         </CardActions>
-      </Card>
-    </VisibilitySensor>
-  ));
+      </>
+    );
+  }
 }
 
 export default observer(ItemListItem);

@@ -1,42 +1,17 @@
 import { types, getRoot } from "mobx-state-tree";
 
-// const getCountByAttribute = (attribute, user) => {
-//   const store = user.levelStore;
-//   if (!user.levelStore) {
-//   }
-//   const seasonCount = store.seasons.filter(x => x.season <= store.currentSeason)
-//     .length;
-//   const thes = store.itemsFromCurrentAndOldSeason.filter(
-//     x =>
-//       x.game.attribute === attribute && x.isDone && x.userName === user.userName
-//   );
-//   const easy = thes.filter(x => x.game.category === "EASY");
-//   const medium = thes.filter(x => x.game.category === "MEDIUM");
-//   const hard = thes.filter(x => x.game.category === "HARD");
-
-//   let count = 50;
-
-//   if (easy.length) {
-//     count = count + easy.length * 10;
-//   }
-
-//   if (medium.length) {
-//     count = count + medium.length * 10;
-//   }
-
-//   if (hard.length) {
-//     count = count + hard.length * 10;
-//   }
-
-//   if (!count) {
-//     debugger;
-//   }
-
-//   return Math.round(count / seasonCount);
-// };
-
 const getPointsByAttribute = (attribute, user) => {
   return getCountByAttribute(attribute, user) * 10;
+};
+
+const ratingbyAttribute = (attribute, user) => {
+  const a = user.levelStore.items.filter(
+    x =>
+      x.userName === user.userName &&
+      x.sessionId !== null &&
+      x.session.attribute === attribute
+  );
+  return a.length;
 };
 
 const getCountByAttribute = (attribute, user) => {
@@ -90,17 +65,29 @@ const User = types
       }
       return levelStore;
     },
+    // get THERating() {
+    //   return getPointsByAttribute("THE", self);
+    // },
+    // get DRIRating() {
+    //   return getPointsByAttribute("DRI", self);
+    // },
+    // get PHYRating() {
+    //   return getPointsByAttribute("PHY", self);
+    // },
+    // get BALRating() {
+    //   return getPointsByAttribute("BAL", self);
+    // },
     get THERating() {
-      return getPointsByAttribute("THE", self);
+      return ratingbyAttribute("THE", self);
     },
     get DRIRating() {
-      return getPointsByAttribute("DRI", self);
+      return ratingbyAttribute("DRI", self);
     },
     get PHYRating() {
-      return getPointsByAttribute("PHY", self);
+      return ratingbyAttribute("PHY", self);
     },
     get BALRating() {
-      return getPointsByAttribute("BAL", self);
+      return ratingbyAttribute("BAL", self);
     },
     get items() {
       return self.levelStore.items.filter(x => x.userName === self.userName);

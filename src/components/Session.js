@@ -17,8 +17,8 @@ var Carousel = require("react-responsive-carousel").Carousel;
 function Session({ store }) {
   const drillCount = store.selectedSession.sessionItems.length;
 
-  const restTime = 15;
-  const workTime = 15;
+  const restTime = 1;
+  const workTime = 1;
 
   const [selectedItem, setSelectedItem] = useState(0);
   const [paused, setPaused] = React.useState(true);
@@ -30,6 +30,9 @@ function Session({ store }) {
     //onChange(0);
 
     setTimeout(() => {
+      if (!store.selectedSession) {
+        return;
+      }
       var media = store.selectedSession.sessionItems[0];
 
       const videoElm = document.getElementById(media.id);
@@ -41,7 +44,7 @@ function Session({ store }) {
 
   useEffect(() => {
     // exit early when we reach 0
-    if (timeLeft === -1) {
+    if (timeLeft === 0) {
       setRest(!rest);
 
       if (!rest) {
@@ -51,7 +54,8 @@ function Session({ store }) {
         if (newSelectedItem === drillCount) {
           setPaused(true);
           setFinished(true);
-          //store.finishedSession();
+          alert("snyggt jobbat");
+          store.finishedSession();
         } else {
           setSelectedItem(newSelectedItem);
         }

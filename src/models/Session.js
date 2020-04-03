@@ -3,7 +3,8 @@ import { types, getRoot } from "mobx-state-tree";
 const Session = types
   .model("Session", {
     sessionId: types.number,
-    description: types.maybeNull(types.string)
+    description: types.maybeNull(types.string),
+    attribute: types.maybeNull(types.string)
   })
   .views(self => ({
     get sessionItems() {

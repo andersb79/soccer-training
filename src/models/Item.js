@@ -19,7 +19,8 @@ const Item = types
     comment: types.maybeNull(types.string),
     season: types.integer,
     fileType: types.maybeNull(types.string),
-    posterPath: types.maybeNull(types.string)
+    posterPath: types.maybeNull(types.string),
+    sessionId: types.maybeNull(types.number)
   })
   .volatile(self => ({
     isVisible: false
@@ -51,6 +52,10 @@ const Item = types
     }
   }))
   .views(self => ({
+    get session() {
+      const levelStore = getRoot(self);
+      return levelStore.sessions.find(x => x.sessionId === self.sessionId);
+    },
     get hasComment() {
       return self.comment ? true : false;
     },

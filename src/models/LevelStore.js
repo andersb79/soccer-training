@@ -239,7 +239,7 @@ const LevelStore = types
     setLevelFilter(filter) {
       self.levelFilter = filter;
     },
-    selectAttselectAttribute(attribute) {
+    selectAttribute(attribute) {
       console.log(attribute);
       self.selectedAttribute = attribute;
     },
@@ -424,12 +424,16 @@ const LevelStore = types
         userName: self.loggedIn.userName,
         sharedPath: "kdlql6q3s3tuoh0",
         level: 1,
-        status: "WAITINGFORAPPROVAL",
+        status: "DONE",
         season: self.currentSeason,
-        fileType: "image"
+        fileType: "image",
+        sessionId: self.selectedSession.sessionId
       };
 
       self.api.insertItem(item);
+      self.refresh();
+
+      self.selectSession();
     },
     processFile(file, level, onProcessed) {
       var formdata = new FormData();
