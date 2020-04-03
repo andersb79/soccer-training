@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react";
 
-function ColorSession({ level, active, index }) {
+function ColorSession({ level, active, uniqueId }) {
   const [colorInterval, setColorInterval] = useState();
 
   useEffect(() => {
@@ -10,7 +10,7 @@ function ColorSession({ level, active, index }) {
     }
     const intervalId = setInterval(() => {
       const number = getRandomInt(4);
-      const square = document.getElementById(`n${index}-${number}`);
+      const square = document.getElementById(`n${uniqueId}-${number}`);
       if (!square) {
         return;
       }
@@ -22,14 +22,14 @@ function ColorSession({ level, active, index }) {
     setColorInterval(intervalId);
     //clear interval on re-render to avoid memory leaks
     return () => clearInterval(colorInterval);
-  }, [colorInterval, active, index]);
+  }, [colorInterval, active, uniqueId]);
 
   return (
     <div className="colors">
-      <div className="child" id={`n${index}-0`}></div>
-      <div className="child" id={`n${index}-1`}></div>
-      <div className="child" id={`n${index}-2`}></div>
-      <div className="child" id={`n${index}-3`}></div>
+      <div className="child" id={`n${uniqueId}-0`}></div>
+      <div className="child" id={`n${uniqueId}-1`}></div>
+      <div className="child" id={`n${uniqueId}-2`}></div>
+      <div className="child" id={`n${uniqueId}-3`}></div>
     </div>
   );
 }
