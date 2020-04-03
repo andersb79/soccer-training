@@ -10,11 +10,14 @@ const Session = types
     get sessionItems() {
       const store = getRoot(self);
 
-      const levelIds = store.sessionItems
+      const array = [];
+      store.sessionItems
         .filter(s => s.sessionId === self.sessionId)
-        .map(l => l.level);
+        .forEach(s => {
+          array.push(store.levels.find(x => x.level === s.level));
+        });
 
-      return store.levels.filter(l => levelIds.includes(l.level));
+      return array;
     }
   }))
   .volatile(self => ({}))

@@ -390,6 +390,8 @@ const LevelStore = types
         self.updateUser(self.loggedIn);
       }
 
+      //      self.selectSession(self.sessions[2]);
+
       self.initzialize = true;
     }),
     uploadImage(file, onProcessed) {
@@ -419,7 +421,7 @@ const LevelStore = types
       };
       xhr.send(formdata);
     },
-    finishedSession() {
+    async finishedSession() {
       const item = {
         userName: self.loggedIn.userName,
         sharedPath: "kdlql6q3s3tuoh0",
@@ -431,9 +433,8 @@ const LevelStore = types
       };
 
       self.api.insertItem(item);
-      self.refresh();
-
       self.selectSession();
+      await self.refresh();
     },
     processFile(file, level, onProcessed) {
       var formdata = new FormData();

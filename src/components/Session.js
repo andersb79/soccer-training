@@ -11,34 +11,39 @@ import styles from "react-responsive-carousel/lib/styles/carousel.min.css";
 import Paper from "@material-ui/core/Paper";
 import Chip from "@material-ui/core/Chip";
 import ArrowLeftIcon from "@material-ui/icons/ChevronLeft";
+import Typography from "@material-ui/core/Typography";
+import ColorSession from "./ColorSession";
+import ColorSession2 from "./ColorSession2";
 
 var Carousel = require("react-responsive-carousel").Carousel;
 
 function Session({ store }) {
   const drillCount = store.selectedSession.sessionItems.length;
 
-  const restTime = 15;
-  const workTime = 15;
+  const workTime = store.selectedSession.sessionItems[0].workTime;
 
   const [selectedItem, setSelectedItem] = useState(0);
   const [paused, setPaused] = React.useState(true);
   const [timeLeft, setTimeLeft] = useState(workTime);
-  const [rest, setRest] = useState(true);
+  const [rest, setRest] = useState(false);
   const [finished, setFinished] = React.useState(false);
+  const [colorInterval, setColorInterval] = React.useState();
 
   useEffect(() => {
-    //onChange(0);
-
     setTimeout(() => {
       if (!store.selectedSession) {
         return;
       }
       var media = store.selectedSession.sessionItems[0];
 
+      if (media.attribute.startsWith("COLORS") && media.fileType === null) {
+        return;
+      }
       const videoElm = document.getElementById(media.id);
-
-      console.log("play");
-      videoElm.play();
+      if (videoElm) {
+        console.log("play");
+        videoElm.play();
+      }
     }, 1000);
   });
 
@@ -48,19 +53,23 @@ function Session({ store }) {
       setRest(!rest);
 
       if (!rest) {
-        setTimeLeft(restTime);
         const newSelectedItem = selectedItem + 1;
+        const level = store.selectedSession.sessionItems[newSelectedItem];
+        if (level) {
+          setTimeLeft(level.restTime);
+        }
 
         if (newSelectedItem === drillCount) {
           setPaused(true);
           setFinished(true);
           alert("snyggt jobbat");
+          setColorInterval(null);
           store.finishedSession();
         } else {
           setSelectedItem(newSelectedItem);
         }
       } else {
-        setTimeLeft(workTime);
+        setTimeLeft(store.selectedSession.sessionItems[selectedItem].workTime);
       }
     }
 
@@ -88,7 +97,7 @@ function Session({ store }) {
 
   function restart() {
     setPaused(true);
-    setRest(true);
+    setRest(false);
     setTimeLeft(workTime);
     setSelectedItem(0);
     setFinished(false);
@@ -99,13 +108,11 @@ function Session({ store }) {
       return;
     }
 
+    setSelectedItem(index);
+
     var media = store.selectedSession.sessionItems[index];
 
     const videoElm = document.getElementById(media.id);
-
-    // const placeHolder = document.getElementById("legend");
-    // console.log(media.details);
-    // placeHolder.innerHTML = media.details;
 
     if (videoElm) {
       console.log("play");
@@ -115,10 +122,6 @@ function Session({ store }) {
 
   return (
     <div className="profile">
-      {/* <div onClick={() => store.selectSession()}>
-        <ArrowLeftIcon />
-        Tillbaka
-      </div> */}
       <Carousel
         selectedItem={selectedItem}
         onChange={onChange}
@@ -127,13 +130,27 @@ function Session({ store }) {
         showIndicators={false}
         showStatus={false}
       >
-        {store.selectedSession.sessionItems.map(level => (
+        {store.selectedSession.sessionItems.map((level, index) => (
           <div>
             {level.fileType === "mp4" && (
               <VideoControl store={store} settings={level} />
             )}
-            {(level.fileType === "jpg" || level.fileType === "gif") && (
-              <img style={{ width: "100%", height: "100%" }} src={level.src} />
+            {level.attribute === "COLORS-4" && (
+              <ColorSession
+                key={`${level.id}${index}`}
+                level={level}
+                active={index === selectedItem}
+                uniqueId={index}
+              />
+            )}
+
+            {level.attribute === "COLORS-1" && index === selectedItem && (
+              <ColorSession2
+                key={`${level.id}${index}`}
+                level={level}
+                active={index === selectedItem}
+                uniqueId={index}
+              />
             )}
           </div>
         ))}
@@ -142,7 +159,7 @@ function Session({ store }) {
       <Box padding={2}>
         <Paper className="sessionOverview">
           <Box textAlign="center" id="legend">
-            {store.selectedSession.sessionItems[selectedItem].details}
+            {store.selectedSession.sessionItems[selectedItem].name}
           </Box>
 
           <Box textAlign="center" fontWeight="fontWeightBold">
@@ -168,9 +185,21 @@ function Session({ store }) {
               <Chip size="small" label="Förbered dig" />
             </div>
           )}
-          {!rest && (
+          <Typography
+            paragraph
+            style={{ margin: "5px", color: "gray", fontStyle: "italic" }}
+          >
+            {store.selectedSession.sessionItems[selectedItem].details}
+          </Typography>
+
+          {!rest && !paused && (
             <div style={{ textAlign: "center" }}>
               <Chip size="small" label="Kör" color="primary" />
+            </div>
+          )}
+          {!rest && paused && (
+            <div style={{ textAlign: "center" }}>
+              <Chip size="small" label="Paus" />
             </div>
           )}
         </Paper>
@@ -189,15 +218,21 @@ function Session({ store }) {
           <Button
             style={{ marginLeft: "15px" }}
             variant="contained"
-            onClick={() => store.selectSession()}
+            onClick={() => {
+              clearInterval(colorInterval);
+              store.selectSession();
+            }}
           >
             Avsluta
           </Button>
         </div>
         <Paper className="sessionOverview">
           {store.selectedSession.sessionItems.map((level, index) => (
-            <div style={{ color: index === selectedItem ? "blue" : "black" }}>
-              {index + 1}. {level.details}
+            <div
+              onClick={() => setSelectedItem(index)}
+              style={{ color: index === selectedItem ? "blue" : "black" }}
+            >
+              {index + 1}. {level.name}
             </div>
           ))}
         </Paper>

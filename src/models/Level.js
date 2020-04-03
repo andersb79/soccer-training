@@ -17,7 +17,7 @@ const Level = types
   .model("Level", {
     id: types.string,
     level: types.integer,
-    details: types.string,
+    details: types.maybeNull(types.string),
     name: types.string,
     category: types.string,
     publicId: types.maybeNull(types.string),
@@ -25,7 +25,9 @@ const Level = types
     sharedPath: types.maybeNull(types.string),
     fileType: types.maybeNull(types.string),
     posterPath: types.maybeNull(types.string),
-    attribute: types.maybeNull(types.string)
+    attribute: types.maybeNull(types.string),
+    restTime: types.maybeNull(types.number),
+    workTime: types.maybeNull(types.number)
   })
   .volatile(self => ({
     isVisible: false

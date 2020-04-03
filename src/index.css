@@ -128,6 +128,40 @@ code {
   color: white;
 }
 
+.colors {
+  color: white;
+  display: flex;
+  /* flex-flow: row nowrap; */
+  flex-flow: column wrap;
+  align-items: center;
+  align-content: space-between;
+  height: 200px;
+}
+
+.color-0 {
+  background-color: yellow;
+}
+
+.color-1 {
+  background-color: red;
+}
+
+.color-2 {
+  background-color: blue;
+}
+
+.color-3 {
+  background-color: white;
+}
+
+.child {
+  width: 30%;
+  height: 30%;
+  border: 1px solid white;
+  margin: 10px;
+  border-radius: 40px;
+}
+
 .game {
   margin-top: 50px;
 }
