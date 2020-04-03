@@ -37,7 +37,9 @@ const useStyles = makeStyles(theme => ({
     transform: "rotate(180deg)"
   },
   avatar: {
-    backgroundColor: red[500]
+    margin: 10,
+    width: 60,
+    height: 60
   }
 }));
 
@@ -135,12 +137,11 @@ function ItemListItem({ store }) {
       <>
         <CardHeader
           avatar={
-            <Avatar aria-label="Recipe" className={classes.avatar}>
+            <Avatar className={classes.avatar}>
               <Image
                 cloudName="deolievif"
                 publicId={item.user.profileImage}
                 width="100%"
-                height="100%"
               />
             </Avatar>
           }
@@ -168,7 +169,7 @@ function ItemListItem({ store }) {
       <>
         <CardHeader
           avatar={
-            <Avatar aria-label="Recipe" className={classes.avatar}>
+            <Avatar className={classes.avatar}>
               <Image
                 cloudName="deolievif"
                 publicId={item.user.profileImage}
