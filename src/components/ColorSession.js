@@ -17,8 +17,8 @@ function ColorSession({ level, active, index }) {
       square.classList.add(`color-${number}`);
       setTimeout(() => {
         square.classList.remove(`color-${number}`);
-      }, 2000);
-    }, 3000);
+      }, 3000);
+    }, 4500);
     setColorInterval(intervalId);
     //clear interval on re-render to avoid memory leaks
     return () => clearInterval(colorInterval);
