@@ -10,6 +10,7 @@ import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
 import HomeIcon from "@material-ui/icons/Home";
 import PersonIcon from "@material-ui/icons/Person";
 import HelpIcon from "@material-ui/icons/Help";
+import FitnessCenterIcon from "@material-ui/icons/FitnessCenter";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { observer } from "mobx-react-lite";
@@ -72,8 +73,8 @@ function Main({ store, onLogout }) {
           <Tab icon={<HomeIcon />} />
           <Tab icon={<StarIcon />} />
           <Tab icon={<FormatListNumberedIcon />} />
+          <Tab icon={<FitnessCenterIcon />} />
           <Tab icon={<PersonIcon />} />
-          <Tab icon={<HelpIcon />} />
         </Tabs>
       </AppBar>
       {tabIndex === 0 && (
