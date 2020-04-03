@@ -44,7 +44,8 @@ const User = types
       if (
         self.userName === "gk" ||
         self.userName === "os" ||
-        self.userName === "va"
+        self.userName === "va" ||
+        self.userName === "al"
       ) {
         return `./${self.userName}.png`;
       }
