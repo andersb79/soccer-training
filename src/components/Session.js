@@ -51,7 +51,7 @@ function Session({ store }) {
 
   function playFinished() {
     console.log("play sound");
-    soundEffect.src = "finish.wav";
+    soundEffect.src = "finishDrill.wav";
     soundEffect.play();
   }
 
