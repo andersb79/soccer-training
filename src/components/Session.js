@@ -57,7 +57,7 @@ function Session({ store }) {
 
   function playStart(timeLeft) {
     console.log("play sound");
-    soundEffect.src = timeLeft === 1 ? "start2.wav" : "start.wav";
+    soundEffect.src = "start.wav";
     soundEffect.play();
   }
 
