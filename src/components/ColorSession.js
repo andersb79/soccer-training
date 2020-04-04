@@ -24,8 +24,8 @@ function ColorSession({ level, active, uniqueId, cleanUp }) {
       square.classList.add(`color-${number}`);
       setTimeout(() => {
         square.classList.remove(`color-${number}`);
-      }, 500);
-    }, 1000);
+      }, 2500);
+    }, 4000);
 
     setColorInterval(intervalId);
 
@@ -34,7 +34,6 @@ function ColorSession({ level, active, uniqueId, cleanUp }) {
 
   return (
     <div className="colors">
-      {colorInterval}
       <div className="child" id={`n${uniqueId}-0`}></div>
       <div className="child" id={`n${uniqueId}-1`}></div>
       <div className="child" id={`n${uniqueId}-2`}></div>
