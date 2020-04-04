@@ -29,8 +29,7 @@ function Session({ store }) {
   const [finished, setFinished] = React.useState(false);
   const [cleanUpColor, setCleanUpColor] = React.useState(false);
   const [colorInterval, setColorInterval] = React.useState();
-
-  const soundEffect = new Audio();
+  const [soundEffect, setSoundEffect] = React.useState(new Audio());
 
   useEffect(() => {
     setTimeout(() => {
@@ -111,7 +110,9 @@ function Session({ store }) {
   function start() {
     soundEffect.src = "start2.wav";
     soundEffect.play();
-    setPaused(!paused);
+    setTimeout(() => {
+      setPaused(!paused);
+    }, 3000);
   }
 
   function restart() {
