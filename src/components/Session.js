@@ -109,6 +109,7 @@ function Session({ store }) {
   }, [timeLeft, selectedItem, paused, rest, finished, drillCount, store]);
 
   function start() {
+    soundEffect.play();
     setPaused(!paused);
   }
 
