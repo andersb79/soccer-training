@@ -90,8 +90,7 @@ function Session({ store }) {
     }
 
     if (rest && (timeLeft === 3 || timeLeft === 2 || timeLeft === 1)) {
-      playFinished();
-      // playStart(timeLeft);
+      playStart(timeLeft);
     }
 
     // save intervalId to clear the interval when the
@@ -109,8 +108,11 @@ function Session({ store }) {
   }, [timeLeft, selectedItem, paused, rest, finished, drillCount, store]);
 
   function start() {
-    soundEffect.src = "start2.wav";
-    soundEffect.play();
+    playStart(1);
+    setTimeout(() => {
+      playFinished();
+    }, 1000);
+
     setTimeout(() => {
       setPaused(!paused);
     }, 3000);
