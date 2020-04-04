@@ -30,6 +30,8 @@ function Session({ store }) {
   const [cleanUpColor, setCleanUpColor] = React.useState(false);
   const [colorInterval, setColorInterval] = React.useState();
 
+  const soundEffect = new Audio();
+
   useEffect(() => {
     setTimeout(() => {
       if (!store.selectedSession) {
@@ -50,14 +52,14 @@ function Session({ store }) {
 
   function playFinished() {
     console.log("play sound");
-    var audio = new Audio("tada.wav");
-    audio.play();
+    soundEffect.src = "tada.wav";
+    soundEffect.play();
   }
 
   function playStart(timeLeft) {
     console.log("play sound");
-    var audio = new Audio(timeLeft === 1 ? "start2.wav" : "start.wav");
-    audio.play();
+    soundEffect.src = timeLeft === 1 ? "start2.wav" : "start.wav";
+    soundEffect.play();
   }
 
   useEffect(() => {
