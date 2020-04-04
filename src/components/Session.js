@@ -90,7 +90,8 @@ function Session({ store }) {
     }
 
     if (rest && (timeLeft === 3 || timeLeft === 2 || timeLeft === 1)) {
-      playStart(timeLeft);
+      playFinished();
+      // playStart(timeLeft);
     }
 
     // save intervalId to clear the interval when the
