@@ -27,6 +27,7 @@ function Session({ store }) {
   const [timeLeft, setTimeLeft] = useState(workTime);
   const [rest, setRest] = useState(false);
   const [finished, setFinished] = React.useState(false);
+  const [cleanUpColor, setCleanUpColor] = React.useState(false);
   const [colorInterval, setColorInterval] = React.useState();
 
   useEffect(() => {
@@ -141,6 +142,7 @@ function Session({ store }) {
                 level={level}
                 active={index === selectedItem}
                 uniqueId={index}
+                cleanUp={cleanUpColor}
               />
             )}
 

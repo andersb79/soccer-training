@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react";
 
-function ColorSession({ level, active, uniqueId }) {
+function ColorSession({ level, active, uniqueId, cleanUp }) {
   const [colorInterval, setColorInterval] = useState();
+
+  useEffect(() => {
+    return () => {
+      console.log("cleanup", this);
+      clearInterval(colorInterval);
+    };
+  }, [cleanUp, colorInterval]);
 
   useEffect(() => {
     if (colorInterval || !active) {
@@ -17,15 +24,17 @@ function ColorSession({ level, active, uniqueId }) {
       square.classList.add(`color-${number}`);
       setTimeout(() => {
         square.classList.remove(`color-${number}`);
-      }, 3000);
-    }, 4500);
+      }, 500);
+    }, 1000);
+
     setColorInterval(intervalId);
+
     //clear interval on re-render to avoid memory leaks
-    return () => clearInterval(colorInterval);
-  }, [colorInterval, active, uniqueId]);
+  }, [active]);
 
   return (
     <div className="colors">
+      {colorInterval}
       <div className="child" id={`n${uniqueId}-0`}></div>
       <div className="child" id={`n${uniqueId}-1`}></div>
       <div className="child" id={`n${uniqueId}-2`}></div>
