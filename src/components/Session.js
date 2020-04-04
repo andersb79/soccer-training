@@ -48,12 +48,26 @@ function Session({ store }) {
     }, 1000);
   });
 
+  function playFinished() {
+    console.log("play sound");
+    var audio = new Audio("tada.wav");
+    audio.play();
+  }
+
+  function playStart(timeLeft) {
+    console.log("play sound");
+    var audio = new Audio(timeLeft === 1 ? "start2.wav" : "start.wav");
+    audio.play();
+  }
+
   useEffect(() => {
     // exit early when we reach 0
     if (timeLeft === 0) {
       setRest(!rest);
 
       if (!rest) {
+        playFinished();
+
         const newSelectedItem = selectedItem + 1;
         const level = store.selectedSession.sessionItems[newSelectedItem];
         if (level) {
@@ -74,14 +88,14 @@ function Session({ store }) {
       }
     }
 
+    if (rest && (timeLeft === 3 || timeLeft === 2 || timeLeft === 1)) {
+      playStart(timeLeft);
+    }
+
     // save intervalId to clear the interval when the
     // component re-renders
     const intervalId = setInterval(() => {
       if (!paused) {
-        // if (rest && timeLeft === workTime - 2) {
-        //   var audio = new Audio("notify.wav");
-        //   audio.play();
-        // }
         setTimeLeft(timeLeft - 1);
       }
     }, 1000);
@@ -173,7 +187,7 @@ function Session({ store }) {
             style={{
               fontSize: "74px",
               textAlign: "center",
-              color: rest ? "orange" : "blue"
+              color: rest ? "orange" : "blue",
             }}
             fontWeight="fontWeightBold"
           >
