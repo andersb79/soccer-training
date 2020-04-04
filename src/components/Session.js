@@ -51,7 +51,7 @@ function Session({ store }) {
 
   function playFinished() {
     console.log("play sound");
-    soundEffect.src = "tada.wav";
+    soundEffect.src = "finish.wav";
     soundEffect.play();
   }
 
