@@ -6,7 +6,7 @@ const getPointsByAttribute = (attribute, user) => {
 
 const ratingbyAttribute = (attribute, user) => {
   const a = user.levelStore.items.filter(
-    x =>
+    (x) =>
       x.userName === user.userName &&
       x.sessionId !== null &&
       x.session.attribute === attribute
@@ -20,7 +20,7 @@ const getCountByAttribute = (attribute, user) => {
   }
 
   const thes = store.itemsFromCurrentAndOldSeason.filter(
-    x =>
+    (x) =>
       x.game.attribute === attribute && x.isDone && x.userName === user.userName
   );
 
@@ -37,14 +37,16 @@ const User = types
     favoriteTeam: types.optional(types.string, ""),
     playerTeam: types.optional(types.string, ""),
     position: types.optional(types.string, ""),
-    shirtNumber: types.optional(types.string, "")
+    shirtNumber: types.optional(types.string, ""),
   })
-  .views(self => ({
+  .views((self) => ({
     get cardImage() {
       if (
         self.userName === "gk" ||
         self.userName === "os" ||
         self.userName === "va" ||
+        self.userName === "cl" ||
+        self.userName === "rs" ||
         self.userName === "al"
       ) {
         return `./${self.userName}.png`;
@@ -91,27 +93,27 @@ const User = types
       return ratingbyAttribute("BAL", self);
     },
     get items() {
-      return self.levelStore.items.filter(x => x.userName === self.userName);
+      return self.levelStore.items.filter((x) => x.userName === self.userName);
     },
     get badgeData() {
-      return self.levelStore.badges.filter(x => x.userName === self.userName);
+      return self.levelStore.badges.filter((x) => x.userName === self.userName);
     },
     get videoList() {
       const userItems = self.items.filter(
-        x => x.isDone && x.userName === self.userName
+        (x) => x.isDone && x.userName === self.userName
       );
-      return userItems.map(x => ({
+      return userItems.map((x) => ({
         id: x.id,
         img: `http://res.cloudinary.com/deolievif/video/upload/${x.publicId}.jpg`,
         title: x.name,
-        challange: x.game.name
+        challange: x.game.name,
       }));
     },
     get nextChallange() {
       return self.levelStore.levels[self.items.length];
-    }
+    },
   }))
-  .actions(self => ({
+  .actions((self) => ({
     setProfileImage(newPublicId) {
       self.profileImage = newPublicId;
     },
@@ -125,7 +127,7 @@ const User = types
       favoriteTeam,
       playerTeam,
       position,
-      shirtNumber
+      shirtNumber,
     }) {
       self.name = name;
       self.password = password;
@@ -134,6 +136,6 @@ const User = types
       self.playerTeam = playerTeam;
       self.position = position;
       self.shirtNumber = shirtNumber;
-    }
+    },
   }));
 export default User;
