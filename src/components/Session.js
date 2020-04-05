@@ -164,6 +164,11 @@ function Session({ store }) {
     store.finishedSession();
   }
 
+  function cancelPublish() {
+    clearInterval(colorInterval);
+    store.selectSession();
+  }
+
   function handleTakePhoto(dataUri) {
     // Do stuff with the photo...
     // var image = document.getElementById("image");
@@ -180,13 +185,31 @@ function Session({ store }) {
 
   if (finished) {
     return (
-      <div style={{ display: "flex" }}>
+      <div className="profile" style={{ display: "flex" }}>
         {images.map((item) => (
-          <li key={item.id}>
-            <img className="previewImage" id="image" src={item.src} />
-          </li>
+          <img
+            key={item.id}
+            className="previewImage"
+            id="image"
+            src={item.src}
+          />
         ))}
-        <button onClick={publish} />
+        <Button
+          style={{ marginLeft: "15px" }}
+          variant="contained"
+          onClick={publish}
+          color="primary"
+        >
+          Publicera
+        </Button>
+        <Button
+          style={{ marginLeft: "15px" }}
+          variant="contained"
+          onClick={cancelPublish}
+          color="secondary"
+        >
+          Avbryt
+        </Button>
       </div>
     );
   }
