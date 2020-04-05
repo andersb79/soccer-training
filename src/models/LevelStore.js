@@ -443,7 +443,16 @@ const LevelStore = types
     },
     uploadWithImage(file, level, onProcessed) {
       var formdata = new FormData();
-      alert(file);
+
+      const item = {
+        userName: self.loggedIn.userName,
+        level: 1,
+        status: "DONE",
+        season: self.currentSeason,
+        fileType: "image",
+        sessionId: self.selectedSession.sessionId,
+      };
+
       // const isImage =
       //   file.type === "image/jpeg" || file.type === "image/png" ? true : false;
 
@@ -467,15 +476,7 @@ const LevelStore = types
         //level.setPublicId(myObj.public_id);
         console.log(this.responseText);
 
-        const item = {
-          userName: self.loggedIn.userName,
-          publicId: myObj.public_id,
-          level: 1,
-          status: "DONE",
-          season: self.currentSeason,
-          fileType: "image",
-          sessionId: self.selectedSession.sessionId,
-        };
+        item.publicId = myObj.public_id;
 
         self.api.insertItem(item);
 
