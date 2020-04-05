@@ -161,7 +161,7 @@ function Session({ store }) {
 
   function publish() {
     setColorInterval(null);
-    store.finishedSession();
+    store.finishedSession(images);
   }
 
   function cancelPublish() {
