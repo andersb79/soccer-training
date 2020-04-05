@@ -159,6 +159,11 @@ function Session({ store }) {
     }
   }
 
+  function publish() {
+    setColorInterval(null);
+    store.finishedSession();
+  }
+
   function handleTakePhoto(dataUri) {
     // Do stuff with the photo...
     // var image = document.getElementById("image");
@@ -181,6 +186,7 @@ function Session({ store }) {
             <img className="previewImage" id="image" src={item.src} />
           </li>
         ))}
+        <button onClick={publish} />
       </div>
     );
   }
