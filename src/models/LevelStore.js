@@ -435,7 +435,7 @@ const LevelStore = types
         status: "DONE",
         season: self.currentSeason,
         fileType: "image",
-        sessionId: sessionId,
+        sessionId: sessionId.sessionId,
       };
 
       formdata.append("file", file);
