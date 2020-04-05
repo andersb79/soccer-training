@@ -424,11 +424,9 @@ const LevelStore = types
       xhr.send(formdata);
     },
     async finishedSession(images) {
-      await self.uploadWithImage(images[0].src, self.selectedSession, () => {});
+      await self.uploadWithImage(images, self.selectedSession, () => {});
     },
-    async uploadWithImage(file, sessionId, onProcessed) {
-      var formdata = new FormData();
-
+    async uploadWithImage(images, sessionId, onProcessed) {
       const item = {
         userName: self.loggedIn.userName,
         level: 1,
@@ -438,37 +436,50 @@ const LevelStore = types
         sessionId: sessionId.sessionId,
       };
 
-      formdata.append("file", file);
-      formdata.append("cloud_name", "deolievif");
-      formdata.append("upload_preset", "kv0do7lj");
-
-      formdata.append("title", self.loggedIn.userName);
-      formdata.append("tags", self.loggedIn.userName);
-
-      const uploadUrl =
-        "https://api.cloudinary.com/v1_1/deolievif/image/upload";
-
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", uploadUrl, true);
-
-      xhr.onload = function () {
-        // do something to response
-        var myObj = JSON.parse(this.responseText);
-        console.log(myObj);
-        //level.setPublicId(myObj.public_id);
-        console.log(this.responseText);
-
-        item.publicId = myObj.public_id;
-
+      if (images.length === 0) {
         self.api.insertItem(item);
         self.selectSession();
         self.refresh();
+      }
 
-        console.log(self.items);
+      images.forEach((image, index) => {
+        var formdata = new FormData();
+        const file = image;
+        formdata.append("file", file);
+        formdata.append("cloud_name", "deolievif");
+        formdata.append("upload_preset", "kv0do7lj");
 
-        onProcessed(this.responseText);
-      };
-      xhr.send(formdata);
+        formdata.append("title", self.loggedIn.userName);
+        formdata.append("tags", self.loggedIn.userName);
+
+        const uploadUrl =
+          "https://api.cloudinary.com/v1_1/deolievif/image/upload";
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", uploadUrl, true);
+
+        xhr.onload = function () {
+          // do something to response
+          var myObj = JSON.parse(this.responseText);
+          console.log(myObj);
+          //level.setPublicId(myObj.public_id);
+          console.log(this.responseText);
+
+          item.publicId = myObj.public_id;
+
+          self.api.insertItem(item);
+
+          if (index === images.length) {
+            self.selectSession();
+            self.refresh();
+          }
+
+          console.log(self.items);
+
+          onProcessed(this.responseText);
+        };
+        xhr.send(formdata);
+      });
     },
     processFile(file, level, onProcessed) {
       var formdata = new FormData();

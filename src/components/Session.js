@@ -34,6 +34,7 @@ function Session({ store }) {
   const [colorInterval, setColorInterval] = React.useState();
   const [soundEffect, setSoundEffect] = React.useState(new Audio());
   const [images, setImages] = React.useState([]);
+  const [canUseCamera, setCanUseCamera] = React.useState(true);
 
   useEffect(() => {
     setTimeout(() => {
@@ -74,7 +75,7 @@ function Session({ store }) {
   useEffect(() => {
     // exit early when we reach 0
 
-    if (!rest && timeLeft === 7) {
+    if (!rest && timeLeft === 7 && canUseCamera) {
       const photoGrabber = document.getElementById("outer-circle");
       photoGrabber.click();
     }
@@ -250,12 +251,19 @@ function Session({ store }) {
           </div>
         ))}
       </Carousel>
+
       <div style={{ width: "0px", height: "0px" }}>
-        <Camera
-          onTakePhoto={(dataUri) => {
-            handleTakePhoto(dataUri);
-          }}
-        />
+        {canUseCamera && (
+          <Camera
+            onCameraError={() => {
+              setCanUseCamera(false);
+            }}
+            isImageMirror={false}
+            onTakePhoto={(dataUri) => {
+              handleTakePhoto(dataUri);
+            }}
+          />
+        )}
       </div>
 
       <Box padding={2}>
