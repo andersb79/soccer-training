@@ -173,6 +173,18 @@ function Session({ store }) {
     ]);
   }
 
+  if (finished) {
+    return (
+      <div style={{ display: "flex" }}>
+        {images.map((item) => (
+          <li key={item.id}>
+            <img className="previewImage" id="image" src={item.src} />
+          </li>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className="profile">
       <Carousel
@@ -215,14 +227,6 @@ function Session({ store }) {
             handleTakePhoto(dataUri);
           }}
         />
-      </div>
-
-      <div style={{ display: "flex" }}>
-        {images.map((item) => (
-          <li key={item.id}>
-            <img className="previewImage" id="image" src={item.src} />
-          </li>
-        ))}
       </div>
 
       <Box padding={2}>
