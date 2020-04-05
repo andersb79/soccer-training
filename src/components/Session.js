@@ -94,9 +94,9 @@ function Session({ store }) {
         if (newSelectedItem === drillCount) {
           setPaused(true);
           setFinished(true);
-          alert("snyggt jobbat");
+          //alert("snyggt jobbat");
           setColorInterval(null);
-          store.finishedSession();
+          //store.finishedSession();
         } else {
           setSelectedItem(newSelectedItem);
         }
