@@ -17,30 +17,30 @@ import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   card: {
     //maxWidth: 345,
-    marginTop: "10px"
+    marginTop: "10px",
   },
   media: {
     height: 0,
-    paddingTop: "56.25%" // 16:9
+    paddingTop: "56.25%", // 16:9
   },
   expand: {
     transform: "rotate(0deg)",
     marginLeft: "auto",
     transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest
-    })
+      duration: theme.transitions.duration.shortest,
+    }),
   },
   expandOpen: {
-    transform: "rotate(180deg)"
+    transform: "rotate(180deg)",
   },
   avatar: {
     margin: 10,
     width: 60,
-    height: 60
-  }
+    height: 60,
+  },
 }));
 
 function onChange(item, isVisible) {
@@ -64,7 +64,7 @@ function ItemListItem({ store }) {
     const [newComment, setNewComment] = React.useState(
       item.comment ? item.comment : ""
     );
-    const updateComment = event => {
+    const updateComment = (event) => {
       setNewComment(event.target.value);
     };
 
@@ -123,7 +123,7 @@ function ItemListItem({ store }) {
   return store.filteredItems.map((item, i) => (
     <VisibilitySensor
       key={item.publicId}
-      onChange={isVisible => onChange(item, isVisible)}
+      onChange={(isVisible) => onChange(item, isVisible)}
     >
       <Card key={item.publicId} className={classes.card}>
         {item.level === 1 && SessionCard(item)}
@@ -153,6 +153,14 @@ function ItemListItem({ store }) {
           subheader={item.session.description}
         />
         <CardContent>
+          {item.publicId && (
+            <Image
+              cloudName="deolievif"
+              publicId={item.publicId}
+              width="100%"
+              height="100%"
+            />
+          )}
           <Typography
             variant="overline"
             style={{ color: "gray", marginLeft: "10px" }}

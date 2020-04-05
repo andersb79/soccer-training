@@ -424,24 +424,10 @@ const LevelStore = types
       xhr.send(formdata);
     },
     async finishedSession(images) {
-      // const item = {
-      //   userName: self.loggedIn.userName,
-      //   sharedPath: "kdlql6q3s3tuoh0",
-      //   level: 1,
-      //   status: "DONE",
-      //   season: self.currentSeason,
-      //   fileType: "image",
-      //   sessionId: self.selectedSession.sessionId,
-      // };
-
-      // self.api.insertItem(item);
-
-      self.uploadWithImage(images[0].src, null, () => {});
-
       self.selectSession();
-      await self.refresh();
+      await self.uploadWithImage(images[0].src, null, () => {});
     },
-    uploadWithImage(file, level, onProcessed) {
+    async uploadWithImage(file, level, onProcessed) {
       var formdata = new FormData();
 
       const item = {
@@ -452,9 +438,6 @@ const LevelStore = types
         fileType: "image",
         sessionId: self.selectedSession.sessionId,
       };
-
-      // const isImage =
-      //   file.type === "image/jpeg" || file.type === "image/png" ? true : false;
 
       formdata.append("file", file);
       formdata.append("cloud_name", "deolievif");
@@ -481,7 +464,6 @@ const LevelStore = types
         self.api.insertItem(item);
 
         self.refresh();
-        //self.addItem(item);
 
         console.log(self.items);
 
