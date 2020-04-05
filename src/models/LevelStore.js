@@ -443,7 +443,7 @@ const LevelStore = types
     },
     uploadWithImage(file, level, onProcessed) {
       var formdata = new FormData();
-
+      alert(file);
       // const isImage =
       //   file.type === "image/jpeg" || file.type === "image/png" ? true : false;
 
