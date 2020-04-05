@@ -444,7 +444,7 @@ const LevelStore = types
 
       images.forEach((image, index) => {
         var formdata = new FormData();
-        const file = image;
+        const file = image.src;
         formdata.append("file", file);
         formdata.append("cloud_name", "deolievif");
         formdata.append("upload_preset", "kv0do7lj");
