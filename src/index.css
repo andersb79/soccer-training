@@ -190,6 +190,10 @@ code {
   height: 50px;
 }
 
+.hide-circle {
+  display: none;
+}
+
 .logout {
   margin-top: 50px;
   color: red;

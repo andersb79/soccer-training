@@ -16,6 +16,7 @@ import ColorSession from "./ColorSession";
 import ColorSession2 from "./ColorSession2";
 import Camera from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
+import { Container } from "@material-ui/core";
 
 var Carousel = require("react-responsive-carousel").Carousel;
 
@@ -36,6 +37,12 @@ function Session({ store }) {
 
   useEffect(() => {
     setTimeout(() => {
+      const circles = document.getElementById("container-circles");
+      debugger;
+      if (circles) {
+        circles.classList.add("hide-circle");
+      }
+
       if (!store.selectedSession) {
         return;
       }
@@ -67,7 +74,7 @@ function Session({ store }) {
   useEffect(() => {
     // exit early when we reach 0
 
-    if (timeLeft === 5) {
+    if (!rest && timeLeft === 7) {
       const photoGrabber = document.getElementById("outer-circle");
       photoGrabber.click();
     }
