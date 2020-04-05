@@ -5,23 +5,25 @@ import { Image } from "cloudinary-react";
 import ImageIcon from "@material-ui/icons/Image";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import Camera from "react-html5-camera-photo";
+import "react-html5-camera-photo/build/css/index.css";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
   },
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: 200
+    width: 200,
   },
   dense: {
-    marginTop: 19
+    marginTop: 19,
   },
   menu: {
-    width: 200
-  }
+    width: 200,
+  },
 }));
 
 function Profile({ store, onLogout }) {
@@ -35,17 +37,17 @@ function Profile({ store, onLogout }) {
     favoriteTeam: store.loggedIn.favoriteTeam,
     playerTeam: store.loggedIn.playerTeam,
     position: store.loggedIn.position,
-    shirtNumber: store.loggedIn.shirtNumber
+    shirtNumber: store.loggedIn.shirtNumber,
   });
 
-  const handleChange = name => event => {
+  const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
   };
 
   function processFile(e, level) {
     var file = e.target.files[0];
 
-    store.uploadImage(file, text => {});
+    store.uploadImage(file, (text) => {});
   }
 
   function logout() {
@@ -57,10 +59,15 @@ function Profile({ store, onLogout }) {
     store.updateUser(values);
   }
 
+  function handleTakePhoto(dataUri) {
+    // Do stuff with the photo...
+    alert(dataUri);
+  }
+
   return (
     <div className="profile">
       <div className="fileinputs">
-        <input type="file" className="file" onChange={e => processFile(e)} />
+        <input type="file" className="file" onChange={(e) => processFile(e)} />
         <div className="fakefile">
           <Button variant="outlined">
             <ImageIcon />
@@ -68,7 +75,11 @@ function Profile({ store, onLogout }) {
         </div>
       </div>
       <br />
-
+      <Camera
+        onTakePhoto={(dataUri) => {
+          handleTakePhoto(dataUri);
+        }}
+      />
       <form className={classes.container} noValidate autoComplete="off">
         <Image
           cloudName="deolievif"
