@@ -424,10 +424,11 @@ const LevelStore = types
       xhr.send(formdata);
     },
     async finishedSession(images) {
+      const selectedSession = self.selectedSession;
       self.selectSession();
-      await self.uploadWithImage(images[0].src, null, () => {});
+      await self.uploadWithImage(images[0].src, selectedSession, () => {});
     },
-    async uploadWithImage(file, level, onProcessed) {
+    async uploadWithImage(file, sessionId, onProcessed) {
       var formdata = new FormData();
 
       const item = {
@@ -436,7 +437,7 @@ const LevelStore = types
         status: "DONE",
         season: self.currentSeason,
         fileType: "image",
-        sessionId: self.selectedSession.sessionId,
+        sessionId: sessionId,
       };
 
       formdata.append("file", file);
