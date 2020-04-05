@@ -38,7 +38,7 @@ function Session({ store }) {
   useEffect(() => {
     setTimeout(() => {
       const circles = document.getElementById("container-circles");
-      debugger;
+
       if (circles) {
         circles.classList.add("hide-circle");
       }
