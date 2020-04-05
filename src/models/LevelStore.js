@@ -425,7 +425,6 @@ const LevelStore = types
     },
     async finishedSession(images) {
       await self.uploadWithImage(images[0].src, self.selectedSession, () => {});
-      self.selectSession();
     },
     async uploadWithImage(file, sessionId, onProcessed) {
       var formdata = new FormData();
@@ -462,7 +461,7 @@ const LevelStore = types
         item.publicId = myObj.public_id;
 
         self.api.insertItem(item);
-
+        self.selectSession();
         self.refresh();
 
         console.log(self.items);
