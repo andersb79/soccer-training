@@ -32,6 +32,7 @@ function Session({ store }) {
   const [cleanUpColor, setCleanUpColor] = React.useState(false);
   const [colorInterval, setColorInterval] = React.useState();
   const [soundEffect, setSoundEffect] = React.useState(new Audio());
+  const [images, setImages] = React.useState([]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -153,8 +154,16 @@ function Session({ store }) {
 
   function handleTakePhoto(dataUri) {
     // Do stuff with the photo...
-    var image = document.getElementById("image");
-    image.src = dataUri;
+    // var image = document.getElementById("image");
+    // image.src = dataUri;
+
+    setImages([
+      ...images,
+      {
+        id: images.length,
+        src: dataUri,
+      },
+    ]);
   }
 
   return (
@@ -201,7 +210,11 @@ function Session({ store }) {
         />
       </div>
 
-      <img id="image" />
+      {images.map((item) => (
+        <li key={item.id}>
+          <img id="image" src={item.src} />
+        </li>
+      ))}
 
       <Box padding={2}>
         <Paper className="sessionOverview">
