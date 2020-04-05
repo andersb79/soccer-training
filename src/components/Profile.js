@@ -61,7 +61,8 @@ function Profile({ store, onLogout }) {
 
   function handleTakePhoto(dataUri) {
     // Do stuff with the photo...
-    alert(dataUri);
+    var image = document.getElementById("image");
+    image.src = dataUri;
   }
 
   return (
@@ -80,6 +81,7 @@ function Profile({ store, onLogout }) {
           handleTakePhoto(dataUri);
         }}
       />
+      <img id="image" />
       <form className={classes.container} noValidate autoComplete="off">
         <Image
           cloudName="deolievif"
