@@ -195,7 +195,7 @@ function Session({ store }) {
       </Carousel>
 
       <Camera
-        style={{ display: "none" }}
+        isShowVideo={false}
         onTakePhoto={(dataUri) => {
           handleTakePhoto(dataUri);
         }}
