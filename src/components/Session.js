@@ -193,13 +193,14 @@ function Session({ store }) {
           </div>
         ))}
       </Carousel>
+      <div style={{ display: "none" }}>
+        <Camera
+          onTakePhoto={(dataUri) => {
+            handleTakePhoto(dataUri);
+          }}
+        />
+      </div>
 
-      <Camera
-        isShowVideo={false}
-        onTakePhoto={(dataUri) => {
-          handleTakePhoto(dataUri);
-        }}
-      />
       <img id="image" />
 
       <Box padding={2}>
