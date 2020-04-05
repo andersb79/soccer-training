@@ -227,7 +227,7 @@ function Session({ store }) {
           </div>
         ))}
       </Carousel>
-      <div style={{ width: "40px", height: "60px" }}>
+      <div style={{ width: "0px", height: "0px" }}>
         <Camera
           onTakePhoto={(dataUri) => {
             handleTakePhoto(dataUri);
