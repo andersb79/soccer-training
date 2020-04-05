@@ -424,9 +424,8 @@ const LevelStore = types
       xhr.send(formdata);
     },
     async finishedSession(images) {
-      const selectedSession = self.selectedSession;
+      await self.uploadWithImage(images[0].src, self.selectedSession, () => {});
       self.selectSession();
-      await self.uploadWithImage(images[0].src, selectedSession, () => {});
     },
     async uploadWithImage(file, sessionId, onProcessed) {
       var formdata = new FormData();
