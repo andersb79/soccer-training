@@ -210,11 +210,13 @@ function Session({ store }) {
         />
       </div>
 
-      {images.map((item) => (
-        <li key={item.id}>
-          <img id="image" src={item.src} />
-        </li>
-      ))}
+      <div style={{ display: "flex" }}>
+        {images.map((item) => (
+          <li key={item.id}>
+            <img className="previewImage" id="image" src={item.src} />
+          </li>
+        ))}
+      </div>
 
       <Box padding={2}>
         <Paper className="sessionOverview">

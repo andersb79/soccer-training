@@ -185,6 +185,11 @@ code {
   margin-bottom: 10px;
 }
 
+.previewImage {
+  width: 20px;
+  height: 20px;
+}
+
 .logout {
   margin-top: 50px;
   color: red;
