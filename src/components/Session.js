@@ -14,6 +14,8 @@ import ArrowLeftIcon from "@material-ui/icons/ChevronLeft";
 import Typography from "@material-ui/core/Typography";
 import ColorSession from "./ColorSession";
 import ColorSession2 from "./ColorSession2";
+import Camera from "react-html5-camera-photo";
+import "react-html5-camera-photo/build/css/index.css";
 
 var Carousel = require("react-responsive-carousel").Carousel;
 
@@ -63,6 +65,12 @@ function Session({ store }) {
 
   useEffect(() => {
     // exit early when we reach 0
+
+    if (timeLeft === 5) {
+      const photoGrabber = document.getElementById("outer-circle");
+      photoGrabber.click();
+    }
+
     if (timeLeft === 0) {
       setRest(!rest);
 
@@ -143,6 +151,12 @@ function Session({ store }) {
     }
   }
 
+  function handleTakePhoto(dataUri) {
+    // Do stuff with the photo...
+    var image = document.getElementById("image");
+    image.src = dataUri;
+  }
+
   return (
     <div className="profile">
       <Carousel
@@ -179,6 +193,13 @@ function Session({ store }) {
           </div>
         ))}
       </Carousel>
+
+      <Camera
+        onTakePhoto={(dataUri) => {
+          handleTakePhoto(dataUri);
+        }}
+      />
+      <img id="image" />
 
       <Box padding={2}>
         <Paper className="sessionOverview">

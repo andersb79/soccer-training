@@ -5,8 +5,6 @@ import { Image } from "cloudinary-react";
 import ImageIcon from "@material-ui/icons/Image";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import Camera from "react-html5-camera-photo";
-import "react-html5-camera-photo/build/css/index.css";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -59,12 +57,6 @@ function Profile({ store, onLogout }) {
     store.updateUser(values);
   }
 
-  function handleTakePhoto(dataUri) {
-    // Do stuff with the photo...
-    var image = document.getElementById("image");
-    image.src = dataUri;
-  }
-
   return (
     <div className="profile">
       <div className="fileinputs">
@@ -76,12 +68,6 @@ function Profile({ store, onLogout }) {
         </div>
       </div>
       <br />
-      <Camera
-        onTakePhoto={(dataUri) => {
-          handleTakePhoto(dataUri);
-        }}
-      />
-      <img id="image" />
       <form className={classes.container} noValidate autoComplete="off">
         <Image
           cloudName="deolievif"
