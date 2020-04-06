@@ -329,9 +329,8 @@ function Session({ store }) {
             style={{ marginLeft: "15px" }}
             variant="contained"
             onClick={() => {
-              // clearInterval(colorInterval);
-              // store.selectSession();
-              publish();
+              clearInterval(colorInterval);
+              store.selectSession();
             }}
           >
             Avsluta
