@@ -465,11 +465,10 @@ const LevelStore = types
           //level.setPublicId(myObj.public_id);
           console.log(this.responseText);
 
-          item.publicId = myObj.public_id;
+          item.images = `${item.images};${myObj.public_id}`;
 
-          self.api.insertItem(item);
-
-          if (index === images.length) {
+          if (index === images.length - 1) {
+            self.api.insertItem(item);
             self.selectSession();
             self.refresh();
           }

@@ -16,6 +16,7 @@ import VideoControl from "./VideoControl";
 import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
+import ImageCarousel from "./ImageCarousel";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -153,14 +154,7 @@ function ItemListItem({ store }) {
           subheader={item.session.description}
         />
         <CardContent>
-          {item.publicId && (
-            <Image
-              cloudName="deolievif"
-              publicId={item.publicId}
-              width="100%"
-              height="100%"
-            />
-          )}
+          <ImageCarousel list={item.imageList} />
           <Typography
             variant="overline"
             style={{ color: "gray", marginLeft: "10px" }}

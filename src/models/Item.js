@@ -20,12 +20,13 @@ const Item = types
     season: types.integer,
     fileType: types.maybeNull(types.string),
     posterPath: types.maybeNull(types.string),
-    sessionId: types.maybeNull(types.number)
+    sessionId: types.maybeNull(types.number),
+    images: types.maybeNull(types.string),
   })
-  .volatile(self => ({
-    isVisible: false
+  .volatile((self) => ({
+    isVisible: false,
   }))
-  .actions(self => ({
+  .actions((self) => ({
     setVisibility(isVisible) {
       self.isVisible = isVisible;
     },
@@ -39,7 +40,8 @@ const Item = types
       const levelStore = getRoot(self);
 
       const like = levelStore.likes.find(
-        x => x.itemId === self.id && x.userName === levelStore.loggedIn.userName
+        (x) =>
+          x.itemId === self.id && x.userName === levelStore.loggedIn.userName
       );
 
       if (like) {
@@ -49,12 +51,19 @@ const Item = types
       }
 
       levelStore.refresh();
-    }
+    },
   }))
-  .views(self => ({
+  .views((self) => ({
+    get imageList() {
+      const array = [];
+
+      self.images.split(";").forEach((x) => array.push(x));
+
+      return array;
+    },
     get session() {
       const levelStore = getRoot(self);
-      return levelStore.sessions.find(x => x.sessionId === self.sessionId);
+      return levelStore.sessions.find((x) => x.sessionId === self.sessionId);
     },
     get hasComment() {
       return self.comment ? true : false;
@@ -88,15 +97,15 @@ const Item = types
     },
     get likes() {
       const levelStore = getRoot(self);
-      return levelStore.likes.filter(x => x.itemId == self.id).length;
+      return levelStore.likes.filter((x) => x.itemId == self.id).length;
     },
     get user() {
       const levelStore = getRoot(self);
-      return levelStore.users.find(x => x.userName === self.userName);
+      return levelStore.users.find((x) => x.userName === self.userName);
     },
     get game() {
       const levelStore = getRoot(self);
-      return levelStore.levels.find(x => x.level === self.level);
+      return levelStore.levels.find((x) => x.level === self.level);
     },
     get points() {
       if (!self.isDone) {
@@ -126,6 +135,6 @@ const Item = types
     },
     get poster() {
       return { publicId: self.publicId + ".jpg", resourceType: "video" };
-    }
+    },
   }));
 export default Item;

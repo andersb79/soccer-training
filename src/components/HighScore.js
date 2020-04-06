@@ -11,12 +11,15 @@ import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import Badges from "./Badges";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     width: "100%",
-    backgroundColor: "#f5f5f5"
-  }
+    backgroundColor: "#f5f5f5",
+    display: "flex",
+    justifyContent: "center",
+    flexWrap: "wrap",
+  },
 }));
 
 function HighScore({ store }) {
@@ -25,7 +28,7 @@ function HighScore({ store }) {
     <>
       <div style={{ marginTop: "60px", textAlign: "center" }}>
         <Typography variant="h6" gutterBottom>
-          TOPPLISTA {store.viewSeasonObject.friendlyName}
+          TOPPLISTAN
         </Typography>
 
         <Typography variant="overline" style={{ color: "gray" }} gutterBottom>
@@ -37,7 +40,7 @@ function HighScore({ store }) {
 
       <div className="highscore">
         <List className={classes.root}>
-          {store.highScoreList.map(user => (
+          {store.highScoreList.map((user) => (
             <div key={user.id}>
               <ListItem key={user.id}>
                 <ListItemAvatar>

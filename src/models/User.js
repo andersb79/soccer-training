@@ -41,17 +41,17 @@ const User = types
   })
   .views((self) => ({
     get cardImage() {
-      if (
-        self.userName === "gk" ||
-        self.userName === "os" ||
-        self.userName === "va" ||
-        self.userName === "cl" ||
-        self.userName === "rs" ||
-        self.userName === "al"
-      ) {
-        return `./${self.userName}.png`;
-      }
-      return "https://i.stack.imgur.com/k2fOF.png";
+      // if (
+      //   self.userName === "gk" ||
+      //   self.userName === "os" ||
+      //   self.userName === "va" ||
+      //   self.userName === "cl" ||
+      //   self.userName === "rs" ||
+      //   self.userName === "al"
+      // ) {
+      return `./${self.userName}.png`;
+      // }
+      // return "https://i.stack.imgur.com/k2fOF.png";
     },
     get firstName() {
       return self.name.split(" ")[0];
