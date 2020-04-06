@@ -445,9 +445,11 @@ const LevelStore = types
       };
 
       if (images.length === 0) {
+        item.images = self.loggedIn.profileImage;
         self.api.insertItem(item);
         self.selectSession();
         self.refresh();
+        return;
       }
 
       const publicIdArray = [];

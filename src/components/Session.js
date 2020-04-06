@@ -17,6 +17,7 @@ import ColorSession2 from "./ColorSession2";
 import Camera from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
 import { Container } from "@material-ui/core";
+import ImageCarousel from "./ImageCarousel";
 
 var Carousel = require("react-responsive-carousel").Carousel;
 
@@ -186,15 +187,11 @@ function Session({ store }) {
 
   if (finished) {
     return (
-      <div className="profile" style={{ display: "flex" }}>
-        {images.map((item) => (
-          <img
-            key={item.id}
-            className="previewImage"
-            id="image"
-            src={item.src}
-          />
-        ))}
+      <div className="profile">
+        <div style={{ textAlign: "center", color: "black" }}>
+          Din övning är avslutad
+        </div>
+        <ImageCarousel images={images} />
         <Button
           style={{ marginLeft: "15px" }}
           variant="contained"

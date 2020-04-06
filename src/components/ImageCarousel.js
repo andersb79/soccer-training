@@ -4,7 +4,7 @@ import SecurityIcon from "@material-ui/icons/Security";
 import { Image } from "cloudinary-react";
 var Carousel = require("react-responsive-carousel").Carousel;
 
-function ImageCarousel({ list }) {
+function ImageCarousel({ list, images }) {
   const [selectedItem, setSelectedItem] = useState(0);
 
   return (
@@ -17,17 +17,30 @@ function ImageCarousel({ list }) {
         showIndicators={true}
         showStatus={false}
       >
-        {list.map(
-          (publicId, index) =>
-            publicId && (
-              <Image
-                cloudName="deolievif"
-                publicId={publicId}
-                width="100%"
-                height="100%"
-              />
-            )
-        )}
+        {list &&
+          list.map(
+            (publicId, index) =>
+              publicId && (
+                <Image
+                  cloudName="deolievif"
+                  publicId={publicId}
+                  width="100%"
+                  height="100%"
+                />
+              )
+          )}
+        {images &&
+          images.map(
+            (item, index) =>
+              item && (
+                <img
+                  key={item.id}
+                  className="previewImage"
+                  id="image"
+                  src={item.src}
+                />
+              )
+          )}
       </Carousel>
     </div>
   );
