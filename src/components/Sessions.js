@@ -26,7 +26,9 @@ function Sessions({ store }) {
 
       {store.sessionsByAttribute.map((s) => (
         <>
-          <div style={{ margin: "10px" }}>{s.attribute.text}</div>
+          <Box style={{ margin: "10px", color: "gray" }}>
+            {s.attribute.text}
+          </Box>
           <Paper>
             <List dense={true}>
               {s.sessions.map((session) => (
