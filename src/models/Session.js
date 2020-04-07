@@ -29,6 +29,14 @@ const Session = types
 
       return array;
     },
+    get totalWorkTime() {
+      let result = self.sessionItems.reduce(
+        (sum, current) => sum + current.workTime + current.restTime,
+        0
+      );
+
+      return Math.floor(result / 60);
+    },
   }))
   .volatile((self) => ({}))
   .actions((self) => ({}));

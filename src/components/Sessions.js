@@ -10,7 +10,8 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Avatar from "@material-ui/core/Avatar";
 import Badge from "@material-ui/core/Badge";
-import DirectionsRunIcon from "@material-ui/icons/DirectionsRun";
+import SportsSoccerIcon from "@material-ui/icons/SportsSoccer";
+import Box from "@material-ui/core/Box";
 
 function Sessions({ store }) {
   if (store.selectedSession) {
@@ -19,6 +20,10 @@ function Sessions({ store }) {
 
   return (
     <div className="game">
+      <Box style={{ textAlign: "center" }} p={2}>
+        TRÄNINGSPASS
+      </Box>
+
       {store.sessionsByAttribute.map((s) => (
         <>
           <div style={{ margin: "10px" }}>{s.attribute.text}</div>
@@ -33,11 +38,11 @@ function Sessions({ store }) {
                   </ListItemAvatar>
                   <ListItemText
                     primary={session.description}
-                    secondary={`Level ${session.grade}`}
+                    secondary={`Level ${session.grade} - Beräknad tid ca ${session.totalWorkTime} minuter`}
                   />
                   <ListItemSecondaryAction>
                     <Badge badgeContent={session.userCount} color="error">
-                      <DirectionsRunIcon />
+                      <SportsSoccerIcon />
                     </Badge>
                   </ListItemSecondaryAction>
                 </ListItem>
