@@ -3,14 +3,14 @@ import { types, getRoot } from "mobx-state-tree";
 const Categories = {
   EASY: "Grunder",
   MEDIUM: "Medium",
-  HARD: "Svår"
+  HARD: "Svår",
 };
 
 const Attribute = {
   BAL: "KON",
   THE: "TEK",
   DRI: "DRI",
-  PHY: "FYS"
+  PHY: "FYS",
 };
 
 const Level = types
@@ -27,12 +27,12 @@ const Level = types
     posterPath: types.maybeNull(types.string),
     attribute: types.maybeNull(types.string),
     restTime: types.maybeNull(types.number),
-    workTime: types.maybeNull(types.number)
+    workTime: types.maybeNull(types.number),
   })
-  .volatile(self => ({
-    isVisible: false
+  .volatile((self) => ({
+    isVisible: false,
   }))
-  .actions(self => ({
+  .actions((self) => ({
     setPublicId(newPublicId) {
       self.publicId = newPublicId;
     },
@@ -41,9 +41,9 @@ const Level = types
     },
     setVisibility(isVisible) {
       self.isVisible = isVisible;
-    }
+    },
   }))
-  .views(self => ({
+  .views((self) => ({
     get attributeText() {
       return Attribute[self.attribute];
     },
@@ -66,7 +66,7 @@ const Level = types
     get isDone() {
       const levelStore = getRoot(self);
       return levelStore.items.some(
-        x =>
+        (x) =>
           x.user.id === levelStore.loggedIn.id &&
           x.isDone &&
           x.level === self.level
@@ -78,6 +78,6 @@ const Level = types
     },
     get poster() {
       return { publicId: self.publicId + ".jpg", resourceType: "video" };
-    }
+    },
   }));
 export default Level;

@@ -46,6 +46,25 @@ const LevelStore = types
     sessionItems: types.maybeNull(types.array(SessionItem)),
   })
   .views((self) => ({
+    get sessionsByAttribute() {
+      const newArray = self.sessions.reduce(
+        (accumulator, item, index, array) => {
+          let head = accumulator.find((x) => x.attribute.id === item.attribute);
+          if (!head) {
+            head = {
+              attribute: self.attributes.find((x) => x.id === item.attribute),
+              sessions: [],
+            };
+            accumulator.push(head);
+          }
+          head.sessions.push(item);
+          return accumulator;
+        },
+        []
+      );
+      console.log(newArray);
+      return newArray;
+    },
     get americanoPlayers() {
       return americanoPlayerList;
     },

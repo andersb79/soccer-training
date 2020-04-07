@@ -4,23 +4,33 @@ const Session = types
   .model("Session", {
     sessionId: types.number,
     description: types.maybeNull(types.string),
-    attribute: types.maybeNull(types.string)
+    attribute: types.maybeNull(types.string),
+    grade: types.maybeNull(types.number),
   })
-  .views(self => ({
+  .views((self) => ({
+    get userCount() {
+      const levelStore = getRoot(self);
+      const a = levelStore.items.filter(
+        (x) =>
+          x.userName === levelStore.loggedIn.userName &&
+          x.sessionId === self.sessionId
+      );
+      return a.length;
+    },
     get sessionItems() {
       const store = getRoot(self);
 
       const array = [];
       store.sessionItems
-        .filter(s => s.sessionId === self.sessionId)
-        .forEach(s => {
-          array.push(store.levels.find(x => x.level === s.level));
+        .filter((s) => s.sessionId === self.sessionId)
+        .forEach((s) => {
+          array.push(store.levels.find((x) => x.level === s.level));
         });
 
       return array;
-    }
+    },
   }))
-  .volatile(self => ({}))
-  .actions(self => ({}));
+  .volatile((self) => ({}))
+  .actions((self) => ({}));
 
 export default Session;

@@ -1,11 +1,12 @@
-import { types } from "mobx-state-tree";
+import { types, getRoot } from "mobx-state-tree";
 
 const SessionItem = types
   .model("SessionItem", {
     sessionId: types.number,
-    level: types.number
+    level: types.number,
   })
-  .volatile(self => ({}))
-  .actions(self => ({}));
+  .views((self) => ({}))
+  .volatile((self) => ({}))
+  .actions((self) => ({}));
 
 export default SessionItem;
