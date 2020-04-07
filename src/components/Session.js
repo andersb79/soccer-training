@@ -18,6 +18,7 @@ import Camera from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
 import { Container } from "@material-ui/core";
 import ImageCarousel from "./ImageCarousel";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 var Carousel = require("react-responsive-carousel").Carousel;
 
@@ -36,6 +37,7 @@ function Session({ store }) {
   const [soundEffect, setSoundEffect] = React.useState(new Audio());
   const [images, setImages] = React.useState([]);
   const [canUseCamera, setCanUseCamera] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
 
   useEffect(() => {
     setTimeout(() => {
@@ -192,22 +194,28 @@ function Session({ store }) {
           Din övning är avslutad
         </div>
         <ImageCarousel images={images} />
-        <Button
-          style={{ marginLeft: "15px" }}
-          variant="contained"
-          onClick={publish}
-          color="primary"
-        >
-          Publicera
-        </Button>
-        <Button
-          style={{ marginLeft: "15px" }}
-          variant="contained"
-          onClick={cancelPublish}
-          color="secondary"
-        >
-          Avbryt
-        </Button>
+        {!loading && (
+          <>
+            <Button
+              style={{ marginLeft: "15px" }}
+              variant="contained"
+              onClick={publish}
+              color="primary"
+            >
+              Publicera
+            </Button>
+            <Button
+              style={{ marginLeft: "15px" }}
+              variant="contained"
+              onClick={cancelPublish}
+              color="secondary"
+            >
+              Avbryt
+            </Button>
+          </>
+        )}
+
+        {loading && <CircularProgress />}
       </div>
     );
   }
