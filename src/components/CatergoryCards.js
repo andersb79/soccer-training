@@ -7,27 +7,28 @@ import { observer } from "mobx-react-lite";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   card: {
-    margin: "20px"
+    marginBottom: "20px",
+    borderRadius: "0px",
   },
   media: {
     height: 210,
-    paddingTop: "56.25%"
+    paddingTop: "56.25%",
   },
   expand: {
     transform: "rotate(0deg)",
     marginLeft: "auto",
     transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest
-    })
+      duration: theme.transitions.duration.shortest,
+    }),
   },
   expandOpen: {
-    transform: "rotate(180deg)"
+    transform: "rotate(180deg)",
   },
   text: {
-    margin: "10px"
-  }
+    margin: "10px",
+  },
 }));
 
 function CatergoryCards({ store }) {

@@ -11,7 +11,7 @@ const ratingbyAttribute = (attribute, user) => {
       x.sessionId !== null &&
       x.session.attribute === attribute
   );
-  return a.length;
+  return a.length * 5;
 };
 
 const getCountByAttribute = (attribute, user) => {

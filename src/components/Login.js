@@ -6,7 +6,7 @@ export default function Login({ store, onLogin }) {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useLocalStorage("loggedIn", {
-    userName: undefined
+    userName: undefined,
   });
 
   function useLocalStorage(key, initialValue) {
@@ -27,7 +27,7 @@ export default function Login({ store, onLogin }) {
 
     // Return a wrapped version of useState's setter function that ...
     // ... persists the new value to localStorage.
-    const setValue = value => {
+    const setValue = (value) => {
       try {
         // Allow value to be a function so we have same API as useState
         const valueToStore =
@@ -58,7 +58,7 @@ export default function Login({ store, onLogin }) {
 
   return (
     <div className="login">
-      <img className="login-img" src="skillsta.jpg" alt="skillzta" />
+      <img className="login-img" src="loggelogo.jpg" alt="skillzta" />
       {/* <video
         id="intro"
         autoPlay
@@ -84,7 +84,7 @@ export default function Login({ store, onLogin }) {
             placeholder="Användarnamn"
             className="login-input"
             value={userName}
-            onChange={e => setUserName(e.target.value)}
+            onChange={(e) => setUserName(e.target.value)}
           />
         </div>
         <div className="login-password">
@@ -93,10 +93,10 @@ export default function Login({ store, onLogin }) {
             className="login-input"
             type="password"
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <Button variant="contained" onClick={e => onClick(e)}>
+        <Button variant="contained" onClick={(e) => onClick(e)}>
           LOGIN
         </Button>
       </div>
