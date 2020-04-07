@@ -58,7 +58,7 @@ export default function Login({ store, onLogin }) {
 
   return (
     <div className="login">
-      <img className="login-img" src="loggelogo.jpg" alt="skillzta" />
+      <img className="login-img" src="loddelogo.jpg" alt="skillzta" />
       {/* <video
         id="intro"
         autoPlay
