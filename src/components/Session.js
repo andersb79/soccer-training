@@ -165,6 +165,7 @@ function Session({ store }) {
 
   function publish() {
     setColorInterval(null);
+    setLoading(true);
     store.finishedSession(images);
   }
 
