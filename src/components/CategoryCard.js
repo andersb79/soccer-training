@@ -14,38 +14,40 @@ import { observer } from "mobx-react-lite";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import ArrowLeftIcon from "@material-ui/icons/ChevronLeft";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const ITEM_HEIGHT = 48;
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   card: {
-    marginTop: "10px"
+    marginTop: "10px",
   },
   media: {
     height: 0,
-    paddingTop: "56.25%"
+    paddingTop: "56.25%",
   },
   expand: {
     transform: "rotate(0deg)",
     marginLeft: "auto",
     transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest
-    })
+      duration: theme.transitions.duration.shortest,
+    }),
   },
   expandOpen: {
-    transform: "rotate(180deg)"
+    transform: "rotate(180deg)",
   },
-  avatar: {}
+  avatar: {},
 }));
 
 function CategoryCard({ store }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
 
   useEffect(() => {
     setTimeout(() => {
       store.levels
-        .filter(x => x.isVisible)
-        .map(level => {
+        .filter((x) => x.isVisible)
+        .map((level) => {
           onChange(level, true);
         });
     }, 1);
@@ -53,8 +55,11 @@ function CategoryCard({ store }) {
 
   function processFile(e, level) {
     var file = e.target.files[0];
-
-    store.processFile(file, level, text => {});
+    setLoading(true);
+    store.processFile(file, level, (text) => {
+      store.selectAttribute();
+      setLoading(false);
+    });
   }
 
   function onChange(level, isVisible) {
@@ -122,7 +127,7 @@ function CategoryCard({ store }) {
       {store.filterLevelsByAttribute.map((level, i) => (
         <VisibilitySensor
           key={level.id}
-          onChange={isVisible => onChange(level, isVisible)}
+          onChange={(isVisible) => onChange(level, isVisible)}
         >
           <Card key={level.level} className={classes.card}>
             <CardHeader
@@ -157,12 +162,13 @@ function CategoryCard({ store }) {
                       <input
                         type="file"
                         className="file"
-                        onChange={e => processFile(e, level)}
+                        onChange={(e) => processFile(e, level)}
                       />
                       <div className="fakefile">
                         <Button variant="outlined">
                           Ladda upp <VideoIcon />
                         </Button>
+                        {loading && <CircularProgress />}
                       </div>
                     </div>
                   </div>
