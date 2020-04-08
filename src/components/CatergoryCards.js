@@ -62,7 +62,7 @@ function CatergoryCards({ store }) {
                 color="textSecondary"
                 component="p"
               >
-                Du har klarat {store.loggedIn.Count(attribute)} av 10
+                {/* Du har klarat {store.loggedIn.Count(attribute)} av 10 */}
               </Typography>
             </CardContent>
           </CardActionArea>
