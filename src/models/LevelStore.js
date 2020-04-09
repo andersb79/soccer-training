@@ -438,7 +438,7 @@ const LevelStore = types
         self.loggedIn.setProfileImage(myObj.public_id);
         self.updateUser(self.loggedIn);
 
-        onProcessed(this.responseText);
+        onProcessed(myObj.public_id);
       };
       xhr.send(formdata);
     },

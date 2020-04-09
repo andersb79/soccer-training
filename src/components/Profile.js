@@ -45,7 +45,9 @@ function Profile({ store, onLogout }) {
   function processFile(e, level) {
     var file = e.target.files[0];
 
-    store.uploadImage(file, (text) => {});
+    store.uploadImage(file, (publicId) => {
+      store.loggedIn.setProfileImage(publicId);
+    });
   }
 
   function logout() {
