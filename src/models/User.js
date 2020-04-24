@@ -5,13 +5,32 @@ const getPointsByAttribute = (attribute, user) => {
 };
 
 const ratingbyAttribute = (attribute, user) => {
-  const a = user.levelStore.items.filter(
+  const trainingPoints = user.levelStore.items.filter(
     (x) =>
       x.userName === user.userName &&
       x.sessionId !== null &&
       x.session.attribute === attribute
   );
-  return a.length * 5;
+
+  const skillsPoint = user.levelStore.items.filter(
+    (x) =>
+      x.userName === user.userName &&
+      x.sessionId === null &&
+      x.attribute === attribute
+  );
+
+  const training = trainingPoints.length * 5;
+  const skillz = skillsPoint.length * 5;
+
+  if (isNaN(training)) {
+    debugger;
+  }
+
+  if (isNaN(skillz)) {
+    debugger;
+  }
+
+  return trainingPoints.length * 5 + skillsPoint.length * 3;
 };
 
 const getCountByAttribute = (attribute, user) => {

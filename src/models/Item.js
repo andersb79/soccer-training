@@ -54,6 +54,12 @@ const Item = types
     },
   }))
   .views((self) => ({
+    get attribute() {
+      const levelStore = getRoot(self);
+
+      var level = levelStore.levels.find((x) => x.level === self.level);
+      return level ? level.attribute : null;
+    },
     get imageList() {
       const array = [];
 
