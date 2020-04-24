@@ -5,6 +5,8 @@ import { Image } from "cloudinary-react";
 import ImageIcon from "@material-ui/icons/Image";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -61,6 +63,14 @@ function Profile({ store, onLogout }) {
 
   return (
     <div className="profile">
+      <Paper className="help">
+        <Typography variant="h6">Utvecklingsplan för {values.name}</Typography>
+
+        <Typography style={{ whiteSpace: "pre-wrap", wordWrap: "break-word" }}>
+          {store.loggedIn.coachComment}
+        </Typography>
+      </Paper>
+
       <div className="fileinputs">
         <input type="file" className="file" onChange={(e) => processFile(e)} />
         <div className="fakefile">
