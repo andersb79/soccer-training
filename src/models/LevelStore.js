@@ -109,7 +109,7 @@ const LevelStore = types
         (x) => x.attribute === self.selectedAttribute.id
       );
 
-      return filteredLevels;
+      return filteredLevels.reverse();
     },
     get viewSeasonObject() {
       return self.seasons.find((x) => x.season === self.viewSeason);
