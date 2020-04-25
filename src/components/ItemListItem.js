@@ -3,7 +3,6 @@ import { observer } from "mobx-react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
-import { red } from "@material-ui/core/colors";
 import CardContent from "@material-ui/core/CardContent";
 import Avatar from "@material-ui/core/Avatar";
 import { Image } from "cloudinary-react";
@@ -51,8 +50,10 @@ function onChange(item, isVisible) {
   if (videoElm) {
     if (isVisible) {
       videoElm.play();
+      console.log("play");
     } else {
       videoElm.pause();
+      console.log("pause");
     }
   } else {
     console.log("not found");

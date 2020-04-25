@@ -59,22 +59,7 @@ export default function Login({ store, onLogin }) {
   return (
     <div className="login">
       <img className="login-img" src="loddelogo.jpg" alt="skillzta" />
-      {/* <video
-        id="intro"
-        autoPlay
-        loop
-        playsInline
-        preload="none"
-        muted
-        width="100%"
-        height="100%"
-        poster="https://www.dropbox.com/s/xwpgpl1pz0xv42k/intro.jpg?raw=1"
-      >
-        <source
-          src="https://www.dropbox.com/s/j6ev3gevrqj78wx/intro.mp4?raw=1"
-          type="video/mp4"
-        />
-      </video> */}
+
       <div className="login-img-wrapper">
         <Typography paragraph variant="h3">
           skillzta
