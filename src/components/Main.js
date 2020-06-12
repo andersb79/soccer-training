@@ -32,15 +32,15 @@ function TabContainer(props) {
 }
 
 TabContainer.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     width: "100%",
-    backgroundColor: "#f5f5f5"
-  }
+    backgroundColor: "#f5f5f5",
+  },
 }));
 
 function Main({ store, onLogout }) {

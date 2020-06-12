@@ -12,7 +12,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 
 const useStyles = makeStyles({
-  table: {}
+  table: {},
 });
 
 function Americano({ store }) {
@@ -29,7 +29,27 @@ function Americano({ store }) {
           </>
         ))}
       </Paper> */}
+
       <div className="help">Antal matcher {store.americano.length} st</div>
+
+      {store.getAllG().map((t) => (
+        <div>
+          {t.players[0].name} - {t.players[1].name} - {t.uniqueId}
+        </div>
+      ))}
+
+      {store.americano.length < 64 && (
+        <div style={{ textAlign: "center" }}>
+          <Button
+            onClick={store.americanoRandom}
+            variant="contained"
+            color="primary"
+          >
+            Ny match
+          </Button>
+        </div>
+      )}
+
       <Paper className="americanoGame">
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
@@ -39,7 +59,7 @@ function Americano({ store }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {store.americanoStat.map(p => (
+            {store.americanoStat.map((p) => (
               <TableRow key={p.player.id}>
                 <TableCell component="th" scope="row">
                   {p.player.name}
@@ -51,18 +71,7 @@ function Americano({ store }) {
         </Table>
       </Paper>
 
-      {store.americano.length < 10 && (
-        <div style={{ textAlign: "center" }}>
-          <Button
-            onClick={store.americanoRandom}
-            variant="contained"
-            color="primary"
-          >
-            Ny match
-          </Button>
-        </div>
-      )}
-      {store.americanoReverse.map(g => (
+      {store.americanoReverse.map((g) => (
         <Paper key={g.gameName} className="americanoGame">
           <div style={{ textAlign: "center", fontSize: "30px" }}>
             {g.gameName}
@@ -74,7 +83,7 @@ function Americano({ store }) {
               type="number"
               style={{ width: "16px", fontSize: "20px" }}
               defaultValue={g.team1.goals}
-              onChange={e => g.team1.setGoals(e.target.value)}
+              onChange={(e) => g.team1.setGoals(e.target.value)}
             />
             <span> - </span>
             <input
@@ -83,12 +92,12 @@ function Americano({ store }) {
               type="number"
               style={{ width: "16px", fontSize: "20px" }}
               defaultValue={g.team2.goals}
-              onChange={e => g.team2.setGoals(e.target.value)}
+              onChange={(e) => g.team2.setGoals(e.target.value)}
             />
           </div>
           <div style={{ backgroundColor: "", padding: "10px" }}>
             <div style={{ textAlign: "center" }}>
-              {g.team1.players.map(x => (
+              {g.team1.players.map((x) => (
                 <img
                   className="playerCard"
                   src={x.image}
@@ -102,7 +111,7 @@ function Americano({ store }) {
           </div>
           <div style={{ backgroundColor: "", padding: "10px" }}>
             <div style={{ textAlign: "center" }}>
-              {g.team2.players.map(x => (
+              {g.team2.players.map((x) => (
                 <img
                   className="playerCard"
                   src={x.image}

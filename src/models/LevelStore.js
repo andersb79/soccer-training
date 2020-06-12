@@ -9,12 +9,23 @@ import Session from "./Session";
 import SessionItem from "./SessionItem";
 
 const americanoPlayerList = [
-  { id: 1, name: "Gustav", image: "gklag.png" },
-  { id: 2, name: "Love", image: "lolag.png" },
-  { id: 3, name: "Oskar", image: "oslag.png" },
-  { id: 4, name: "Alfred", image: "aslag.png" },
-  { id: 5, name: "Arvid", image: "allag.png" },
-  { id: 6, name: "Douglas", image: "dblag.png" },
+  // { id: 4, name: "Alfred", image: "aslag.png" },
+  { id: 1, name: "Gustav", image: "gk.png" },
+  { id: 2, name: "Love", image: "lo.png" },
+  { id: 3, name: "Oskar", image: "os.png" },
+  { id: 4, name: "ChalrieM", image: "cm.png" },
+  { id: 5, name: "Arvid", image: "al.png" },
+  { id: 6, name: "Douglas", image: "db.png" },
+  { id: 7, name: "Alexander", image: "an.png" },
+  { id: 8, name: "Ove", image: "owe.png" },
+  { id: 9, name: "Agust", image: "at.png" },
+  { id: 10, name: "Alwin", image: "aw.png" },
+  { id: 11, name: "ChalrieL", image: "cl.png" },
+  { id: 12, name: "Robin", image: "rs.png" },
+  { id: 13, name: "Enzo", image: "eh.png" },
+  { id: 14, name: "Erfan", image: "eha.png" },
+  { id: 15, name: "Hannes", image: "hn.png" },
+  { id: 16, name: "Vidar", image: "va.png" },
 ];
 
 const levelFilters = [
@@ -191,18 +202,18 @@ const LevelStore = types
     removeUser() {
       self.users.remove(self.users[0]);
     },
-    getNewGame() {
-      var shuffled = self.americanoPlayers.sort(function () {
-        return 0.5 - Math.random();
-      });
+    getGame(numberOfPlayers, shuffled) {
+      if (!shuffled || shuffled.length < 4) {
+        debugger;
+      }
 
-      let players1 = shuffled.slice(0, 3);
+      let players1 = shuffled.slice(0, numberOfPlayers);
       players1 = players1.sort(function (a, b) {
         var textA = a.name.toUpperCase();
         var textB = b.name.toUpperCase();
         return textA < textB ? -1 : textA > textB ? 1 : 0;
       });
-      let players2 = shuffled.slice(3, 6);
+      let players2 = shuffled.slice(numberOfPlayers, numberOfPlayers * 2);
       players2 = players2.sort(function (a, b) {
         var textA = a.name.toUpperCase();
         var textB = b.name.toUpperCase();
@@ -217,25 +228,182 @@ const LevelStore = types
 
       //kolla om det redan finns
       //hämta då ny
-      const uniqueId = players1.reduce((a, b) => a + (b["id"] || ""), "");
-      console.log(uniqueId);
+      // const uniqueId = players1.reduce((a, b) => a + (b["id"] || ""), "");
+      // console.log(uniqueId);
+
+      const uniqueId1 = players1.reduce((a, b) => a + (b["name"] || ""), "");
+      const uniqueId2 = players2.reduce((a, b) => a + (b["name"] || ""), "");
+
+      if (uniqueId1.indexOf("Gustav") !== -1) {
+      }
+
+      if (uniqueId2.indexOf("Gustav") !== -1) {
+      }
 
       self.americano.forEach((g) => {
-        if (g.team1.uniqueId === uniqueId || g.team2.uniqueId === uniqueId) {
-          console.log("dublett", uniqueId);
-          game = self.getNewGame();
+        if (
+          g.team1.uniqueId === uniqueId1 ||
+          g.team2.uniqueId === uniqueId1 ||
+          g.team1.uniqueId === uniqueId2 ||
+          g.team2.uniqueId === uniqueId2
+        ) {
+          console.log("dublett", uniqueId1, uniqueId2);
+          game = self.getGame(
+            numberOfPlayers,
+            shuffled.sort(function () {
+              return 0.5 - Math.random();
+            })
+          );
         }
       });
 
       return game;
     },
+    getAllG() {
+      var array = [];
+      self.americano.forEach((g) => {
+        if (g.team1.players[0].id === 1 || g.team1.players[1].id === 1) {
+          array.push(g.team1);
+        } else if (g.team2.players[0].id === 1 || g.team2.players[1].id === 1) {
+          array.push(g.team2);
+        }
+      });
+
+      return array;
+    },
+    getNewGame(shuffled) {
+      let game = self.getGame(2, shuffled);
+
+      return game;
+    },
+    getActivePlayers(shuffled, game) {
+      var players = shuffled;
+      players = players.filter((x) => x.id !== game.team1.players[0].id);
+      players = players.filter((x) => x.id !== game.team1.players[1].id);
+      players = players.filter((x) => x.id !== game.team2.players[0].id);
+      players = players.filter((x) => x.id !== game.team2.players[1].id);
+
+      return players.sort(function () {
+        return 0.5 - Math.random();
+      });
+    },
     americanoRandom() {
-      const game = self.getNewGame();
-      const mobxGame = Game.create(game);
+      var a = self.createGames(self.americanoPlayers);
+      console.log(a);
 
-      self.americano.push(mobxGame);
+      var gameAddedToRound = 0;
 
+      var shuffled = self.americanoPlayers.sort(function () {
+        return 0.5 - Math.random();
+      });
+
+      console.log(shuffled);
+
+      console.log(shuffled.slice(0, 4));
+      console.log(shuffled.slice(4, 8));
+      console.log(shuffled.slice(8, 12));
+      console.log(shuffled.slice(12, 16));
+
+      try {
+        const game = self.getNewGame(shuffled);
+        const mobxGame = Game.create(game);
+        self.americano.push(mobxGame);
+        gameAddedToRound = 1;
+
+        shuffled = self.getActivePlayers(shuffled, game).sort(function () {
+          return 0.5 - Math.random();
+        });
+
+        const game2 = self.getNewGame(shuffled);
+        const mobxGame2 = Game.create(game2);
+        self.americano.push(mobxGame2);
+        gameAddedToRound = 2;
+
+        shuffled = self.getActivePlayers(shuffled, game2).sort(function () {
+          return 0.5 - Math.random();
+        });
+
+        const game3 = self.getNewGame(shuffled);
+        const mobxGame3 = Game.create(game3);
+        self.americano.push(mobxGame3);
+        gameAddedToRound = 3;
+
+        shuffled = self.getActivePlayers(shuffled, game3).sort(function () {
+          return 0.5 - Math.random();
+        });
+
+        const game4 = self.getNewGame(shuffled);
+        const mobxGame4 = Game.create(game4);
+        self.americano.push(mobxGame4);
+        gameAddedToRound = 4;
+      } catch {
+        console.log("game added to round" + gameAddedToRound);
+
+        if (gameAddedToRound > 0) {
+          self.americano.remove(self.americano[self.americano.length - 1]);
+        }
+        if (gameAddedToRound > 1) {
+          self.americano.remove(self.americano[self.americano.length - 1]);
+        }
+        if (gameAddedToRound > 2) {
+          self.americano.remove(self.americano[self.americano.length - 1]);
+        }
+
+        self.americanoRandom();
+      }
       //applySnapshot(self.americano, game);
+    },
+    shuffleArray(array) {
+      let shuffledArray = [...array];
+      for (let i = shuffledArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledArray[i], shuffledArray[j]] = [
+          shuffledArray[j],
+          shuffledArray[i],
+        ];
+      }
+      return shuffledArray;
+    },
+    createGames(playerArr) {
+      let players = self.shuffleArray(playerArr);
+
+      const rounds = 8,
+        gamesPerRound = 4,
+        teamSize = 2,
+        numOfTeamsPerRound = players.length / teamSize;
+
+      var teams = Array(rounds)
+        .fill()
+        .map((x, i) => []);
+
+      for (let round = 0; round < rounds; round++) {
+        let stepSize = Math.pow(2, round);
+        let playerIndex = 0;
+        for (let i = 0; i < numOfTeamsPerRound; i++) {
+          teams[round].push([
+            { ...players[playerIndex] },
+            { ...players[playerIndex + stepSize] },
+          ]);
+          playerIndex += 1 + ((i + 1) % stepSize ? 0 : stepSize);
+        }
+      }
+
+      // Now that we have teams, we can create the games. Let's shuffle the teams per round before to ensure it's more random.
+      const games = teams.map((teamsPerRound) =>
+        self.shuffleArray(teamsPerRound).reduce(
+          (acc, team, index) => {
+            acc[Math.floor(index / teamSize)][
+              `team${(index % teamSize) + 1}`
+            ] = team;
+            return acc;
+          },
+          Array(gamesPerRound)
+            .fill()
+            .map((x) => ({}))
+        )
+      );
+
+      return games;
     },
     setHasAnimatedCards(value) {
       self.hasAnimatedCards = value;
