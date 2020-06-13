@@ -26,6 +26,10 @@ const americanoPlayerList = [
   { id: 14, name: "Erfan", image: "eha.png" },
   { id: 15, name: "Hannes", image: "hn.png" },
   { id: 16, name: "Vidar", image: "va.png" },
+  // { id: 17, name: "Loke", image: "Loke.png" },
+  // { id: 18, name: "Lucas", image: "Lucas.png" },
+  // { id: 19, name: "Max", image: "mm.png" },
+  // { id: 20, name: "Nils", image: "nm.png" },
 ];
 
 const levelFilters = [
@@ -202,63 +206,6 @@ const LevelStore = types
     removeUser() {
       self.users.remove(self.users[0]);
     },
-    getGame(numberOfPlayers, shuffled) {
-      if (!shuffled || shuffled.length < 4) {
-        debugger;
-      }
-
-      let players1 = shuffled.slice(0, numberOfPlayers);
-      players1 = players1.sort(function (a, b) {
-        var textA = a.name.toUpperCase();
-        var textB = b.name.toUpperCase();
-        return textA < textB ? -1 : textA > textB ? 1 : 0;
-      });
-      let players2 = shuffled.slice(numberOfPlayers, numberOfPlayers * 2);
-      players2 = players2.sort(function (a, b) {
-        var textA = a.name.toUpperCase();
-        var textB = b.name.toUpperCase();
-        return textA < textB ? -1 : textA > textB ? 1 : 0;
-      });
-
-      let game = {
-        gameName: `Match ${self.americano.length + 1}`,
-        team1: { players: players1 },
-        team2: { players: players2 },
-      };
-
-      //kolla om det redan finns
-      //hämta då ny
-      // const uniqueId = players1.reduce((a, b) => a + (b["id"] || ""), "");
-      // console.log(uniqueId);
-
-      const uniqueId1 = players1.reduce((a, b) => a + (b["name"] || ""), "");
-      const uniqueId2 = players2.reduce((a, b) => a + (b["name"] || ""), "");
-
-      if (uniqueId1.indexOf("Gustav") !== -1) {
-      }
-
-      if (uniqueId2.indexOf("Gustav") !== -1) {
-      }
-
-      self.americano.forEach((g) => {
-        if (
-          g.team1.uniqueId === uniqueId1 ||
-          g.team2.uniqueId === uniqueId1 ||
-          g.team1.uniqueId === uniqueId2 ||
-          g.team2.uniqueId === uniqueId2
-        ) {
-          console.log("dublett", uniqueId1, uniqueId2);
-          game = self.getGame(
-            numberOfPlayers,
-            shuffled.sort(function () {
-              return 0.5 - Math.random();
-            })
-          );
-        }
-      });
-
-      return game;
-    },
     getAllG() {
       var array = [];
       self.americano.forEach((g) => {
@@ -270,11 +217,6 @@ const LevelStore = types
       });
 
       return array;
-    },
-    getNewGame(shuffled) {
-      let game = self.getGame(2, shuffled);
-
-      return game;
     },
     getActivePlayers(shuffled, game) {
       var players = shuffled;
@@ -289,69 +231,23 @@ const LevelStore = types
     },
     americanoRandom() {
       var a = self.createGames(self.americanoPlayers);
-      console.log(a);
 
-      var gameAddedToRound = 0;
+      a.forEach((round, index) => {
+        console.log("runda" + round);
 
-      var shuffled = self.americanoPlayers.sort(function () {
-        return 0.5 - Math.random();
+        round.forEach((game) => {
+          let g = {
+            gameName: `Match ${self.americano.length + 1} runda ${index + 1}`,
+            team1: { players: [...game.team1] },
+            team2: { players: [...game.team2] },
+          };
+
+          const mobxGame = Game.create(g);
+          self.americano.push(mobxGame);
+        });
       });
 
-      console.log(shuffled);
-
-      console.log(shuffled.slice(0, 4));
-      console.log(shuffled.slice(4, 8));
-      console.log(shuffled.slice(8, 12));
-      console.log(shuffled.slice(12, 16));
-
-      try {
-        const game = self.getNewGame(shuffled);
-        const mobxGame = Game.create(game);
-        self.americano.push(mobxGame);
-        gameAddedToRound = 1;
-
-        shuffled = self.getActivePlayers(shuffled, game).sort(function () {
-          return 0.5 - Math.random();
-        });
-
-        const game2 = self.getNewGame(shuffled);
-        const mobxGame2 = Game.create(game2);
-        self.americano.push(mobxGame2);
-        gameAddedToRound = 2;
-
-        shuffled = self.getActivePlayers(shuffled, game2).sort(function () {
-          return 0.5 - Math.random();
-        });
-
-        const game3 = self.getNewGame(shuffled);
-        const mobxGame3 = Game.create(game3);
-        self.americano.push(mobxGame3);
-        gameAddedToRound = 3;
-
-        shuffled = self.getActivePlayers(shuffled, game3).sort(function () {
-          return 0.5 - Math.random();
-        });
-
-        const game4 = self.getNewGame(shuffled);
-        const mobxGame4 = Game.create(game4);
-        self.americano.push(mobxGame4);
-        gameAddedToRound = 4;
-      } catch {
-        console.log("game added to round" + gameAddedToRound);
-
-        if (gameAddedToRound > 0) {
-          self.americano.remove(self.americano[self.americano.length - 1]);
-        }
-        if (gameAddedToRound > 1) {
-          self.americano.remove(self.americano[self.americano.length - 1]);
-        }
-        if (gameAddedToRound > 2) {
-          self.americano.remove(self.americano[self.americano.length - 1]);
-        }
-
-        self.americanoRandom();
-      }
-      //applySnapshot(self.americano, game);
+      return a;
     },
     shuffleArray(array) {
       let shuffledArray = [...array];
@@ -366,40 +262,57 @@ const LevelStore = types
     },
     createGames(playerArr) {
       let players = self.shuffleArray(playerArr);
-
-      const rounds = 8,
+      const teamsPerRound = [],
+        rounds = players.length - 1,
+        mod = players.length - 1,
         gamesPerRound = 4,
-        teamSize = 2,
-        numOfTeamsPerRound = players.length / teamSize;
+        // Helper for checking how often a player is confronted with another player.
+        confrontations = Array(players.length)
+          .fill()
+          .map((x) => Array(players.length).fill(0));
 
-      var teams = Array(rounds)
-        .fill()
-        .map((x, i) => []);
-
-      for (let round = 0; round < rounds; round++) {
-        let stepSize = Math.pow(2, round);
-        let playerIndex = 0;
-        for (let i = 0; i < numOfTeamsPerRound; i++) {
-          teams[round].push([
-            { ...players[playerIndex] },
-            { ...players[playerIndex + stepSize] },
+      // Inspired by: https://math.stackexchange.com/a/3094469
+      // Create as many unique teams as possible, whereas within a round every player occurs exactly once.
+      for (let i = 0; i < rounds; i++) {
+        let team = [[players.length - 1, (players.length + i) % mod]];
+        for (let k = 1; k < players.length / 2; k++) {
+          team.push([
+            (players.length + i + k) % mod,
+            (players.length + i - k) % mod,
           ]);
-          playerIndex += 1 + ((i + 1) % stepSize ? 0 : stepSize);
         }
+        teamsPerRound.push(team);
+        console.log(`Teams-Round ${i + 1}`, JSON.stringify(team));
       }
 
       // Now that we have teams, we can create the games. Let's shuffle the teams per round before to ensure it's more random.
-      const games = teams.map((teamsPerRound) =>
-        self.shuffleArray(teamsPerRound).reduce(
-          (acc, team, index) => {
-            acc[Math.floor(index / teamSize)][
-              `team${(index % teamSize) + 1}`
-            ] = team;
-            return acc;
-          },
-          Array(gamesPerRound)
-            .fill()
-            .map((x) => ({}))
+      const games = self.shuffleArray(teamsPerRound).map((teams) => {
+        let roundMatches = [];
+        teams = self.shuffleArray(teams);
+        for (let i = 0; i < teams.length / 2; i++) {
+          let first = teams[i],
+            second = teams[teams.length - 1 - i];
+
+          roundMatches.push({
+            team1: first.map((x) => ({ ...players[x] })),
+            team2: second.map((x) => ({ ...players[x] })),
+          });
+
+          // Helper for checking how often a player is confronted with another player.
+          first.forEach((x) =>
+            second.forEach(
+              (y) => (confrontations[x][y]++, confrontations[y][x]++)
+            )
+          );
+        }
+        return roundMatches;
+      });
+
+      confrontations.forEach((x, i) =>
+        console.log(
+          `Confrontations (playerIndex: ${i})`,
+          JSON.stringify(x),
+          x.reduce((acc, val) => (acc += val))
         )
       );
 

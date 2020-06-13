@@ -102,8 +102,8 @@ function Main({ store, onLogout }) {
       )}
       {tabIndex === 4 && (
         <TabContainer>
-          {/* <Americano store={store} /> */}
-          <Profile store={store} onLogout={onLogout} />
+          <Americano store={store} />
+          {/* <Profile store={store} onLogout={onLogout} /> */}
         </TabContainer>
       )}
     </div>

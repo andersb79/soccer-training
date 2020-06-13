@@ -32,11 +32,11 @@ function Americano({ store }) {
 
       <div className="help">Antal matcher {store.americano.length} st</div>
 
-      {store.getAllG().map((t) => (
+      {/* {store.getAllG().map((t) => (
         <div>
           {t.players[0].name} - {t.players[1].name} - {t.uniqueId}
         </div>
-      ))}
+      ))} */}
 
       {store.americano.length < 64 && (
         <div style={{ textAlign: "center" }}>
