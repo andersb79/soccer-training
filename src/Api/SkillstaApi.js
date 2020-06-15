@@ -10,7 +10,7 @@ const config = {
   view: "Grid%20view",
   apiKey: "keyHQ5GM7ktar7YtG",
   maxRecords: 1000,
-  url: "https://api.airtable.com/v0/appC7N77wl4iVEXGD"
+  url: "https://api.airtable.com/v0/appC7N77wl4iVEXGD",
 };
 
 export default {
@@ -40,18 +40,31 @@ export default {
     return new Request(url, {
       method: "get",
       headers: new Headers({
-        Authorization: `Bearer ${conf.apiKey}`
-      })
+        Authorization: `Bearer ${conf.apiKey}`,
+      }),
     });
   },
   async response(conf) {
-    var resp = await fetch(this.generalRequest(conf)).catch(err => {
+    var resp = await fetch(this.generalRequest(conf)).catch((err) => {
       console.log(err);
     });
     if (resp.status >= 200 && resp.status < 300) {
       var json = await resp.json();
       return json.records;
     }
+  },
+  updatePlayer(player) {
+    const u = {
+      id: player.id,
+      fields: {
+        idNumber: player.idNumber,
+        name: player.name,
+        image: player.pasimagesword,
+        active: player.active,
+      },
+    };
+
+    this.update("AmericanoPlayers", u);
   },
   async getUsers() {
     return this.response({ table: "Users" });
@@ -69,49 +82,48 @@ export default {
         playerTeam: user.playerTeam,
         position: user.position,
         shirtNumber: user.shirtNumber,
-        lastFetch: `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`
-      }
+        lastFetch: `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`,
+      },
     };
 
     this.update("Users", u);
   },
   async fetchSeasons() {
-    const data = await base("Seasons")
-      .select({ view: "Grid view" })
-      .all();
+    const data = await base("Seasons").select({ view: "Grid view" }).all();
 
     return data;
   },
   async fetchLevels(season = 0) {
     return this.response({
       table: "Levels",
-      filterByFromula: `&filterByFormula=season%3D${season}`
+      filterByFromula: `&filterByFormula=season%3D${season}`,
     });
   },
   async fetchItems(season = 0) {
     return this.response({
       table: "Items",
-      filterByFromula: `&filterByFormula=season%3D${season}`
+      filterByFromula: `&filterByFormula=season%3D${season}`,
     });
   },
   async fetchLikes() {
-    const data = await base("Likes")
+    const data = await base("Likes").select({ view: "Grid view" }).all();
+
+    return data;
+  },
+  async fetchPlayers() {
+    const data = await base("AmericanoPlayers")
       .select({ view: "Grid view" })
       .all();
 
     return data;
   },
   async fetchSessions() {
-    const data = await base("Sessions")
-      .select({ view: "Grid view" })
-      .all();
+    const data = await base("Sessions").select({ view: "Grid view" }).all();
 
     return data;
   },
   async fetchSessionItems() {
-    const data = await base("SessionItems")
-      .select({ view: "Grid view" })
-      .all();
+    const data = await base("SessionItems").select({ view: "Grid view" }).all();
 
     return data;
   },
@@ -120,14 +132,14 @@ export default {
       new Request(`${config.url}/Items`, {
         method: "post",
         body: JSON.stringify({
-          fields: item
+          fields: item,
         }),
         headers: new Headers({
           Authorization: `Bearer ${config.apiKey}`,
-          "Content-Type": "application/json"
-        })
+          "Content-Type": "application/json",
+        }),
       })
-    ).catch(err => {
+    ).catch((err) => {
       console.log(err);
     });
   },
@@ -147,22 +159,20 @@ export default {
             comment: item.comment,
             season: item.season,
             fileType: item.fileType,
-            posterPath: item.posterPath
-          }
+            posterPath: item.posterPath,
+          },
         }),
         headers: new Headers({
           Authorization: `Bearer ${config.apiKey}`,
-          "Content-Type": "application/json"
-        })
+          "Content-Type": "application/json",
+        }),
       })
-    ).catch(err => {
+    ).catch((err) => {
       alert(err);
     });
   },
   async fetchUsers() {
-    const data = await base("Users")
-      .select({ view: "Grid view" })
-      .all();
+    const data = await base("Users").select({ view: "Grid view" }).all();
 
     return data;
   },
@@ -170,8 +180,8 @@ export default {
     const u = {
       fields: {
         userName,
-        itemId
-      }
+        itemId,
+      },
     };
 
     this.create("Likes", u);
@@ -180,7 +190,7 @@ export default {
     this.delete("Likes", id);
   },
   delete(table, id) {
-    base(table).destroy([id], function(err, deletedRecords) {
+    base(table).destroy([id], function (err, deletedRecords) {
       if (err) {
         console.error(err);
         return;
@@ -189,25 +199,25 @@ export default {
     });
   },
   create(table, item) {
-    base(table).create([item], function(err, records) {
+    base(table).create([item], function (err, records) {
       if (err) {
         console.error(err);
         return;
       }
-      records.forEach(function(record) {
+      records.forEach(function (record) {
         console.log(record.getId());
       });
     });
   },
   update(table, item) {
-    base(table).update([item], function(err, records) {
+    base(table).update([item], function (err, records) {
       if (err) {
         console.error(err);
         return;
       }
-      records.forEach(function(record) {
+      records.forEach(function (record) {
         console.log(record.get("name"));
       });
     });
-  }
+  },
 };

@@ -7,25 +7,26 @@ import Season from "./Season";
 import Game from "./Game";
 import Session from "./Session";
 import SessionItem from "./SessionItem";
+import Player from "./Player";
 
-const americanoPlayerList = [
+const americanoPotentiallyAvailablePlayers = [
   // { id: 4, name: "Alfred", image: "aslag.png" },
-  { id: 1, name: "Gustav", image: "gk.png" },
-  { id: 2, name: "Love", image: "lo.png" },
-  { id: 3, name: "Oskar", image: "os.png" },
-  { id: 4, name: "ChalrieM", image: "cm.png" },
-  { id: 5, name: "Arvid", image: "al.png" },
-  { id: 6, name: "Douglas", image: "db.png" },
-  { id: 7, name: "Alexander", image: "an.png" },
-  { id: 8, name: "Ove", image: "owe.png" },
-  { id: 9, name: "Agust", image: "at.png" },
-  { id: 10, name: "Alwin", image: "aw.png" },
-  { id: 11, name: "ChalrieL", image: "cl.png" },
-  { id: 12, name: "Robin", image: "rs.png" },
-  { id: 13, name: "Enzo", image: "eh.png" },
-  { id: 14, name: "Erfan", image: "eha.png" },
-  { id: 15, name: "Hannes", image: "hn.png" },
-  { id: 16, name: "Vidar", image: "va.png" },
+  { id: 1, name: "Gustav", image: "gk.png", active: false },
+  { id: 2, name: "Love", image: "lo.png", active: false },
+  { id: 3, name: "Oskar", image: "os.png", active: false },
+  { id: 4, name: "ChalrieM", image: "cm.png", active: false },
+  { id: 5, name: "Arvid", image: "al.png", active: false },
+  { id: 6, name: "Douglas", image: "db.png", active: false },
+  { id: 7, name: "Alexander", image: "an.png", active: false },
+  { id: 8, name: "Ove", image: "owe.png", active: false },
+  { id: 9, name: "Agust", image: "at.png", active: false },
+  { id: 10, name: "Alwin", image: "aw.png", active: false },
+  { id: 11, name: "ChalrieL", image: "cl.png", active: false },
+  { id: 12, name: "Robin", image: "rs.png", active: false },
+  { id: 13, name: "Enzo", image: "eh.png", active: false },
+  { id: 14, name: "Erfan", image: "eha.png", active: false },
+  { id: 15, name: "Hannes", image: "hn.png", active: false },
+  { id: 16, name: "Vidar", image: "va.png", active: false },
   // { id: 17, name: "Loke", image: "Loke.png" },
   // { id: 18, name: "Lucas", image: "Lucas.png" },
   // { id: 19, name: "Max", image: "mm.png" },
@@ -56,6 +57,7 @@ const LevelStore = types
     seasons: types.array(Season),
     badges: types.array(Item),
     likes: types.array(Likes),
+    players: types.array(Player),
     americano: types.maybeNull(types.array(Game)),
     sessions: types.maybeNull(types.array(Session)),
     sessionItems: types.maybeNull(types.array(SessionItem)),
@@ -80,8 +82,14 @@ const LevelStore = types
       console.log(newArray);
       return newArray;
     },
+    get availablePalyers() {
+      return americanoPotentiallyAvailablePlayers;
+    },
     get americanoPlayers() {
-      return americanoPlayerList;
+      return self.players.filter((x) => x.active);
+    },
+    get inactivePlayers() {
+      return self.players.filter((x) => !x.active);
     },
     get americanoStat() {
       const stat = [];
@@ -201,33 +209,15 @@ const LevelStore = types
     hasAnimatedCards: false,
     selectedAttribute: null,
     selectedSession: null,
+    americanoGamePlayers: [],
   }))
   .actions((self) => ({
+    toggleActive(player) {
+      player.active = !player.active;
+      self.api.updatePlayer(player);
+    },
     removeUser() {
       self.users.remove(self.users[0]);
-    },
-    getAllG() {
-      var array = [];
-      self.americano.forEach((g) => {
-        if (g.team1.players[0].id === 1 || g.team1.players[1].id === 1) {
-          array.push(g.team1);
-        } else if (g.team2.players[0].id === 1 || g.team2.players[1].id === 1) {
-          array.push(g.team2);
-        }
-      });
-
-      return array;
-    },
-    getActivePlayers(shuffled, game) {
-      var players = shuffled;
-      players = players.filter((x) => x.id !== game.team1.players[0].id);
-      players = players.filter((x) => x.id !== game.team1.players[1].id);
-      players = players.filter((x) => x.id !== game.team2.players[0].id);
-      players = players.filter((x) => x.id !== game.team2.players[1].id);
-
-      return players.sort(function () {
-        return 0.5 - Math.random();
-      });
     },
     americanoRandom() {
       var a = self.createGames(self.americanoPlayers);
@@ -370,6 +360,7 @@ const LevelStore = types
       var likes = await self.api.fetchLikes();
       var sessions = await self.api.fetchSessions();
       var sessionItems = await self.api.fetchSessionItems();
+      var players = await self.api.fetchPlayers();
 
       const data = {
         users: [],
@@ -380,6 +371,7 @@ const LevelStore = types
         likes: [],
         sessions: [],
         sessionItems: [],
+        players: [],
       };
 
       seasons.forEach((elm) => {
@@ -420,6 +412,12 @@ const LevelStore = types
         elm.fields.id = elm.id;
         elm.fields.createdTime = new Date(elm.createdTime);
         data.sessionItems.push(elm.fields);
+      });
+
+      players.forEach((elm) => {
+        elm.fields.id = elm.id;
+        elm.fields.createdTime = new Date(elm.createdTime);
+        data.players.push(elm.fields);
       });
 
       items.reverse();

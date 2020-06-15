@@ -30,7 +30,22 @@ function Americano({ store }) {
         ))}
       </Paper> */}
 
-      <div className="help">Antal matcher {store.americano.length} st</div>
+      <div className="help">
+        Antal matcher {store.americano.length} st,{" "}
+        {store.americanoPlayers.length} spelare
+      </div>
+
+      {!store.americano.length &&
+        store.inactivePlayers.map((x) => (
+          <div style={{ opacity: "0.5" }} onClick={() => store.toggleActive(x)}>
+            {x.name}
+          </div>
+        ))}
+
+      {!store.americano.length &&
+        store.americanoPlayers.map((x) => (
+          <div onClick={() => store.toggleActive(x)}>{x.name}</div>
+        ))}
 
       {/* {store.getAllG().map((t) => (
         <div>
