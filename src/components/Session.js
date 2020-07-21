@@ -19,10 +19,12 @@ import "react-html5-camera-photo/build/css/index.css";
 import { Container } from "@material-ui/core";
 import ImageCarousel from "./ImageCarousel";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Grid from "@material-ui/core/Grid";
 
 var Carousel = require("react-responsive-carousel").Carousel;
 
 function Session({ store }) {
+  const size = useWindowSize();
   const drillCount = store.selectedSession.sessionItems.length;
 
   const workTime = store.selectedSession.sessionItems[0].workTime;
@@ -62,6 +64,34 @@ function Session({ store }) {
       }
     }, 1000);
   });
+
+  function useWindowSize() {
+    const isClient = typeof window === "object";
+
+    function getSize() {
+      return {
+        width: isClient ? window.innerWidth : undefined,
+        height: isClient ? window.innerHeight : undefined,
+      };
+    }
+
+    const [windowSize, setWindowSize] = useState(getSize);
+
+    useEffect(() => {
+      if (!isClient) {
+        return false;
+      }
+
+      function handleResize() {
+        setWindowSize(getSize());
+      }
+
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }, []); // Empty array ensures that effect is only run on mount and unmount
+
+    return windowSize;
+  }
 
   function playFinished() {
     console.log("play sound");
@@ -221,8 +251,8 @@ function Session({ store }) {
     );
   }
 
-  return (
-    <div className="profile">
+  function renderCarousel() {
+    return (
       <Carousel
         selectedItem={selectedItem}
         onChange={onChange}
@@ -257,7 +287,103 @@ function Session({ store }) {
           </div>
         ))}
       </Carousel>
+    );
+  }
 
+  function renderTablet() {
+    return (
+      <Box padding={2}>
+        <Grid container spacing={3}>
+          <Grid item xs={2}>
+            <Box
+              style={{
+                fontSize: "47px",
+                color: rest ? "orange" : "blue",
+              }}
+              fontWeight="fontWeightBold"
+            >
+              {timeLeft}
+            </Box>
+
+            <Typography
+              paragraph
+              style={{ margin: "5px", color: "gray", fontStyle: "italic" }}
+            >
+              {store.selectedSession.sessionItems[selectedItem].details}
+            </Typography>
+
+            <div style={{ textAlign: "center" }}>
+              {finished && <Box textAlign="center">KLART</Box>}
+              {rest && <Chip size="small" label="Förbered dig" />}
+              {!rest && !paused && (
+                <Chip size="small" label="Kör" color="primary" />
+              )}
+              {!rest && paused && <Chip size="small" label="Paus" />}
+            </div>
+          </Grid>
+
+          <Grid item xs={8}>
+            <Paper
+              className="sessionOverview"
+              style={{
+                flexWrap: "wrap",
+                display: "flex",
+                justifyContent: "space-evenly",
+              }}
+            >
+              {store.selectedSession.sessionItems.map((level, index) => (
+                <div
+                  onClick={() => setSelectedItem(index)}
+                  style={{
+                    color: index === selectedItem ? "blue" : "black",
+                  }}
+                >
+                  {index + 1}. {level.name}
+                </div>
+              ))}
+            </Paper>
+          </Grid>
+          <Grid item xs={2}>
+            <div>
+              <Button
+                style={{ width: "120px" }}
+                variant="contained"
+                color="primary"
+                onClick={start}
+              >
+                {paused ? "Starta" : "Pausa"}
+              </Button>
+            </div>
+            <div>
+              <Button
+                style={{ width: "120px" }}
+                variant="contained"
+                color="secondary"
+                onClick={restart}
+              >
+                Börja om
+              </Button>
+            </div>
+            <div>
+              <Button
+                style={{ width: "120px" }}
+                variant="contained"
+                onClick={() => {
+                  clearInterval(colorInterval);
+                  store.selectSession();
+                }}
+              >
+                Avsluta
+              </Button>
+            </div>
+          </Grid>
+        </Grid>
+      </Box>
+    );
+  }
+
+  return (
+    <div className="profile">
       <div style={{ width: "0px", height: "0px" }}>
         {canUseCamera && (
           <Camera
@@ -272,87 +398,92 @@ function Session({ store }) {
         )}
       </div>
 
-      <Box padding={2}>
-        <Paper className="sessionOverview">
-          <Box textAlign="center" id="legend">
-            {store.selectedSession.sessionItems[selectedItem].name}
-          </Box>
+      {renderCarousel()}
 
-          <Box textAlign="center" fontWeight="fontWeightBold">
-            Övning {selectedItem + 1} av{" "}
-            {store.selectedSession.sessionItems.length}
-          </Box>
+      {size.width > 1000 && renderTablet()}
+      {size.width < 1000 && (
+        <Box padding={2}>
+          <Paper className="sessionOverview">
+            <Box textAlign="center" id="legend">
+              {store.selectedSession.sessionItems[selectedItem].name}
+            </Box>
 
-          <Box
-            style={{
-              fontSize: "74px",
-              textAlign: "center",
-              color: rest ? "orange" : "blue",
-            }}
-            fontWeight="fontWeightBold"
-          >
-            {timeLeft}
-          </Box>
+            <Box textAlign="center" fontWeight="fontWeightBold">
+              Övning {selectedItem + 1} av{" "}
+              {store.selectedSession.sessionItems.length}
+            </Box>
 
-          {finished && <Box textAlign="center">KLART</Box>}
-
-          {rest && (
-            <div style={{ textAlign: "center" }}>
-              <Chip size="small" label="Förbered dig" />
-            </div>
-          )}
-          <Typography
-            paragraph
-            style={{ margin: "5px", color: "gray", fontStyle: "italic" }}
-          >
-            {store.selectedSession.sessionItems[selectedItem].details}
-          </Typography>
-
-          {!rest && !paused && (
-            <div style={{ textAlign: "center" }}>
-              <Chip size="small" label="Kör" color="primary" />
-            </div>
-          )}
-          {!rest && paused && (
-            <div style={{ textAlign: "center" }}>
-              <Chip size="small" label="Paus" />
-            </div>
-          )}
-        </Paper>
-        <div style={{ textAlign: "center" }}>
-          <Button variant="contained" color="primary" onClick={start}>
-            {paused ? "Starta" : "Pausa"}
-          </Button>
-          <Button
-            style={{ marginLeft: "15px" }}
-            variant="contained"
-            color="secondary"
-            onClick={restart}
-          >
-            Börja om
-          </Button>
-          <Button
-            style={{ marginLeft: "15px" }}
-            variant="contained"
-            onClick={() => {
-              clearInterval(colorInterval);
-              store.selectSession();
-            }}
-          >
-            Avsluta
-          </Button>
-        </div>
-        <Paper className="sessionOverview">
-          {store.selectedSession.sessionItems.map((level, index) => (
-            <div
-              onClick={() => setSelectedItem(index)}
-              style={{ color: index === selectedItem ? "blue" : "black" }}
+            <Box
+              style={{
+                fontSize: "74px",
+                textAlign: "center",
+                color: rest ? "orange" : "blue",
+              }}
+              fontWeight="fontWeightBold"
             >
-              {index + 1}. {level.name}
-            </div>
-          ))}
-        </Paper>
-      </Box>
+              {timeLeft}
+            </Box>
+
+            {finished && <Box textAlign="center">KLART</Box>}
+
+            {rest && (
+              <div style={{ textAlign: "center" }}>
+                <Chip size="small" label="Förbered dig" />
+              </div>
+            )}
+            <Typography
+              paragraph
+              style={{ margin: "5px", color: "gray", fontStyle: "italic" }}
+            >
+              {store.selectedSession.sessionItems[selectedItem].details}
+            </Typography>
+
+            {!rest && !paused && (
+              <div style={{ textAlign: "center" }}>
+                <Chip size="small" label="Kör" color="primary" />
+              </div>
+            )}
+            {!rest && paused && (
+              <div style={{ textAlign: "center" }}>
+                <Chip size="small" label="Paus" />
+              </div>
+            )}
+          </Paper>
+          <div style={{ textAlign: "center" }}>
+            <Button variant="contained" color="primary" onClick={start}>
+              {paused ? "Starta" : "Pausa"}
+            </Button>
+            <Button
+              style={{ marginLeft: "15px" }}
+              variant="contained"
+              color="secondary"
+              onClick={restart}
+            >
+              Börja om
+            </Button>
+            <Button
+              style={{ marginLeft: "15px" }}
+              variant="contained"
+              onClick={() => {
+                clearInterval(colorInterval);
+                store.selectSession();
+              }}
+            >
+              Avsluta
+            </Button>
+          </div>
+          <Paper className="sessionOverview">
+            {store.selectedSession.sessionItems.map((level, index) => (
+              <div
+                onClick={() => setSelectedItem(index)}
+                style={{ color: index === selectedItem ? "blue" : "black" }}
+              >
+                {index + 1}. {level.name}
+              </div>
+            ))}
+          </Paper>
+        </Box>
+      )}
     </div>
   );
 }
