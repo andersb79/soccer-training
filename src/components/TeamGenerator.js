@@ -18,7 +18,7 @@ import Card from "./Card";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-// import Rating from "@material-ui/lab/Rating";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 
 import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
@@ -26,6 +26,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Checkbox from "@material-ui/core/Checkbox";
+import StarIcon from "@material-ui/icons/Star";
 var Carousel = require("react-responsive-carousel").Carousel;
 
 function TabContainer(props) {
@@ -74,6 +75,36 @@ function TeamGenerator({ store, onLogout }) {
     );
   }
 
+  function Star(props) {
+    return (
+      <div>
+        {props.rating === 1 && (
+          <>
+            <StarIcon style={{ color: "#e6e24d" }} />
+            <StarIcon />
+            <StarIcon />
+          </>
+        )}
+
+        {props.rating === 2 && (
+          <>
+            <StarIcon style={{ color: "#e6e24d" }} />
+            <StarIcon style={{ color: "#e6e24d" }} />
+            <StarIcon />
+          </>
+        )}
+
+        {props.rating === 3 && (
+          <>
+            <StarIcon style={{ color: "#e6e24d" }} />
+            <StarIcon style={{ color: "#e6e24d" }} />
+            <StarIcon style={{ color: "#e6e24d" }} />
+          </>
+        )}
+      </div>
+    );
+  }
+
   return (
     <>
       <AppBar position="absolute" style={{ top: "48px" }}>
@@ -103,10 +134,7 @@ function TeamGenerator({ store, onLogout }) {
                 <ListItemText
                   id={x.id}
                   primary={x.name}
-                  secondary={
-                    // <Rating name="read-only" value={x.rating} readOnly />
-                    x.rating
-                  }
+                  secondary={<Star rating={x.rating} />}
                 />
                 <ListItemSecondaryAction>
                   <Checkbox
@@ -126,38 +154,56 @@ function TeamGenerator({ store, onLogout }) {
       )}
       {tabIndex === 1 && (
         <TabContainer>
-          <div style={{ textAlign: "center", marginTop: "100px" }}>
-            Mixade lag
-            <Button
-              onClick={() => store.teamGenerator(2, false)}
-              variant="contained"
-              color="primary"
-            >
-              2
-            </Button>
-            <Button
-              onClick={() => store.teamGenerator(3, false)}
-              variant="contained"
-              color="primary"
-            >
-              3
-            </Button>
-            Nivåanpassade lag
-            <Button
-              onClick={() => store.teamGenerator(2, true)}
-              variant="contained"
-              color="primary"
-            >
-              2
-            </Button>
-            <Button
-              onClick={() => store.teamGenerator(3, true)}
-              variant="contained"
-              color="primary"
-            >
-              3
-            </Button>
-          </div>
+          <List>
+            <ListItem>
+              <ListItemIcon>
+                <StarIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="2 lag"
+                onClick={() => {
+                  store.teamGenerator(2, false);
+                  setTabIndex(2);
+                }}
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemIcon>
+                <StarIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="3 lag"
+                onClick={() => {
+                  store.teamGenerator(3, false);
+                  setTabIndex(2);
+                }}
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemIcon>
+                <StarIcon style={{ color: "#e6e24d" }} />
+              </ListItemIcon>
+              <ListItemText
+                primary="2 lag"
+                onClick={() => {
+                  store.teamGenerator(2, true);
+                  setTabIndex(2);
+                }}
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemIcon>
+                <StarIcon style={{ color: "#e6e24d" }} />
+              </ListItemIcon>
+              <ListItemText
+                primary="3 lag"
+                onClick={() => {
+                  store.teamGenerator(3, true);
+                  setTabIndex(2);
+                }}
+              />
+            </ListItem>
+          </List>
         </TabContainer>
       )}
       {tabIndex === 2 && (
