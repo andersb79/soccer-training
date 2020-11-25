@@ -88,6 +88,20 @@ const LevelStore = types
     get availablePalyers() {
       return americanoPotentiallyAvailablePlayers;
     },
+    get allPlayers() {
+      var items = self.players.slice().sort(function (a, b) {
+        if (a.name < b.name) {
+          return -1;
+        }
+        if (a.name > b.name) {
+          return 1;
+        }
+        return 0;
+      });
+
+      return items;
+      //return self.players;
+    },
     get americanoPlayers() {
       return self.players.filter((x) => x.active);
     },
@@ -271,7 +285,7 @@ const LevelStore = types
         arrayOfTeams[2].shirtColor = "green";
       }
 
-      const name = `${teamCount} lag ${skills ? "NIVÅ" : "BLANDAT"}`;
+      const name = `${teamCount} lag ${skills ? "A" : "B"}`;
 
       let roundMatches = [];
 
