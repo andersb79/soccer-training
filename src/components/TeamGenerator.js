@@ -75,6 +75,30 @@ function TeamGenerator({ store, onLogout }) {
     );
   }
 
+  function ImageOrNot(prop) {
+    const player = prop.player;
+    return (
+      <div key={player.id} style={{ width: "90px", height: "90px" }}>
+        {player.image && <img className="playerCard" src={player.image} />}
+        {!player.image && (
+          <div
+            style={{
+              border: "1px solid #717171",
+              width: "90px",
+              height: "90px",
+              borderRadius: "36px",
+              paddingTop: "21px",
+              backgroundColor: "#cbcccc",
+              color: "black",
+            }}
+          >
+            {player.name}
+          </div>
+        )}
+      </div>
+    );
+  }
+
   function Star(props) {
     return (
       <div>
@@ -125,6 +149,7 @@ function TeamGenerator({ store, onLogout }) {
       {tabIndex === 0 && (
         <TabContainer>
           <Chip label={store.americanoPlayers.length} color="primary" />
+
           <List dense>
             {store.allPlayers.map((x) => (
               <ListItem button onClick={() => store.toggleActive(x)}>
@@ -238,13 +263,7 @@ function TeamGenerator({ store, onLogout }) {
                         <div className="highscore">
                           <div className={classes.root}>
                             {team.players.map((player) => (
-                              <div key={player.id}>
-                                <img
-                                  className="playerCard"
-                                  src={player.image}
-                                  style={{ width: "90px", height: "90px" }}
-                                />
-                              </div>
+                              <ImageOrNot player={player} />
                             ))}
                           </div>
                         </div>
@@ -265,13 +284,7 @@ function TeamGenerator({ store, onLogout }) {
                                 }}
                               >
                                 {innerTeam.players.map((p) => (
-                                  <div key={p.id}>
-                                    <img
-                                      className="playerCard"
-                                      src={p.image}
-                                      style={{ width: "90px", height: "90px" }}
-                                    />
-                                  </div>
+                                  <ImageOrNot player={p} />
                                 ))}
                               </div>
                             ))}
@@ -294,13 +307,7 @@ function TeamGenerator({ store, onLogout }) {
                                 }}
                               >
                                 {innerTeam.players.map((p) => (
-                                  <div key={p.id}>
-                                    <img
-                                      className="playerCard"
-                                      src={p.image}
-                                      style={{ width: "90px", height: "90px" }}
-                                    />
-                                  </div>
+                                  <ImageOrNot player={p} />
                                 ))}
                               </div>
                             ))}

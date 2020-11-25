@@ -5,7 +5,7 @@ const Player = types
     id: types.string,
     idNumber: types.number,
     name: types.string,
-    image: types.string,
+    image: types.maybeNull(types.string),
     active: types.maybeNull(types.boolean),
     rating: types.number,
   })
