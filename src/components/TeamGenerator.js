@@ -197,6 +197,10 @@ function TeamGenerator({ store, onLogout }) {
             </div>
           ))}
       </div>
+
+      <Button variant="outlined" onClick={logout}>
+        Logga ut
+      </Button>
     </>
   );
 }
