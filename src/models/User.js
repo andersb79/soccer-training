@@ -58,6 +58,7 @@ const User = types
     position: types.optional(types.string, ""),
     shirtNumber: types.optional(types.string, ""),
     coachComment: types.optional(types.string, ""),
+    rating: types.number,
   })
   .views((self) => ({
     get cardImage() {

@@ -5,9 +5,11 @@ import Likes from "./Likes";
 import User from "./User";
 import Season from "./Season";
 import Game from "./Game";
+import TeamContainer from "./TeamContainer";
 import Session from "./Session";
 import SessionItem from "./SessionItem";
 import Player from "./Player";
+import { toJS } from "mobx";
 
 const americanoPotentiallyAvailablePlayers = [
   // { id: 4, name: "Alfred", image: "aslag.png" },
@@ -59,6 +61,7 @@ const LevelStore = types
     likes: types.array(Likes),
     players: types.array(Player),
     americano: types.maybeNull(types.array(Game)),
+    generatedTeams: types.maybeNull(types.array(TeamContainer)),
     sessions: types.maybeNull(types.array(Session)),
     sessionItems: types.maybeNull(types.array(SessionItem)),
   })
@@ -219,6 +222,78 @@ const LevelStore = types
     removeUser() {
       self.users.remove(self.users[0]);
     },
+    generateTeams(teamCount, skills, playerArr) {
+      let players = self.shuffleArray(playerArr);
+
+      players = players
+        .sort((a, b) => (a.rating > b.rating ? 1 : -1))
+        .reverse();
+
+      const playersPerTeam = Math.floor(players.length / teamCount);
+
+      const arrayOfTeams = [];
+
+      if (skills) {
+        arrayOfTeams[0] = { players: [] };
+        players.forEach((player, index) => {
+          const currentTeam = arrayOfTeams[arrayOfTeams.length - 1];
+          currentTeam.players.push(toJS(player));
+          if (
+            currentTeam.players.length === playersPerTeam &&
+            arrayOfTeams.length !== teamCount
+          ) {
+            arrayOfTeams.push({ players: [] });
+          }
+        });
+      } else {
+        var i;
+        for (i = 0; i < teamCount; i++) {
+          arrayOfTeams[i] = { players: [] };
+        }
+
+        let teamIndex = 0;
+        players.forEach((player, index) => {
+          const currentTeam = arrayOfTeams[teamIndex];
+          currentTeam.players.push(toJS(player));
+          if (teamIndex === teamCount - 1) {
+            teamIndex = 0;
+          } else {
+            teamIndex++;
+          }
+        });
+      }
+
+      arrayOfTeams[0].shirtColor = "blue";
+      if (arrayOfTeams.length > 1) {
+        arrayOfTeams[1].shirtColor = "red";
+      }
+      if (arrayOfTeams.length > 2) {
+        arrayOfTeams[2].shirtColor = "green";
+      }
+
+      const name = `${teamCount} lag ${skills ? "NIVÅ" : "BLANDAT"}`;
+
+      let roundMatches = [];
+
+      roundMatches.push({
+        name: name,
+        teams: arrayOfTeams,
+      });
+
+      return roundMatches;
+    },
+    teamGenerator(teamCount, skills) {
+      self.generatedTeams = [];
+      var a = self.generateTeams(teamCount, skills, self.americanoPlayers);
+
+      a.forEach((game, index) => {
+        const mobxTeamContainer = TeamContainer.create(game);
+        self.generatedTeams.push(mobxTeamContainer);
+      });
+      console.log(a);
+      return a;
+    },
+
     americanoRandom() {
       var a = self.createGames(self.americanoPlayers);
 
@@ -250,6 +325,7 @@ const LevelStore = types
       }
       return shuffledArray;
     },
+
     createGames(playerArr) {
       let players = self.shuffleArray(playerArr);
       const teamsPerRound = [],
@@ -431,6 +507,7 @@ const LevelStore = types
         });
 
       data.americano = [];
+      data.generatedTeams = [];
 
       return data;
     },

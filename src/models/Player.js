@@ -7,6 +7,7 @@ const Player = types
     name: types.string,
     image: types.string,
     active: types.maybeNull(types.boolean),
+    rating: types.number,
   })
   .actions((self) => ({}));
 

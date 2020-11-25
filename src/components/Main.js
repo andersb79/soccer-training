@@ -22,6 +22,8 @@ import Help from "./Help";
 import Number from "./Number";
 import Categories from "./Categories";
 import Americano from "./Americano";
+import TeamGenerator from "./TeamGenerator";
+import GroupIcon from "@material-ui/icons/Group";
 
 function TabContainer(props) {
   return (
@@ -74,7 +76,8 @@ function Main({ store, onLogout }) {
           <Tab icon={<StarIcon />} />
           <Tab icon={<FormatListNumberedIcon />} />
           <Tab icon={<FitnessCenterIcon />} />
-          <Tab icon={<PersonIcon />} />
+          {/* <Tab icon={<PersonIcon />} /> */}
+          <Tab icon={<GroupIcon />} />
         </Tabs>
       </AppBar>
       {tabIndex === 0 && (
@@ -100,7 +103,13 @@ function Main({ store, onLogout }) {
           {/* <Profile store={store} onLogout={onLogout} /> */}
         </TabContainer>
       )}
+
       {tabIndex === 4 && (
+        <TabContainer>
+          <TeamGenerator store={store} onLogout={onLogout} />
+        </TabContainer>
+      )}
+      {tabIndex === 5 && (
         <TabContainer>
           <Americano store={store} />
           {/* <Profile store={store} onLogout={onLogout} /> */}
