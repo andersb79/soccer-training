@@ -233,6 +233,10 @@ const LevelStore = types
       player.active = !player.active;
       self.api.updatePlayer(player);
     },
+    updateRating(player, rating) {
+      player.rating = rating;
+      self.api.updatePlayer(player);
+    },
     removeUser() {
       self.users.remove(self.users[0]);
     },

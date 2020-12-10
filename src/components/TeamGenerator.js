@@ -31,7 +31,7 @@ var Carousel = require("react-responsive-carousel").Carousel;
 
 function TabContainer(props) {
   return (
-    <Typography component="div" style={{ marginTop: "100px" }}>
+    <Typography component="div" style={{ marginTop: "60px" }}>
       {props.children}
     </Typography>
   );
@@ -67,7 +67,6 @@ function TeamGenerator({ store, onLogout }) {
   if (store.loggedIn.userName !== "admin") {
     return (
       <div style={{ textAlign: "center", marginTop: "100px" }}>
-        nothing here
         <Button variant="outlined" onClick={logout}>
           Logga ut
         </Button>
@@ -104,25 +103,43 @@ function TeamGenerator({ store, onLogout }) {
       <div>
         {props.rating === 1 && (
           <>
-            <StarIcon style={{ color: "#e6e24d" }} />
-            <StarIcon />
-            <StarIcon />
+            <StarIcon
+              style={{ color: "#e6e24d" }}
+              onClick={() => props.player.updateRating(1)}
+            />
+            <StarIcon onClick={() => props.player.updateRating(2)} />
+            <StarIcon onClick={() => props.player.updateRating(3)} />
           </>
         )}
 
         {props.rating === 2 && (
           <>
-            <StarIcon style={{ color: "#e6e24d" }} />
-            <StarIcon style={{ color: "#e6e24d" }} />
-            <StarIcon />
+            <StarIcon
+              style={{ color: "#e6e24d" }}
+              onClick={() => props.player.updateRating(1)}
+            />
+            <StarIcon
+              style={{ color: "#e6e24d" }}
+              onClick={() => props.player.updateRating(2)}
+            />
+            <StarIcon onClick={() => props.player.updateRating(3)} />
           </>
         )}
 
         {props.rating === 3 && (
           <>
-            <StarIcon style={{ color: "#e6e24d" }} />
-            <StarIcon style={{ color: "#e6e24d" }} />
-            <StarIcon style={{ color: "#e6e24d" }} />
+            <StarIcon
+              style={{ color: "#e6e24d" }}
+              onClick={() => props.player.updateRating(1)}
+            />
+            <StarIcon
+              style={{ color: "#e6e24d" }}
+              onClick={() => props.player.updateRating(2)}
+            />
+            <StarIcon
+              style={{ color: "#e6e24d" }}
+              onClick={() => props.player.updateRating(3)}
+            />
           </>
         )}
       </div>
@@ -131,7 +148,7 @@ function TeamGenerator({ store, onLogout }) {
 
   return (
     <>
-      <AppBar position="absolute" style={{ top: "48px" }}>
+      <AppBar position="sticky" style={{ top: "48px" }}>
         <Tabs
           value={tabIndex}
           onChange={handleChange}
@@ -152,14 +169,14 @@ function TeamGenerator({ store, onLogout }) {
 
           <List dense>
             {store.allPlayers.map((x) => (
-              <ListItem button onClick={() => store.toggleActive(x)}>
+              <ListItem>
                 <ListItemAvatar>
                   <Avatar src={x.image} />
                 </ListItemAvatar>
                 <ListItemText
                   id={x.id}
                   primary={x.name}
-                  secondary={<Star rating={x.rating} />}
+                  secondary={<Star rating={x.rating} player={x} />}
                 />
                 <ListItemSecondaryAction>
                   <Checkbox
@@ -233,6 +250,10 @@ function TeamGenerator({ store, onLogout }) {
       )}
       {tabIndex === 2 && (
         <TabContainer>
+          {!store.generatedTeams && (
+            <div style={{ top: "100px" }}>Inga lag genererade</div>
+          )}
+
           {store.generatedTeams &&
             store.generatedTeams.map((x) => (
               <>

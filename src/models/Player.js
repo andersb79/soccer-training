@@ -1,4 +1,4 @@
-import { types } from "mobx-state-tree";
+import { types, getRoot } from "mobx-state-tree";
 
 const Player = types
   .model("Player", {
@@ -9,6 +9,11 @@ const Player = types
     active: types.maybeNull(types.boolean),
     rating: types.number,
   })
-  .actions((self) => ({}));
+  .actions((self) => ({
+    updateRating(rating) {
+      const store = getRoot(self);
+      store.updateRating(self, rating);
+    },
+  }));
 
 export default Player;

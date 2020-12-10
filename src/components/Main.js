@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Main({ store, onLogout }) {
   const classes = useStyles();
-  const [tabIndex, setTabIndex] = useState(store.items.length === 0 ? 3 : 4);
+  const [tabIndex, setTabIndex] = useState(store.items.length === 0 ? 2 : 2);
 
   function handleChange(event, newValue) {
     setTabIndex(newValue);
@@ -106,7 +106,12 @@ function Main({ store, onLogout }) {
 
       {tabIndex === 4 && (
         <TabContainer>
-          <TeamGenerator store={store} onLogout={onLogout} />
+          {store.loggedIn.userName !== "admin" && (
+            <Profile store={store} onLogout={onLogout} />
+          )}
+          {store.loggedIn.userName === "admin" && (
+            <TeamGenerator store={store} onLogout={onLogout} />
+          )}
         </TabContainer>
       )}
       {tabIndex === 5 && (

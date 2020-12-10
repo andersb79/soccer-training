@@ -61,6 +61,7 @@ export default {
         name: player.name,
         image: player.pasimagesword,
         active: player.active,
+        rating: player.rating,
       },
     };
 
